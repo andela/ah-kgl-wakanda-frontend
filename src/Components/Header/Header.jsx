@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import './Header.scss';
 
+/**
+ *
+ * @class Header
+ * @extends {Component}
+ */
 class Header extends Component {
   state = {
     title: 'Header',
   };
 
+  /**
+   * render the component
+   * @returns {*} jsx
+   */
   render() {
     const { title } = this.state;
     return (

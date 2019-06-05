@@ -4,9 +4,10 @@ import './Home.scss';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { changeName } from '../../actions/changeName';
+import './Home.css';
+
 /**
  *
- * Home component
  * @class Home
  * @extends {Component}
  */
@@ -16,9 +17,8 @@ class Home extends Component {
   };
 
   /**
-   *
-   * @returns {void}
-   * @memberof Home
+   * render the component
+   * @returns {*} jsx
    */
   render() {
     const { title } = this.state;
@@ -43,12 +43,22 @@ Home.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
+/**
+ *
+ * @param {object} state
+ * @returns {object} props
+ */
 const mapStateToProps = ({ name }) => {
   return {
     name,
   };
 };
 
+/**
+ *
+ * @param {*} dispatch
+ * @returns {object} props
+ */
 const mapDispatchToProps = dispatch => {
   return {
     onChangeName: name => dispatch(changeName(name)),
