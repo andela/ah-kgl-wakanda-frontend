@@ -1,5 +1,5 @@
 const initialState = {
-    name: { team: "Wakanda" }
-}
+  name: { team: 'Wakanda' },
+};
 
 export default initialState;

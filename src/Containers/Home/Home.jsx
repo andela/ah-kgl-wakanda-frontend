@@ -1,32 +1,61 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Home.scss';
-
 import { connect } from 'react-redux';
-
+import { PropTypes } from 'prop-types';
 import { changeName } from '../../actions/changeName';
-
+/**
+ *
+ * Home component
+ * @class Home
+ * @extends {Component}
+ */
 class Home extends Component {
-    render() {
-        return (
-          <div id='home' className='text-center'>
-            <h1>Hello World {this.props.name.team}</h1>
-            <button className='button' onClick={() => this.props.changeName('Avengers')}>Change to avengers</button>
-          </div>
-        );
-    }
+  state = {
+    title: 'Hello world',
+  };
+
+  /**
+   *
+   * @returns {void}
+   * @memberof Home
+   */
+  render() {
+    const { title } = this.state;
+    const { name, onChangeName } = this.props;
+    const { team } = name;
+    return (
+      <div id="home" className="text-center">
+        <h1>
+          {title}
+          {team}
+        </h1>
+        <button className="button" onClick={() => onChangeName('Avengers')}>
+          Change to avengers
+        </button>
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = ({ name }) => {
-    return {
-        name
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        changeName: (name) => dispatch(changeName(name))
-    }
+Home.propTypes = {
+  onChangeName: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const mapStateToProps = ({ name }) => {
+  return {
+    name,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onChangeName: name => dispatch(changeName(name)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);
