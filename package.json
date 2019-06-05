@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "cypress": "^3.3.1",
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
@@ -15,15 +16,19 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "wait-on": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "coveralls": "npm run cypress-run && jest --detectOpenHandles --coverage  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "eject": "react-scripts eject",
+    "cypress-run": " npm start & wait-on http://localhost:3000 && cypress run",
+    "cypress": "npm start & cypress open",
     "start:heroku": "node server.js",
     "test": "react-scripts test",
-    "coveralls": "jest --detectOpenHandles --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "eject": "react-scripts eject"
+    "test-travis": "react-scripts test && npm run cypress-run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,5 +44,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "coveralls": "^3.0.4",
+    "eslint-plugin-cypress": "^2.2.1"
   }
 }
