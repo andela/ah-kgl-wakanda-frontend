@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './Home.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './Home.scss';
 
 import { connect } from 'react-redux';
 
@@ -8,10 +9,10 @@ import { changeName } from '../../actions/changeName';
 class Home extends Component {
     render() {
         return (
-            <React.Fragment>
+            <div id='home' className='text-center'>
                 <h1>Hello World {this.props.name.team}</h1>
-                <button onClick={() => this.props.changeName('Avengers')}>Change to avengers</button>
-            </React.Fragment>
+                <button className='button' onClick={() => this.props.changeName('Avengers')}>Change to avengers</button>
+            </div>
         );
     }
 }
