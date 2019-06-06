@@ -9,10 +9,10 @@ import { changeName } from '../../actions/changeName';
 class Home extends Component {
     render() {
         return (
-            <div id='home' className='text-center'>
-                <h1>Hello World {this.props.name.team}</h1>
-                <button className='button' onClick={() => this.props.changeName('Avengers')}>Change to avengers</button>
-            </div>
+          <div id='home' className='text-center'>
+            <h1>Hello World {this.props.name.team}</h1>
+            <button className='button' onClick={() => this.props.changeName('Avengers')}>Change to avengers</button>
+          </div>
         );
     }
 }

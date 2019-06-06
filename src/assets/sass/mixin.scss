@@ -1,4 +1,4 @@
-@import './global.scss';
+@import "./global";
 
 // All reusable styles can be placed here
 
@@ -6,6 +6,6 @@
   background: $color-primary;
   color: $color-light;
   padding: 4px 8px;
-  border: 1px solid rgba($color-primary,0.5);
+  border: 1px solid rgba($color-primary, 0.5);
   font-weight: 500;
 }
