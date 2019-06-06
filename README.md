@@ -1,3 +1,7 @@
+[![CircleCI](https://circleci.com/gh/andela/ah-kgl-wakanda-frontend.svg?style=svg)](https://circleci.com/gh/andela/ah-kgl-wakanda-frontend)
+[![Maintainability](https://api.codeclimate.com/v1/badges/449ad127ddcf7e1b599b/maintainability)](https://codeclimate.com/github/andela/ah-kgl-wakanda-frontend/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/449ad127ddcf7e1b599b/test_coverage)](https://codeclimate.com/github/andela/ah-kgl-wakanda-frontend/test_coverage)
+
 # Authors Haven - A Social platform for the creative at heart.
 
 ## Vision
