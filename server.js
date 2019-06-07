@@ -1,5 +1,5 @@
 //server.js
-import express from  'express';
+import express from 'express';
 import favicon from 'express-favicon';
 import  path from 'path';
 const port = process.env.PORT || 8080;
