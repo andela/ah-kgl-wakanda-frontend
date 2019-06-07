@@ -8,7 +8,7 @@ cache:
 install:
   - yarn install
 script:
-  - npm test -- -u
+  - npm run test-travis -- -u
 after_success:
   - npm run coveralls
 notifications:
