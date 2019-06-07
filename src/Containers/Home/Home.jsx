@@ -1,41 +1,32 @@
-import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import './Home.scss';
+import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { changeName } from '../../actions/changeName';
+import './Home.scss';
+import 'bootstrap/dist/css/bootstrap.css';
+import initialState from '../../store/initialState';
 
 /**
- *
- * @class Home
- * @extends {Component}
+ * Home component
+ * @param {object} props
+ * @returns {void}
  */
-class Home extends Component {
-  state = {
-    title: 'Hello world',
-  };
-
-  /**
-   * render the component
-   * @returns {*} jsx
-   */
-  render() {
-    const { title } = this.state;
-    const { name, onChangeName } = this.props;
-    const { team } = name;
-    return (
-      <div id="home" className="text-center">
-        <h1>
-          {title}
-          {team}
-        </h1>
-        <button className="button" onClick={() => onChangeName('Avengers')}>
-          Change to avengers
-        </button>
-      </div>
-    );
-  }
-}
+const Home = props => {
+  const { title } = initialState;
+  const { name, onChangeName } = props;
+  const { team } = name;
+  return (
+    <div id="home" className="text-center">
+      <h1>
+        {title}
+        {team}
+      </h1>
+      <button className="button" onClick={() => onChangeName('Avengers')}>
+        Change to avengers
+      </button>
+    </div>
+  );
+};
 
 Home.propTypes = {
   onChangeName: PropTypes.array.isRequired,
