@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { changeName } from '../../actions/changeName';
 import './Home.scss';
 import 'bootstrap/dist/css/bootstrap.css';
+import { changeName } from '../../actions/changeName';
 import initialState from '../../store/initialState';
 
 /**
