@@ -1,6 +1,9 @@
 [![CircleCI](https://circleci.com/gh/andela/ah-kgl-wakanda-frontend.svg?style=svg)](https://circleci.com/gh/andela/ah-kgl-wakanda-frontend)
+[![Build Status](https://travis-ci.com/andela/ah-kgl-wakanda-frontend.svg?branch=develop)](https://travis-ci.com/andela/ah-kgl-wakanda-frontend)
+[![Coverage Status](https://coveralls.io/repos/github/andela/ah-kgl-wakanda-frontend/badge.svg?branch=ch-setup-eslint-houndci-166470806)](https://coveralls.io/github/andela/ah-kgl-wakanda-frontend?branch=ch-setup-eslint-houndci-166470806)
 [![Maintainability](https://api.codeclimate.com/v1/badges/449ad127ddcf7e1b599b/maintainability)](https://codeclimate.com/github/andela/ah-kgl-wakanda-frontend/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/449ad127ddcf7e1b599b/test_coverage)](https://codeclimate.com/github/andela/ah-kgl-wakanda-frontend/test_coverage)
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
 # Authors Haven - A Social platform for the creative at heart.
 

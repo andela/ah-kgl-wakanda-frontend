@@ -9,6 +9,7 @@
     "express-favicon": "^2.0.1",
     "node-sass": "^4.12.0",
     "path": "^0.12.7",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
@@ -19,6 +20,22 @@
     "redux-thunk": "^2.3.0",
     "wait-on": "^3.2.0"
   },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "husky": "^2.3.0",
+    "lint-staged": "^8.1.7",
+    "prettier": "^1.17.1",
+    "pretty-quick": "^1.11.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "coveralls": "^3.0.4",
+    "eslint-plugin-cypress": "^2.2.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -28,7 +45,21 @@
     "cypress": "npm start & cypress open",
     "start:heroku": "node server.js",
     "test": "react-scripts test",
-    "test-travis": "react-scripts test && npm run cypress-run"
+    "test-travis": "react-scripts test && npm run cypress-run",
+    "lint": "npx eslint src/**/*.{js,jsx}",
+    "lint-fix": "npx eslint --fix src/**/*.{js,jsx}"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "eslint",
+      "pretty-quick --staged",
+      "git add"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,10 +75,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "coveralls": "^3.0.4",
-    "eslint-plugin-cypress": "^2.2.1"
   }
 }
