@@ -4,7 +4,6 @@ import './Home.scss';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { changeName } from '../../actions/changeName';
-import './Home.css';
 
 /**
  *
