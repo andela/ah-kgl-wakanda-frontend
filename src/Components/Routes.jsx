@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
@@ -12,7 +11,7 @@ import Login from '../Containers/Login/login';
 import Home from '../Containers/Home/Home';
 
 /**
- * Home component
+ * NavBar component
  * @param {object} props
  * @returns {void}
  */
@@ -45,7 +44,7 @@ Routes.propTypes = {
 };
 
 /**
- * Home component
+ * NavBar component
  * @param {object} props
  * @returns {void}
  */

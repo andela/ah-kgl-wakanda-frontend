@@ -1,0 +1,45 @@
+@import '../../../assets/sass/components';
+
+.searchbox {
+  background: $color-light-soft;
+  border: 0;
+  border-radius: 3px;
+
+  .dropdown-toggle {
+    width: 100px !important;
+  }
+
+  input {
+    border: 0px solid rgba(0, 0, 0, 0.1);
+    background: $color-light-soft;
+    width: 300px !important;
+  }
+  .btn-outline-primary {
+    color: $color-primary;
+    border: 0px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-outline-primary:hover {
+    color: $color-light;
+    background-color: $color-primary;
+    border: 0px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-outline-primary:focus,
+  .btn-outline-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(244, 95, 54, 0.5);
+  }
+
+  .btn-outline-primary:not(:disabled):not(.disabled):active,
+  .btn-outline-primary:not(:disabled):not(.disabled).active,
+  .show > .btn-outline-primary.dropdown-toggle {
+    color: $color-light;
+    background-color: $color-primary;
+  }
+
+  .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+  .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-outline-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(244, 95, 54, 0.5);
+  }
+}
