@@ -46,8 +46,7 @@ class Input extends Component {
     }
     const { error } = Joi.validate(input, schema);
     if (error) {
-      const { key } = error.details[0].context;
-      if (key === 'password') {
+      if (type === 'password') {
         return {
           message:
             'Your password must have at least 8 digits and contain 1 Uppercase, 1 Lowercase, 1 number',
@@ -107,7 +106,6 @@ class Input extends Component {
             onInput={onType}
             onBlur={this.handleError}
             id={name}
-            onInput={onType}
             required={required}
             placeholder={placeholder && this.capitalize(placeholder)}
             className={this.inputClasses()}
