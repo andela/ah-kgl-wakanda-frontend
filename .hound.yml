@@ -4,4 +4,4 @@ eslint:
   ignore_file: .eslintignore
 
 scss:
-  enabled: true
+  enabled: false
