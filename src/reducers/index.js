@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import currentUser from './currentUser';
 import login from './login';
 import signupState from './signupReducer';
-import navbar from './navbar';
+import navbar, { profile } from './navbar';
 import resetPassword from './resetPassword';
 import updatePassword from './updatePassword';
 
@@ -13,6 +13,7 @@ const reducers = combineReducers({
   resetPassword,
   updatePassword,
   navbar,
+  profile,
 });
 
 export default reducers;

@@ -6,16 +6,23 @@ import initialState from '../store/initialState';
  * @param {object} action
  * @returns {object} new state
  */
-const navbar = (state = initialState.navbar, { type, payload }) => {
+const navbar = (state = initialState.navbar, { type }) => {
   switch (type) {
     case TOGGLE_SIDE_NAV:
       return {
         ...state,
-        isDrawerDisplay: payload,
+        isDrawerDisplay: !state.isDrawerDisplay,
       };
     default:
       return state;
   }
 };
+
+/**
+ * @param {object} state
+ * @param {object} action
+ * @returns {object} new state
+ */
+export const profile = (state = initialState.profile) => state;
 
 export default navbar;

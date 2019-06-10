@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
+import * as paths from '../../paths';
 
 import './SideBar.scss';
 
@@ -9,17 +11,17 @@ import './SideBar.scss';
  * SideBar component
  * @returns {void}
  */
-class SideBar extends Component {
+export class SideBar extends Component {
   state = {
     checked: true,
     navLinks: [
-      { key: 0, to: '/home', icon: 'far fa-newspaper', name: 'Home' },
-      { key: 1, to: '//my-articles', icon: 'fas fa-list-ul', name: 'My articles' },
+      { key: 0, to: paths.HOME_PATH, icon: 'far fa-newspaper', name: 'Home' },
+      { key: 1, to: '/my-articles', icon: 'fas fa-list-ul', name: 'My articles' },
       { key: 2, to: '/bookmarks', icon: 'far fa-heart', name: 'Bookmarks' },
       { key: 3, to: '/stats', icon: 'fas fa-signal', name: 'Statistics' },
       { key: 4, to: '/complaint', icon: 'fas fa-file', name: 'Complaints' },
       { key: 5, to: '/sidebar', icon: 'far fa-user', name: 'Create user' },
-      { key: 6, to: '/logout', icon: 'fas fa-sign-out-alt', name: 'Logout' },
+      { key: 6, to: paths.LOGOUT_PATH, icon: 'fas fa-sign-out-alt', name: 'Logout' },
     ],
   };
 
@@ -86,9 +88,12 @@ class SideBar extends Component {
    * @returns {void}
    */
   render() {
-    const { user, display = true } = this.props;
+    const {
+      user,
+      navbar: { isDrawerDisplay },
+    } = this.props;
     return (
-      <div className="sidenav" style={{ display: display ? 'flex' : null }}>
+      <div className="sidenav slide-in-left" style={{ display: isDrawerDisplay ? 'flex' : null }}>
         <div className="user">{this.user(this.props)}</div>
         <div className="info row">{this.accountStats(user)}</div>
         <div className="navigation">{this.navigation(this.state)}</div>
@@ -100,7 +105,13 @@ class SideBar extends Component {
 
 SideBar.propTypes = {
   user: PropTypes.object.isRequired,
-  display: PropTypes.bool.isRequired,
+  navbar: PropTypes.object.isRequired,
 };
 
-export default SideBar;
+/**
+ * @param {object} state
+ * @returns {object} props
+ */
+export const mapStateToProps = state => state;
+
+export default connect(mapStateToProps)(SideBar);

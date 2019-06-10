@@ -1,16 +1,18 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Dropdown, Col, Row } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 const property = [
   {
+    id: 1,
     text: 'Profile',
-    icon: ' far fa-user',
+    icon: ' far fa-user fa-lg',
     link: '#/action-1',
   },
   {
+    id: 2,
     text: 'Logout',
-    icon: ' fas fa-sign-out-alt',
+    icon: ' fas fa-sign-out-alt fa-lg',
     link: '#/action-2',
   },
 ];
@@ -20,16 +22,12 @@ const property = [
  */
 const DropdownItem = () => {
   return (
-    <Dropdown.Menu>
+    <Dropdown.Menu id="menu">
       {property.map(item => {
         return (
-          <Dropdown.Item href={item.link}>
-            <Row>
-              <Col sm={2}>
-                <i className={item.icon} />
-              </Col>
-              <Col sm={8}>{item.text}</Col>
-            </Row>
+          <Dropdown.Item style={{ margin: '10px 0px' }} key={item.id} href={item.link}>
+            <i style={{ marginRight: '10px' }} className={item.icon} />
+            {item.text}
           </Dropdown.Item>
         );
       })}

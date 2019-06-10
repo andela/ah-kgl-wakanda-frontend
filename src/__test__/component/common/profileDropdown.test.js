@@ -4,8 +4,7 @@ import ProfileDropdown from '../../../Components/Common/Profile/ProfileDropdown'
 import img from '../../../assets/img/images.png';
 
 const props = {
-  firstName: 'Fname',
-  lastName: 'Lname',
+  username: '@gisel',
   picture: img,
 };
 describe('Render the Profile Dropdown component', () => {

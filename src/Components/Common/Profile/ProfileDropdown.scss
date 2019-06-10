@@ -1,3 +1,6 @@
+@import '../../../assets/sass/components';
+@import '../../../assets/sass/global';
+
 #dropdown-basic {
   place-items: 10px;
   background-color: transparent;
@@ -12,5 +15,53 @@
   .names {
     padding: 0 8px;
     font-size: 0.9em;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+  }
+}
+
+#menu {
+  right: 5px !important;
+  left: auto;
+}
+
+// extra small device
+@media #{$extra-small-device} {
+  #dropdown-basic {
+    .names {
+      display: none;
+    }
+
+    .dropdown-menu {
+      position: absolute !important;
+    }
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media #{$small-device} {
+  #dropdown-basic {
+    .names {
+      display: none;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+    }
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media #{$medium-device} {
+  #dropdown-basic {
+    .names {
+      display: inline-block;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+    }
   }
 }

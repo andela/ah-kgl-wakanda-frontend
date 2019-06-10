@@ -11,7 +11,7 @@ import './NotifIcon.scss';
  * @returns {object} jsx
  */
 const NotifIcon = ({ icon, notificationsCount, onClick }) => (
-  <div className="user">
+  <div className="user mr-3">
     <div role="button" tabIndex="-1" onKeyDown={onClick} className="drop-down" onClick={onClick}>
       <FontAwesomeIcon icon={icon} className="notif-icon" />
       {notificationsCount >= 1 ? <span className="num">{notificationsCount}</span> : null}

@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import SideBar from '../../Components/SideBar/SideBar';
+import { SideBar } from '../../Components/SideBar/SideBar';
 
 const props = {
-  display: true,
+  navbar: { isDrawerDisplay: true },
   user: {
     firstName: 'Karl',
     lastName: 'Musingo',

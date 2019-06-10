@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { NavBar, mapDispatchToProps, mapStateToProps } from '../../Components/NavBar/NavBar';
 import initialState from '../../store/initialState';
+import { HOME_PATH } from '../../paths';
 
 describe('NavBar component', () => {
   let props;
@@ -12,6 +13,9 @@ describe('NavBar component', () => {
       onToggleSideNav: jest.fn(),
       navbar: initialState.navbar,
       currentUser: initialState.currentUser,
+      profile: initialState.profile,
+      location: { pathname: HOME_PATH },
+      displaySearchBox: true,
       onClick: jest.fn(e),
       onChange: jest.fn(e),
     };
