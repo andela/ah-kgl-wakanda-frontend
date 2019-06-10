@@ -1,0 +1,55 @@
+@import '../../../assets/sass/global.scss';
+
+.ah-button {
+  display: inline-block;
+  vertical-align: baseline;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin: 10px;
+  padding: 7px 18px;
+  border-radius: 4px;
+  transition: 0.5s all;
+  background-color: $color-primary;
+  box-shadow: 0px 1px 2px rgba($color: #000000, $alpha: 0.12),
+    0px 2px 5px rgba($color: #000000, $alpha: 0.12);
+  &:hover {
+    cursor: pointer;
+  }
+  .ah-icon {
+    margin-right: 10px;
+    font-size: 0.85em;
+  }
+  .spinner {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    border: 1px solid white;
+    border-top: 1px solid transparent;
+    border-radius: 100%;
+    margin-right: 8px;
+    animation: spin 0.5s linear 0s infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.social {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  margin: 5px;
+  padding: 3px;
+  border-radius: 50%;
+  box-shadow: 0px 1px 2px rgba($color: #000000, $alpha: 0.12),
+    0px 2px 5px rgba($color: #000000, $alpha: 0.12);
+  img {
+    width: 30px;
+  }
+}
