@@ -21,6 +21,7 @@
   },
   "rules": {
     "import/no-named-as-default": 0,
+    "import/no-extraneous-dependencies": 0,
     "class-methods-use-this": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": [
