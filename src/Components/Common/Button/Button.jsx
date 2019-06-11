@@ -43,7 +43,7 @@ const changeOpacity = (e, value) => {
  * @param {object} props
  * @returns {object} Jsx component
  */
-const Button = ({ social, text, color, full, size, disabled, icon, loading }) => {
+const Button = ({ social, text, color, full, size, disabled, icon, loading, outline }) => {
   return (
     <React.Fragment>
       {typeof social !== 'string' ? (
@@ -52,8 +52,9 @@ const Button = ({ social, text, color, full, size, disabled, icon, loading }) =>
           tabIndex="-1"
           className="ah-button"
           style={{
-            backgroundColor: null,
-            color,
+            backgroundColor: outline ? '#fff' : color || null,
+            color: outline ? '#f46036' : null,
+            border: outline ? '1px solid #f46036' : null,
             display: full ? 'block' : 'inline-block',
             fontSize: `${size}px`,
             opacity: disabled ? 0.8 : 1,
@@ -83,6 +84,7 @@ Button.defaultProps = {
   disabled: PropTypes.boolean,
   icon: PropTypes.any,
   loading: PropTypes.boolean,
+  outline: PropTypes.boolean,
 };
 
 Button.propTypes = {
@@ -94,6 +96,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   icon: PropTypes.any,
   loading: PropTypes.bool,
+  outline: PropTypes.bool,
 };
 
 export default Button;
