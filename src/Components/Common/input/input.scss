@@ -1,0 +1,31 @@
+@import '../../../assets/sass/global.scss';
+
+.form-group {
+  label {
+    display: block;
+    color: #444;
+    font-family: 'Nunito Sans', sans-serif;
+  }
+  input {
+    border: 2px solid #efefef;
+    height: 35px;
+    margin-bottom: 10px;
+    padding: 0 6px;
+    &:focus {
+      outline: none !important;
+      border: 2px solid rgba(#aca9a9, 0.5);
+      box-shadow: 2px 0 6px rgba(#efefef, 0.8);
+    }
+  }
+  .error-message {
+    background: rgba($color-primary, 0.9);
+    color: $color-light;
+    padding: 4px;
+    margin-top: 6px;
+    font-size: 15px;
+  }
+
+  .input-error {
+    border: 2px solid rgba($color-primary, 0.6) !important;
+  }
+}

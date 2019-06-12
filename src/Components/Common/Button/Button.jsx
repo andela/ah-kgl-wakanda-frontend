@@ -46,14 +46,14 @@ const changeOpacity = (e, value) => {
 const Button = ({ social, text, color, full, size, disabled, icon, loading, outline }) => {
   return (
     <React.Fragment>
-      {typeof social !== 'string' ? (
+      {!social ? (
         <div
           role="button"
           tabIndex="-1"
           className="ah-button"
           style={{
             backgroundColor: outline ? '#fff' : color || null,
-            color: outline ? '#f46036' : null,
+            color: outline ? color : null,
             border: outline ? '1px solid #f46036' : null,
             display: full ? 'block' : 'inline-block',
             fontSize: `${size}px`,
@@ -63,8 +63,10 @@ const Button = ({ social, text, color, full, size, disabled, icon, loading, outl
           onMouseUp={e => (!disabled ? changeOpacity(e, 1) : null)}
         >
           {loading ? <div className="spinner" /> : null}
-          <FontAwesomeIcon icon={icon} className="ah-icon" style={{ fontSize: `${size}px` }} />
-          {text}
+          {icon ? (
+            <FontAwesomeIcon icon={icon} className="ah-icon" style={{ fontSize: `${size}px` }} />
+          ) : null}
+          <span>{text}</span>
         </div>
       ) : (
         <div className="social" style={{ width: `${size + 6}px`, height: `${size + 6}px` }}>
@@ -76,15 +78,15 @@ const Button = ({ social, text, color, full, size, disabled, icon, loading, outl
 };
 
 Button.defaultProps = {
-  social: PropTypes.string,
-  text: PropTypes.string,
-  color: PropTypes.string,
-  full: PropTypes.boolean,
-  size: PropTypes.number,
-  disabled: PropTypes.boolean,
-  icon: PropTypes.any,
-  loading: PropTypes.boolean,
-  outline: PropTypes.boolean,
+  social: null,
+  text: '',
+  color: '#f46036',
+  full: false,
+  size: 14,
+  disabled: false,
+  icon: null,
+  loading: false,
+  outline: false,
 };
 
 Button.propTypes = {
