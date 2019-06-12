@@ -1,0 +1,110 @@
+@import '../../assets//sass/global.scss';
+
+#signup,
+#login {
+  .container {
+    padding: 0;
+    margin: 0;
+    .row {
+      width: 100%;
+    }
+  }
+  .illustration-box {
+    background: $color-secondary;
+    height: calc(100vh);
+    z-index: 2;
+    img {
+      width: 100%;
+      margin-left: 112px !important;
+    }
+  }
+  .form-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: white;
+    padding: 2rem 7rem;
+    .logo {
+      width: 50px;
+      height: auto;
+      position: fixed;
+      right: 24rem;
+      top: 0.5rem;
+    }
+    h1 {
+      text-align: center;
+      color: #555;
+      font-family: 'Nunito', sans-serif;
+    }
+    form {
+      margin-top: 1rem;
+      label {
+        display: block;
+        color: #555;
+        font-family: 'Nunito Sans', sans-serif;
+      }
+      input {
+        border: 2px solid #efefef;
+        width: 300px;
+        height: 35px;
+        margin-bottom: 10px;
+        padding: 0 6px;
+      }
+      .input:focus {
+        outline: none !important;
+        border: 2px solid rgba($color-primary, 0.5);
+        box-shadow: 2px 0 6px rgba($color-primary, 0.8);
+      }
+    }
+    p {
+      text-align: center;
+      color: #666;
+      margin-top: 15px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .social-login {
+      display: flex;
+      justify-content: space-around;
+      padding: 0 1rem;
+      a {
+        box-shadow: 8px 10px 20px 0px rgba(46, 61, 73, 0.15);
+        border-radius: 17px;
+        padding: 2px;
+        img {
+          height: 34px;
+          width: 34px;
+        }
+      }
+      a:hover {
+        box-shadow: 8px 10px 20px 15px rgba(46, 61, 73, 0.15);
+      }
+    }
+    .signin-link {
+      margin-top: 3rem;
+      color: #777;
+      a {
+        color: $color-primary;
+      }
+    }
+  }
+  .error {
+    font-size: 0.9em;
+    color: $color-primary;
+  }
+  @media only screen and (max-width: 768px) {
+    .illustration-box {
+      display: none;
+    }
+    .form-box {
+      padding: 2rem 4rem;
+      .logo {
+        width: 50px;
+        height: auto;
+        position: fixed;
+        left: 1rem;
+        top: 0.5rem;
+      }
+    }
+  }
+}
