@@ -7,6 +7,7 @@ import illustration from '../../assets/images/signup-illustration.svg';
 import { signup } from '../../actions/signupActions';
 import Input from '../../Components/Common/input/input';
 import Button from '../../Components/Common/Button/Button';
+import logo from '../../assets/images/logo_ah_2.png';
 
 /**
  * Registers the user account
@@ -61,7 +62,7 @@ export class Signup extends Component {
               <img src={illustration} alt="" />
             </div>
             <div className="col-md-4 form-box">
-              <img src="./img/logo_ah.png" className="logo" alt="" />
+              <img src={logo} className="logo" alt="" />
               <h1>Register</h1>
               {error ? <div className="error">{error}</div> : null}
               {noMatch ? <div className="error">{noMatch}</div> : null}
@@ -113,17 +114,17 @@ export class Signup extends Component {
                   full
                   loading={loading}
                 />
+                <p>Or sign up with</p>
+                <div className="social-login">
+                  <Button social="google" />
+                  <Button social="facebook" />
+                  <Button social="twitter" />
+                </div>
+                <p className="signin-link">
+                  <span>Already have an account ? </span>
+                  <a href="/login"> Signin</a>
+                </p>
               </form>
-              <p>OR SIGNUP WITH</p>
-              <div className="social-login">
-                <Button social="google" />
-                <Button social="facebook" />
-                <Button social="twitter" />
-              </div>
-              <p className="signin-link">
-                <span>Already have an account ? </span>
-                <a href="/login"> Signin</a>
-              </p>
             </div>
           </div>
         </div>
