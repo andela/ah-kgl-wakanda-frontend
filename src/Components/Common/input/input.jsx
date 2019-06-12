@@ -104,6 +104,7 @@ class Input extends Component {
             type={type}
             name={name}
             onChange={this.handleInput}
+            onInput={onType}
             onBlur={this.handleError}
             id={name}
             onInput={onType}
@@ -123,12 +124,8 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   required: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.string.isRequired,
   onType: PropTypes.func.isRequired,
-};
-
-Input.defaultProps = {
-  placeholder: '',
 };
 
 export default Input;

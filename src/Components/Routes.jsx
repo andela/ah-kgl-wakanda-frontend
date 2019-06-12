@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-d
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import Home from '../Containers/Home/Home';
+import Signup from '../Containers/Signup/Signup';
 import NotFound from '../Containers/NotFound/NotFound';
 import Login from '../Containers/Login/login';
 
@@ -16,11 +16,10 @@ import Login from '../Containers/Login/login';
 export const Routes = ({ isAuth }) => (
   <Router>
     <Switch>
-      <Route exact path="/" component={Home} />
       <Route
         exact
-        path="/home"
-        render={props => (isAuth ? <Home {...props} /> : <Redirect to="/" />)}
+        path="/signup"
+        render={props => (!isAuth ? <Signup {...props} /> : <Redirect to="/" />)}
       />
       <Route
         exact
