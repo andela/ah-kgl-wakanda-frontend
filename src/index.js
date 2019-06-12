@@ -5,7 +5,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
-
 import Routes from './Components/Routes';
 
 const routing = (

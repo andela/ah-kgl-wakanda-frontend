@@ -94,7 +94,7 @@ class Input extends Component {
    * @returns {jsx} react fragment
    */
   render() {
-    const { type = 'text', name, label, placeholder, required = false } = this.props;
+    const { type = 'text', name, label, placeholder, required = false, onType } = this.props;
     const { message } = this.state;
     return (
       <React.Fragment>
@@ -106,6 +106,7 @@ class Input extends Component {
             onChange={this.handleInput}
             onBlur={this.handleError}
             id={name}
+            onInput={onType}
             required={required}
             placeholder={placeholder && this.capitalize(placeholder)}
             className={this.inputClasses()}
@@ -123,6 +124,7 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   required: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
+  onType: PropTypes.func.isRequired,
 };
 
 export default Input;
