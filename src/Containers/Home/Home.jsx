@@ -5,6 +5,7 @@ import './Home.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import { changeName } from '../../actions/changeName';
 import initialState from '../../store/initialState';
+import Input from '../../Components/Common/input/input';
 
 /**
  * Home component
@@ -24,6 +25,12 @@ const Home = props => {
       <button className="button" onClick={() => onChangeName('Avengers')}>
         Change to avengers
       </button>
+      <div className="col-4">
+        <Input label="username" required name="username" placeholder="Username" />
+        <Input label="email" name="email" type="email" />
+        <Input label="password" name="password" type="password" />
+        <button className="btn btn-primary btn-block">submit</button>
+      </div>
     </div>
   );
 };

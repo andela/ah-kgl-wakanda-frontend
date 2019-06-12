@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "cypress": "^3.3.1",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "bootstrap": "^4.3.1",
+    "cypress": "^3.3.1",
+    "enzyme-adapter-react-16": "^1.14.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "identity-obj-proxy": "^3.0.0",
+    "joi-browser": "^13.4.0",
     "node-sass": "^4.12.0",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
@@ -21,9 +25,13 @@
     "wait-on": "^3.2.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "coveralls": "^3.0.4",
+    "enzyme": "^3.10.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-cypress": "^2.2.1",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.1.0",
@@ -32,9 +40,7 @@
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
     "pretty-quick": "^1.11.0",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "coveralls": "^3.0.4",
-    "eslint-plugin-cypress": "^2.2.1"
+    "react-test-renderer": "^16.8.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,7 +50,7 @@
     "cypress-run": " npm start & wait-on http://localhost:3000 && cypress run",
     "cypress": "npm start & cypress open",
     "start:heroku": "node server.js",
-    "test": "react-scripts test",
+    "test": "jest",
     "test-travis": "react-scripts test && npm run cypress-run",
     "lint": "npx eslint src/**/*.{js,jsx}",
     "lint-fix": "npx eslint --fix src/**/*.{js,jsx}"
