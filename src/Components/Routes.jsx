@@ -6,6 +6,7 @@ import { PropTypes } from 'prop-types';
 
 import Home from '../Containers/Home/Home';
 import NotFound from '../Containers/NotFound/NotFound';
+import Login from '../Containers/Login/login';
 
 /**
  * Home component
@@ -20,6 +21,11 @@ export const Routes = ({ isAuth }) => (
         exact
         path="/home"
         render={props => (isAuth ? <Home {...props} /> : <Redirect to="/" />)}
+      />
+      <Route
+        exact
+        path="/login"
+        render={props => (isAuth ? <Redirect to="/" /> : <Login {...props} />)}
       />
       <Route exact path="*" component={NotFound} />
     </Switch>

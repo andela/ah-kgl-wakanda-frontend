@@ -8,6 +8,7 @@ const props = {
   label: 'firstname',
   required: false,
   placeholder: 'firstname',
+  onType: jest.fn(),
 };
 
 const mockedEvent = {

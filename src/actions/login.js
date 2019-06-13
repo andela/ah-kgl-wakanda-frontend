@@ -7,8 +7,11 @@ import wakanda from '../api/wakanda';
  */
 export default ({ email, password }) => dispatch => {
   // Do some actions
+  dispatch({
+    type: 'LOADING_LOGIN',
+  });
   wakanda
-    .post('/auth/login', {
+    .post('/api/auth/login', {
       email,
       password,
     })
@@ -20,7 +23,7 @@ export default ({ email, password }) => dispatch => {
       });
     })
     .catch(error => {
-      const { message } = error.response.data;
+      const message = error.response ? error.response.data.message : 'No internet access';
       dispatch({
         type: ERROR_LOGIN,
         payload: message,
