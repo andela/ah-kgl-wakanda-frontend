@@ -5,7 +5,8 @@ import './Home.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import { changeName } from '../../actions/changeName';
 import initialState from '../../store/initialState';
-import Input from '../../Components/Common/input/input';
+import SideBar from '../../Components/SideBar/SideBar';
+import profileImage from '../../assets/images/man.jpg';
 
 /**
  * Home component
@@ -17,19 +18,28 @@ const Home = props => {
   const { name, onChangeName } = props;
   const { team } = name;
   return (
-    <div id="home" className="text-center">
-      <h1>
-        {title}
-        {team}
-      </h1>
-      <button className="button" onClick={() => onChangeName('Avengers')}>
-        Change to avengers
-      </button>
-      <div className="col-4">
-        <Input label="username" required name="username" placeholder="Username" />
-        <Input label="email" name="email" type="email" />
-        <Input label="password" name="password" type="password" />
-        <button className="btn btn-primary btn-block">submit</button>
+    <div>
+      <div id="home" className="text-center">
+        <SideBar
+          user={{
+            firstName: 'Karl',
+            lastName: 'Musingo',
+            username: 'karl143',
+            posts: 21,
+            followers: 345,
+            following: 52,
+            profileImage,
+          }}
+        />
+        <div>
+          <h1>
+            {title}
+            {team}
+          </h1>
+          <button className="button" onClick={() => onChangeName('Avengers')}>
+            Change to avengers
+          </button>
+        </div>
       </div>
     </div>
   );
