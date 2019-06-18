@@ -1,0 +1,151 @@
+@import '../../assets/sass/global.scss';
+
+#login {
+  .container {
+    padding: 0;
+    margin: 0;
+    .row {
+      width: 100%;
+    }
+  }
+  .illustration-box {
+    background: $color-secondary;
+    height: calc(100vh);
+    z-index: 2;
+    img {
+      width: 100%;
+      margin-left: 112px !important;
+    }
+  }
+  .form-box {
+    background: #ffffff;
+    padding: 2rem 3rem 2rem 7rem;
+    margin-top: 5rem;
+    .logo {
+      width: 50px;
+      height: auto;
+      position: fixed;
+      right: 24rem;
+      top: 0.5rem;
+    }
+    h1 {
+      margin-left: 5rem;
+      color: #555;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      font-size: 2.5rem;
+    }
+    form {
+      margin-top: 1rem;
+      label {
+        display: block;
+        color: #555;
+        font-family: 'Nunito Sans', sans-serif;
+      }
+      input {
+        border: 2px solid #efefef;
+        width: 100%;
+        height: 35px;
+        margin-bottom: 10px;
+        padding: 0 6px;
+      }
+      .input:focus {
+        outline: none !important;
+        border: 2px solid rgba($color-primary, 0.5);
+        box-shadow: 2px 0 6px rgba($color-primary, 0.8);
+      }
+      .link-reset-password {
+        color: $color-dark;
+        margin: 1rem 0;
+        float: right;
+        font-weight: 600;
+      }
+    }
+    .social-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+    }
+    .link-signin {
+      color: $color-primary;
+      font-weight: 600;
+    }
+    p {
+      text-align: center;
+      color: #666;
+      margin-top: 15px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .social-login {
+      display: flex;
+      justify-content: space-around;
+      padding: 0 1rem;
+      a {
+        box-shadow: 8px 10px 20px 0px rgba(46, 61, 73, 0.15);
+        border-radius: 17px;
+        padding: 2px;
+        img {
+          height: 34px;
+          width: 34px;
+        }
+      }
+      a:hover {
+        box-shadow: 8px 10px 20px 15px rgba(46, 61, 73, 0.15);
+      }
+    }
+    .signin-link {
+      margin-top: 3rem;
+      color: #777;
+      a {
+        color: $color-primary;
+      }
+    }
+  }
+  .error-message-server {
+    color: $color-primary;
+    font-family: 'Nunito';
+    font-weight: 500;
+    margin-bottom: 1.6rem;
+  }
+  @media only screen and (max-width: 768px) {
+    .illustration-box {
+      display: none;
+    }
+    .form-box {
+      padding: 2rem 3rem;
+      .logo {
+        width: 50px;
+        height: auto;
+        position: fixed;
+        left: 1rem;
+        top: 0.5rem;
+      }
+    }
+  }
+}
+
+.button {
+  background: $color-primary;
+  color: $color-light;
+  padding: 4px 8px;
+  border: 1px solid rgba($color-primary, 0.5);
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.button-register,
+.button-login,
+.button-forgot-password {
+  width: 300px;
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+}
+.button-register:hover,
+.button-login:hover,
+.button-forgot-password:hover {
+  color: #dadada;
+  text-decoration: none;
+  box-shadow: 8px 10px 20px 15px rgba(46, 61, 73, 0.15);
+}

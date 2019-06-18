@@ -9,6 +9,7 @@
     "jest": true
   },
   "globals": {
+    "cy": true,
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },

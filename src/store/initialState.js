@@ -4,7 +4,7 @@ const initialState = {
   name: { team: 'Wakanda' },
   title: 'Hello world',
   currentUser: {
-    isAuth: !!checkToken(),
+    isAuth: checkToken(),
     user: checkToken() || null,
   },
 };

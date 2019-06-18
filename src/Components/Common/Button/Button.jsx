@@ -47,15 +47,15 @@ const Button = ({ social, text, color, full, size, disabled, icon, loading, outl
   return (
     <React.Fragment>
       {!social ? (
-        <div
-          role="button"
-          tabIndex="-1"
+        <button
           className="ah-button"
           style={{
             backgroundColor: outline ? '#fff' : color || null,
             color: outline ? color : null,
             border: outline ? '1px solid #f46036' : null,
             display: full ? 'block' : 'inline-block',
+            width: full ? '100%' : 'auto',
+            margin: full ? '0' : null,
             fontSize: `${size}px`,
             opacity: disabled ? 0.8 : 1,
           }}
@@ -67,10 +67,10 @@ const Button = ({ social, text, color, full, size, disabled, icon, loading, outl
             <FontAwesomeIcon icon={icon} className="ah-icon" style={{ fontSize: `${size}px` }} />
           ) : null}
           <span>{text}</span>
-        </div>
+        </button>
       ) : (
-        <div className="social" style={{ width: `${size + 6}px`, height: `${size + 6}px` }}>
-          <img src={setIcon(social)} style={{ width: size ? `${size}px` : '40px' }} alt="" />
+        <div className="social">
+          <img src={setIcon(social)} alt="" />
         </div>
       )}
     </React.Fragment>

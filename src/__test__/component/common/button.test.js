@@ -19,15 +19,15 @@ const mockedEvent = {
 describe('Button component', () => {
   it('Has a div tag', async () => {
     const wrapper = shallow(<Button {...props} />);
-    expect(wrapper.find('div').length).toBe(1);
+    expect(wrapper.find('button').length).toBe(1);
   });
   it('Displays an outline button', async () => {
     const wrapper = mount(<Button text="button" outline full />);
-    expect(wrapper.find('div').prop('style').color).toBe('#f46036');
+    expect(wrapper.find('button').prop('style').color).toBe('#f46036');
   });
   it('Displays a disabled button', async () => {
     const button = mount(<Button text="button" disabled />);
-    expect(button.find('div').prop('style').opacity).toBe(0.8);
+    expect(button.find('button').prop('style').opacity).toBe(0.8);
   });
   it('Displays a button with an icon', async () => {
     const button = mount(<Button text="button" loading icon={faCoffee} />);
@@ -47,7 +47,7 @@ describe('Button component', () => {
   });
   it('Should change the opacity', async () => {
     const button = shallow(<Button text="button" />);
-    button.find('div').simulate('mousedown', mockedEvent);
-    expect(button.find('div').prop('style').opacity).toBe(1);
+    button.find('button').simulate('mousedown', mockedEvent);
+    expect(button.find('button').prop('style').opacity).toBe(1);
   });
 });
