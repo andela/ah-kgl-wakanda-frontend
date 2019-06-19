@@ -13,6 +13,6 @@ module.exports = {
   verbose: true,
   collectCoverageFrom: ['src/**/*.js*'],
   coverageDirectory: 'coverage',
-  coveragePathIgnorePatterns: ['/node_modules/', '/coverage/', '/src/index.js'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/coverage/', '/src/index.js', 'src/__test__/'],
   testPathIgnorePatterns: ['/cypress/'],
 };

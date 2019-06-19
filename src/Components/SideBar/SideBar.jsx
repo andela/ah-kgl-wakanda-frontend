@@ -88,12 +88,12 @@ class SideBar extends Component {
   render() {
     const { user, display = true } = this.props;
     return (
-      <nav style={{ display: display ? 'flex' : null }}>
+      <div className="sidenav" style={{ display: display ? 'flex' : null }}>
         <div className="user">{this.user(this.props)}</div>
         <div className="info row">{this.accountStats(user)}</div>
         <div className="navigation">{this.navigation(this.state)}</div>
         <div className="notif">{this.toggle(this.state)}</div>
-      </nav>
+      </div>
     );
   }
 }
