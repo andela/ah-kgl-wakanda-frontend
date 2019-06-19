@@ -14,12 +14,12 @@ const initialState = {
   },
   profile: {
     user: {
-      username: '@coolbeatz71',
+      username: '',
       firstName: '',
       lastName: '',
       email: '',
-      bio: undefined,
-      image: undefined,
+      bio: null,
+      image: img,
       followers: 0,
       following: 0,
       articles: 0,
@@ -27,4 +27,5 @@ const initialState = {
     },
   },
 };
+
 export default initialState;

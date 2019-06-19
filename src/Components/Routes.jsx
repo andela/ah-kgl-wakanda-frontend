@@ -2,17 +2,17 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-
-import Home from '../Containers/Home/Home';
-import Signup from '../Containers/Signup/Signup';
 import ResetPassword from '../Containers/ResetPassword/ResetPassword';
 import UpdatePassword from '../Containers/UpdatePassword/UpdatePassword';
 import NotFound from '../Containers/NotFound/NotFound';
 import Login from '../Containers/Login/login';
-import UserArticles from '../Containers/UserArticles/UserArticles';
 import * as paths from '../paths';
+import Signup from '../Containers/Signup/Signup';
 import CreateArticle from '../Containers/Article/Create/createArticle';
 import SingleArticle from '../Containers/Article/Single/singleArticle';
+import Home from '../Containers/Home/Home';
+import Profile from '../Containers/Profile/profile';
+import UserArticles from '../Containers/UserArticles/UserArticles';
 
 /**
  * NavBar component
@@ -55,6 +55,8 @@ export const Routes = ({ isAuth }) => (
       <Route exact path="/articles/:slug" component={SingleArticle} />
       <Route exact path="/not-found" component={NotFound} />
       <Route exact path="/" render={props => <Home {...props} />} />
+      <Route exact path="/profile" component={Profile} />
+
       <Route exact path="*" component={NotFound} />
     </Switch>
   </Router>

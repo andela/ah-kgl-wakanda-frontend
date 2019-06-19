@@ -35,6 +35,7 @@ export class NavBar extends Component {
     this.navbar = navbar;
     this.onToggleSideNav = onToggleSideNav;
     this.currentUser = currentUser;
+    this.profile = profile;
   }
 
   state = {

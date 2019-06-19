@@ -10,6 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "cloudinary": "^1.14.0",
     "cypress": "^3.3.1",
     "dotenv": "^8.0.0",
     "draft-convert": "^2.1.5",

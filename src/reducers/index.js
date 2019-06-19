@@ -2,11 +2,12 @@ import { combineReducers } from 'redux';
 import currentUser from './currentUser';
 import login from './login';
 import signupState from './signupReducer';
-import navbar, { profile } from './navbar';
+import navbar from './navbar';
 import resetPassword from './resetPassword';
 import updatePassword from './updatePassword';
 import article from './article';
 import system from './system';
+import profile from './profileReducers';
 import articles from './fetchArticles';
 
 const reducers = combineReducers({
