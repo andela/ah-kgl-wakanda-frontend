@@ -27,11 +27,12 @@ const ProfileDropdown = props => {
 };
 
 ProfileDropdown.propTypes = {
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
   picture: PropTypes.string,
 };
 ProfileDropdown.defaultProps = {
   picture: image,
+  username: null,
 };
 
 export default ProfileDropdown;

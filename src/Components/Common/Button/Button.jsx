@@ -72,7 +72,7 @@ const Button = ({ social, text, color, full, size, disabled, icon, loading, outl
           <span>{text}</span>
         </button>
       ) : (
-        <div className="social">
+        <div role="button" tabIndex="-1" className="social" onClick={onClick}>
           <img src={setIcon(social)} alt="" />
         </div>
       )}

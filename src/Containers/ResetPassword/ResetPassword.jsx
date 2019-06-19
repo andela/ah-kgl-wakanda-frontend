@@ -100,8 +100,12 @@ export class ResetPassword extends Component {
 ResetPassword.propTypes = {
   onResetPassword: PropTypes.func.isRequired,
   emailSent: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   message: PropTypes.string.isRequired,
+};
+
+ResetPassword.defaultProps = {
+  loading: null,
 };
 
 /**
