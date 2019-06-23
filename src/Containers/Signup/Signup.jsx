@@ -8,6 +8,7 @@ import { signup } from '../../actions/signupActions';
 import Input from '../../Components/Common/input/input';
 import Button from '../../Components/Common/Button/Button';
 import logo from '../../assets/images/logo_ah_2.png';
+import SocialLogin from '../../Components/SocialLogin';
 
 /**
  * Registers the user account
@@ -43,6 +44,18 @@ export class Signup extends Component {
         history.push('/');
       }
     });
+  };
+
+  componentDidMount = () => {
+    document.title = 'Sign Up';
+  };
+
+  componentWillUpdate = ({ user, history }) => {
+    if (user) {
+      localStorage.setItem('token_ah_wakanda', `Bearer ${user.token}`);
+      localStorage.setItem('user_ah_wakanda', JSON.stringify(user));
+      history.push('/');
+    }
   };
 
   /**
@@ -114,17 +127,15 @@ export class Signup extends Component {
                   full
                   loading={loading}
                 />
-                <p>Or sign up with</p>
-                <div className="social-login">
-                  <Button social="google" />
-                  <Button social="facebook" />
-                  <Button social="twitter" />
-                </div>
-                <p className="signin-link">
-                  <span>Already have an account ? </span>
-                  <a href="/login"> Signin</a>
-                </p>
               </form>
+              <p>OR SIGNUP WITH</p>
+              <div className="social-login">
+                <SocialLogin />
+              </div>
+              <p className="signin-link">
+                <span>Already have an account ? </span>
+                <a href="/login"> Signin</a>
+              </p>
             </div>
           </div>
         </div>
@@ -138,6 +149,7 @@ Signup.propTypes = {
   onSignup: PropTypes.func.isRequired,
   history: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 /**
@@ -146,10 +158,11 @@ Signup.propTypes = {
  * @returns {object} props
  */
 const mapStateToProps = ({ signupState }) => {
-  const { loading, error } = signupState;
+  const { loading, error, user } = signupState;
   return {
     loading,
     error,
+    user,
   };
 };
 

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import './Button.scss';
@@ -43,39 +45,37 @@ const changeOpacity = (e, value) => {
  * @param {object} props
  * @returns {object} Jsx component
  */
-const Button = ({ social, text, color, full, size, disabled, icon, loading, outline }) => {
-  return (
-    <React.Fragment>
-      {!social ? (
-        <button
-          className="ah-button"
-          style={{
-            backgroundColor: outline ? '#fff' : color || null,
-            color: outline ? color : null,
-            border: outline ? '1px solid #f46036' : null,
-            display: full ? 'block' : 'inline-block',
-            width: full ? '100%' : 'auto',
-            margin: full ? '0' : null,
-            fontSize: `${size}px`,
-            opacity: disabled ? 0.8 : 1,
-          }}
-          onMouseDown={e => (!disabled ? changeOpacity(e, 0.8) : null)}
-          onMouseUp={e => (!disabled ? changeOpacity(e, 1) : null)}
-        >
-          {loading ? <div className="spinner" /> : null}
-          {icon ? (
-            <FontAwesomeIcon icon={icon} className="ah-icon" style={{ fontSize: `${size}px` }} />
-          ) : null}
-          <span>{text}</span>
-        </button>
-      ) : (
-        <div className="social">
-          <img src={setIcon(social)} alt="" />
-        </div>
-      )}
-    </React.Fragment>
-  );
-};
+const Button = ({ social, text, color, full, size, disabled, icon, loading, outline, onClick }) => (
+  <React.Fragment>
+    {!social ? (
+      <button
+        className="ah-button"
+        style={{
+          backgroundColor: outline ? '#fff' : color || null,
+          color: outline ? color : null,
+          border: outline ? '1px solid #f46036' : null,
+          display: full ? 'block' : 'inline-block',
+          width: full ? '100%' : 'auto',
+          margin: full ? '0' : null,
+          fontSize: `${size}px`,
+          opacity: disabled ? 0.8 : 1,
+        }}
+        onMouseDown={e => (!disabled ? changeOpacity(e, 0.8) : null)}
+        onMouseUp={e => (!disabled ? changeOpacity(e, 1) : null)}
+      >
+        {loading ? <div className="spinner" /> : null}
+        {icon ? (
+          <FontAwesomeIcon icon={icon} className="ah-icon" style={{ fontSize: `${size}px` }} />
+        ) : null}
+        <span>{text}</span>
+      </button>
+    ) : (
+      <div className="social">
+        <img onClick={onClick} src={setIcon(social)} alt="" />
+      </div>
+    )}
+  </React.Fragment>
+);
 
 Button.defaultProps = {
   social: null,
@@ -87,6 +87,7 @@ Button.defaultProps = {
   icon: null,
   loading: false,
   outline: false,
+  onClick: null,
 };
 
 Button.propTypes = {
@@ -99,6 +100,7 @@ Button.propTypes = {
   icon: PropTypes.any,
   loading: PropTypes.bool,
   outline: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Button;

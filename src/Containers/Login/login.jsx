@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import './login.scss';
 import images1 from '../../assets/images/undraw_authentication_fsn5.svg';
 import logo from '../../assets/images/logo_ah_2.png';
 import Input from '../../Components/Common/input/input';
 import submitLogin from '../../actions/login';
 import Button from '../../Components/Common/Button/Button';
+import SocialLogin from '../../Components/SocialLogin';
+import { loginWithTwitter } from '../../actions/socialLogin';
 
 /**
  *
@@ -22,6 +25,11 @@ export class Login extends Component {
    * @return {object}
    * s {jsx} react fragment
    */
+
+  componentDidMount = () => {
+    document.title = 'Log in';
+  };
+
   componentWillUpdate = ({ login, history }) => {
     if (login.user) {
       localStorage.setItem('token_ah_wakanda', `Bearer ${login.user.token}`);
@@ -63,9 +71,7 @@ export class Login extends Component {
 
   shareButton = () => (
     <div className="social-button">
-      <Button social="google" />
-      <Button social="facebook" />
-      <Button social="twitter" />
+      <SocialLogin />
     </div>
   );
 
@@ -98,6 +104,14 @@ export class Login extends Component {
    * @returns {jsx} react fragment
    */
   render() {
+    const { props } = this;
+    const url = props.location.search;
+    const userData = queryString.parse(url);
+    const { token, username } = userData;
+
+    if (token) {
+      props.onLoginWithTwitter(token, username);
+    }
     return (
       <div id="login">
         <div className="wrapper">
@@ -135,6 +149,7 @@ const mapStateToProps = ({ login }) => ({
  */
 const mapDispatchToProps = dispatch => ({
   onSubmitLogin: credentials => dispatch(submitLogin(credentials)),
+  onLoginWithTwitter: (token, username) => dispatch(loginWithTwitter(token, username)),
 });
 
 export default connect(

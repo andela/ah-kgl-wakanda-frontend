@@ -8,6 +8,8 @@ yarn.lock
 .pnp.js
 .env
 
+/cypress/videos
+
 # testing
 /coverage
 

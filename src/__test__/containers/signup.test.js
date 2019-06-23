@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import mockAxios from 'axios';
 import { createBrowserHistory } from 'history';
@@ -33,13 +34,37 @@ const user = {
 const mockStore = configureMockStore([thunk]);
 
 describe('Render Signup component', () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore({ noMatch: 'Passwords do not match' });
+  });
   it('to have wrapper class', async () => {
-    const wrapper = shallow(<Signup {...props} />);
+    const wrapper = mount(
+      <Provider store={store}>
+        <Signup store={store} {...props} />
+      </Provider>,
+    );
+
     expect(wrapper.find('.wrapper').length).toBe(1);
   });
 
   it('to should signup a user', async () => {
-    const wrapper = mount(<Signup {...props} />);
+    const props1 = {
+      ...props,
+      history: {
+        push: jest.fn(''),
+        location: '/',
+      },
+      user: {
+        token: 'token',
+      },
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Signup store={store} {...props1} />
+      </Provider>,
+    );
     wrapper.find('input[name="username"]').simulate('input', { target: { value: 'username' } });
     wrapper.find('input[name="email"]').simulate('input', { target: { value: 'grace@gmail.com' } });
     wrapper.find('input[name="password"]').simulate('input', { target: { value: 'Abc123' } });
@@ -47,11 +72,17 @@ describe('Render Signup component', () => {
       .find('input[name="confirmPassword"]')
       .simulate('input', { target: { value: 'Abc123' } });
     wrapper.find('form').simulate('submit');
-    expect(wrapper.instance().props.history.length).toBe(1);
+
+    expect(wrapper.instance().props.children.props.history.location).toBe('/');
   });
 
   it('to should return an error when passwords do not match', async () => {
-    const wrapper = mount(<Signup {...props} />);
+    const wrapper = mount(
+      <Provider store={store}>
+        <Signup store={store} {...props} />
+      </Provider>,
+    );
+    wrapper.setState({ noMatch: 'Passwords do not match' });
     wrapper.find('input[name="username"]').simulate('input', { target: { value: 'username' } });
     wrapper.find('input[name="email"]').simulate('input', { target: { value: 'grace@gmail.com' } });
     wrapper.find('input[name="password"]').simulate('input', { target: { value: 'Abc123' } });

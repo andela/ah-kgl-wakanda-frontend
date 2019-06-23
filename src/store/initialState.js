@@ -2,7 +2,7 @@ import checkToken from '../helpers/checkToken';
 
 const initialState = {
   currentUser: {
-    isAuth: checkToken(),
+    isAuth: !!checkToken(),
     user: checkToken() || null,
     notification: {
       notificationList: [],
