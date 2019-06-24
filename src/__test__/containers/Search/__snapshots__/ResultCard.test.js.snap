@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResultCard component should render ResultCard component 1`] = `ShallowWrapper {}`;

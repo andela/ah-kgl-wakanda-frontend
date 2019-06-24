@@ -9,6 +9,7 @@ import article from './article';
 import system from './system';
 import profile from './profileReducers';
 import articles from './fetchArticles';
+import searchFilter from './search';
 
 const reducers = combineReducers({
   currentUser,
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   article,
   system,
   articles,
+  searchFilter,
 });
 
 export default reducers;

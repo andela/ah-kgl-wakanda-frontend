@@ -27,11 +27,20 @@ export class NavBar extends Component {
    */
   constructor(props) {
     super(props);
-    const { navbar, onToggleSideNav, profile, currentUser, location, displaySearchBox } = props;
+    const {
+      navbar,
+      onToggleSideNav,
+      profile,
+      currentUser,
+      location,
+      history,
+      displaySearchBox,
+    } = props;
     const { pathname } = location;
     this.profile = profile;
     this.displaySearchBox = displaySearchBox;
     this.pathname = pathname;
+    this.history = history;
     this.navbar = navbar;
     this.onToggleSideNav = onToggleSideNav;
     this.currentUser = currentUser;
@@ -48,18 +57,6 @@ export class NavBar extends Component {
    * @returns {void}
    */
   onChange = e => this.setState({ [e.target.name]: e.target.value });
-
-  /**
-   * TODO: the teammate who should implement search filter feature
-   * should complete this function
-   * help clicking to submit search text
-   * @param {Event} e
-   * @memberof NavBar
-   * @returns {void}
-   */
-  onClick = e => {
-    e.preventDefault();
-  };
 
   /**
    * @memberof NavBar
@@ -151,7 +148,7 @@ export class NavBar extends Component {
           {this.renderHamburgerIcon(faBars)}
           {this.displaySearchBox ? (
             <Nav className="mr-auto search-container">
-              <SearchBox value={searchText} onChange={this.onChange} onClick={this.onClick} />
+              <SearchBox history={this.history} value={searchText} onChange={this.onChange} />
             </Nav>
           ) : null}
 
@@ -211,6 +208,7 @@ NavBar.propTypes = {
   location: PropTypes.object.isRequired,
   displaySearchBox: PropTypes.bool,
   profile: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 NavBar.defaultProps = {

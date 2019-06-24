@@ -13,6 +13,7 @@ import SingleArticle from '../Containers/Article/Single/singleArticle';
 import Home from '../Containers/Home/Home';
 import UserArticles from '../Containers/UserArticles/UserArticles';
 import Profile from '../Containers/Profile/profileContainer';
+import SearchResult from '../Containers/Search/SearchResult';
 
 /**
  * NavBar component
@@ -56,7 +57,7 @@ export const Routes = ({ isAuth }) => (
       <Route exact path="/not-found" component={NotFound} />
       <Route exact path="/" render={props => <Home {...props} />} />
       <Route exact path="/profile" component={Profile} />
-
+      <Route exact path="/search" component={SearchResult} />
       <Route exact path="*" component={NotFound} />
     </Switch>
   </Router>

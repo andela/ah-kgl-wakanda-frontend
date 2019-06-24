@@ -6,3 +6,4 @@ export const RESET_PASSWORD_PATH = '/reset-password';
 export const UPDATE_PASSWORD_PATH = '/update-password/:token';
 export const USER_ARTICLES = '/myarticles';
 export const LOGOUT_PATH = '/logout';
+export const ARTICLES_PATH = '/articles';

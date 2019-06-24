@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { createMemoryHistory } from 'history';
 import { NavBar, mapDispatchToProps, mapStateToProps } from '../../Components/NavBar/NavBar';
 import initialState from '../../store/initialState';
 import { HOME_PATH } from '../../paths';
@@ -8,16 +9,28 @@ describe('NavBar component', () => {
   let props;
   let wrapper;
   const e = { preventDefault: jest.fn() };
+  const history = createMemoryHistory();
   beforeEach(() => {
     props = {
       onToggleSideNav: jest.fn(),
       navbar: initialState.navbar,
-      currentUser: initialState.currentUser,
+      currentUser: {
+        isAuth: true,
+        user: {
+          username: 'test',
+        },
+        notification: {
+          notificationList: [],
+          notificationsCount: 0,
+        },
+      },
       profile: initialState.profile,
       location: { pathname: HOME_PATH },
+      history,
       displaySearchBox: true,
       onClick: jest.fn(e),
       onChange: jest.fn(e),
+      onSearch: jest.fn(e),
     };
     wrapper = shallow(<NavBar {...props} />);
   });
@@ -39,21 +52,11 @@ describe('NavBar component', () => {
     expect(props.onToggleSideNav).toHaveBeenCalled();
   });
 
-  it('should render navbar children', () => {
-    expect(wrapper).toMatchSnapshot();
-    props.currentUser.isAuth = true;
-  });
-
   it('should map state to props', () => {
     const navbar = {
       isDrawerDisplay: false,
     };
     expect(mapStateToProps({ navbar })).toBeDefined();
-  });
-
-  it('should trigger onClick event', () => {
-    wrapper.find('SearchBox').simulate('click', e);
-    expect(e.preventDefault).toHaveBeenCalled();
   });
 
   it('should trigger toggleNotification event', () => {
@@ -67,7 +70,26 @@ describe('NavBar component', () => {
       searchText,
     });
 
-    wrapper.find('SearchBox').simulate('change', { target: { value: searchText } });
+    wrapper.find('Connect(SearchBox)').simulate('change', { target: { value: searchText } });
     expect(wrapper.state('searchText')).toBe(searchText);
+  });
+
+  it('should display auth button', () => {
+    const newProps = {
+      ...props,
+      displaySearchBox: false,
+      currentUser: {
+        isAuth: false,
+        user: {
+          username: 'test',
+        },
+        notification: {
+          notificationList: [],
+          notificationsCount: 0,
+        },
+      },
+    };
+
+    wrapper = shallow(<NavBar {...newProps} />);
   });
 });

@@ -1,5 +1,9 @@
+import jwt from 'jsonwebtoken';
+import { secret } from '../../config';
+
 describe('Create article', () => {
   beforeEach(() => {
+    const token = jwt.sign({ username: 'hadad', email: 'hadad.bwenge@gmail.com', id: 23 }, secret);
     cy.server(); // enable response stubbing
     cy.visit('/login');
     cy.route({
@@ -9,8 +13,7 @@ describe('Create article', () => {
       response: {
         user: {
           email: 'hadad.bwenge@gmail.com',
-          token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXNlcm5hbWUiOiJoYWRhZCIsImVtYWlsIjoiaGFkYWQuYndlbmdlQGdtYWlsLmNvbSIsInJvbGVJZCI6MSwiaWF0IjoxNTYxNTQyMjAzLCJleHAiOjE1NjE4MDE0MDN9.NWVdYCJJFkhqKUXataHQB8b1ZIV2BoJGkY4uYmFF0vQ',
+          token,
           username: 'hadad',
           bio: null,
           image:
@@ -62,7 +65,7 @@ describe('Create article', () => {
     });
     cy.route({
       method: 'GET', // Route all POST requests
-      url: '/api/articles/:slug', // that have a URL that matches '/users/*'
+      url: '/api/articles/sdjaklsdsa-132141825', // that have a URL that matches '/users/*'
       status: 200,
       response: {
         data: {

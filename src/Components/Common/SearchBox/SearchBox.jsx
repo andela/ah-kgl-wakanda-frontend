@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InputGroup, DropdownButton, Dropdown, FormControl, Button } from 'react-bootstrap';
+import {
+  InputGroup,
+  DropdownButton,
+  Dropdown,
+  FormControl,
+  Button,
+  Spinner,
+} from 'react-bootstrap';
 import { PropTypes } from 'prop-types';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.css';
 import './SearchBox.scss';
+import { search } from '../../../actions/search';
 
 const filters = ['tag', 'author', 'title'];
 
@@ -14,7 +23,7 @@ const filters = ['tag', 'author', 'title'];
  * @param {object} props {icon, onChange, onClick}
  * @returns {object} jsx
  */
-class SearchBox extends Component {
+export class SearchBox extends Component {
   state = {
     filter: 'filter',
   };
@@ -26,6 +35,40 @@ class SearchBox extends Component {
    */
   onChangeFilter = filterValue => {
     this.setState({ filter: filterValue });
+  };
+
+  /**
+   * submit the search filter
+   * @param {object} e
+   * @returns {void}
+   */
+  onSubmitSearch = e => {
+    e.preventDefault();
+    const { value, onSearch, history } = this.props;
+    const { filter } = this.state;
+
+    if (value) {
+      const url = `/api/search?${filter !== 'filter' ? filter : 'keyword'}=${value}`;
+      onSearch(url).then(() => {
+        history.push({
+          pathname: '/search',
+          state: {
+            search: value,
+          },
+        });
+      });
+    }
+  };
+
+  /**
+   * handle search filter when press -enter-
+   * @param {object} e
+   * @returns {void}
+   */
+  onKeyPress = e => {
+    if (e.key === 'Enter') {
+      return this.onSubmitSearch(e);
+    }
   };
 
   /**
@@ -49,7 +92,7 @@ class SearchBox extends Component {
    * @memberof SearchBox
    */
   render() {
-    const { icon, onChange, onClick, value } = this.props;
+    const { icon, onChange, value, loading } = this.props;
     const { filter } = this.state;
     return (
       <InputGroup className="searchbox">
@@ -59,10 +102,25 @@ class SearchBox extends Component {
             return this.renderItems(item, index);
           })}
         </DropdownButton>
-        <FormControl name="searchText" value={value} placeholder="Search..." onChange={onChange} />
+        <FormControl
+          name="searchText"
+          value={value}
+          placeholder="Search..."
+          onKeyPress={this.onKeyPress}
+          onChange={onChange}
+        />
         <InputGroup.Append>
-          <Button variant="outline-primary" onClick={onClick}>
-            <FontAwesomeIcon icon={icon} />
+          <Button
+            className="btn-search"
+            variant="outline-primary"
+            disabled={loading}
+            onClick={this.onSubmitSearch}
+          >
+            {!loading ? (
+              <FontAwesomeIcon icon={icon} />
+            ) : (
+              <Spinner animation="border" size="sm" variant="secondary" />
+            )}
           </Button>
         </InputGroup.Append>
       </InputGroup>
@@ -72,14 +130,41 @@ class SearchBox extends Component {
 
 SearchBox.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
   icon: PropTypes.any,
   value: PropTypes.string,
+  onSearch: PropTypes.func.isRequired,
+  history: PropTypes.any.isRequired,
+  loading: PropTypes.bool,
 };
 
 SearchBox.defaultProps = {
   icon: faSearch,
   value: '',
+  loading: false,
 };
 
-export default SearchBox;
+/**
+ * @param {object} state
+ * @returns {object} props
+ */
+export const mapStateToProps = ({ searchFilter }) => {
+  const { loading, error, articles } = searchFilter;
+  return {
+    loading,
+    error,
+    articles,
+  };
+};
+
+/**
+ * @param {*} dispatch
+ * @returns {object} props
+ */
+export const mapDispatchToProps = dispatch => ({
+  onSearch: url => dispatch(search(url)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SearchBox);
