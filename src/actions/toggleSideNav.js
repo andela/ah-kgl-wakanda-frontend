@@ -3,9 +3,7 @@ import { TOGGLE_SIDE_NAV } from '../actionTypes';
 /**
  * action to toggle the sideNav
  * @returns {object} action
- * @param {boolean} payload
  */
-export const toggleSideNav = payload => ({
+export const toggleSideNav = () => ({
   type: TOGGLE_SIDE_NAV,
-  payload,
 });

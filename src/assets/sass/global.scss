@@ -18,3 +18,35 @@ div,
 a {
   font-family: 'Nunito', sans-serif;
 }
+
+/// media query variables
+// extra small device
+$extra-small-device: '(max-width: 575px)';
+
+// Small devices (landscape phones, 576px and up)
+$small-device: '(min-width: 576px) AND (max-width: 767px)';
+
+// Medium devices (tablets, 768px and up)
+$medium-device: '(min-width: 768px) AND (max-width: 991px)';
+
+// Large devices (desktops, 992px and up)
+$large-device: '(min-width: 992px) AND (max-width: 1199px)';
+
+// Extra large devices (large desktops, 1200px and up)
+$extra-large-device: '(min-width: 1200px)';
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  box-shadow: none !important;
+  -webkit-appearance: none;
+}

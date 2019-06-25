@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Dropdown, Image } from 'react-bootstrap';
 import './ProfileDropdown.scss';
-import image from '../../../assets/img/images.png';
+import image from '../../../assets/img/blank_profile_pic.png';
 import DropdownItem from './DropdownItem';
 
 /**
@@ -12,16 +12,13 @@ import DropdownItem from './DropdownItem';
  * @returns {void}
  */
 const ProfileDropdown = props => {
-  const { firstName, lastName, picture } = props;
+  const { username, picture } = props;
   return (
     <React.Fragment>
       <Dropdown>
         <Dropdown.Toggle variant="light" id="dropdown-basic">
           <Image src={picture} roundedCircle />
-          <span className="names">
-            {firstName}
-            {lastName}
-          </span>
+          <span className="names">{username}</span>
         </Dropdown.Toggle>
         <DropdownItem />
       </Dropdown>
@@ -30,12 +27,11 @@ const ProfileDropdown = props => {
 };
 
 ProfileDropdown.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   picture: PropTypes.string,
 };
 ProfileDropdown.defaultProps = {
-  picture: { image },
+  picture: image,
 };
 
 export default ProfileDropdown;

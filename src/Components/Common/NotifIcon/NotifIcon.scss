@@ -3,7 +3,6 @@
   display: flex;
   align-self: center;
   align-items: center;
-  margin: 0 20px;
   .drop-down {
     .notif-icon {
       margin-top: auto;
@@ -16,7 +15,7 @@
       position: relative;
       bottom: 10px;
       right: 2px;
-      padding: 0.2px 5px;
+      padding: 2px 7px;
       border-radius: 50%;
       background: #f46036;
       color: $color-light;

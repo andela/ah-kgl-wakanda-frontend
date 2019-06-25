@@ -1,5 +1,164 @@
+@import '../../assets/sass/components';
+@import '../../assets/sass/global';
 .navbar {
+  background: #fff;
+  padding: 0.4em 0.8em !important;
   .search-container {
     margin-left: auto !important;
+    width: 40%;
+  }
+
+  #dropdown-basic {
+    .dropdown-menu {
+      position: absolute;
+      right: 3px !important;
+      top: 57px !important;
+    }
+  }
+}
+
+@media #{$extra-small-device} {
+  .navbar {
+    padding: 0.4em 0 !important;
+    .logo {
+      display: none;
+    }
+
+    .search-container {
+      width: 100%;
+    }
+
+    .searchbox {
+      width: 90%;
+      margin-left: 8px;
+      padding-top: 4px;
+    }
+
+    .btn-auth {
+      display: none;
+    }
+
+    .toggler-icon {
+      color: $color-primary;
+      border-radius: 4px;
+      width: 38px;
+      padding: 5px;
+      height: 38px;
+      cursor: pointer;
+
+      &:hover {
+        background: $color-secondary;
+        color: $color-light;
+      }
+
+      &:active {
+        background: $color-secondary;
+        color: $color-light;
+      }
+    }
+  }
+}
+
+@media #{$small-device} {
+  .navbar {
+    padding: 0.4em 0 !important;
+    .logo {
+      display: none;
+    }
+
+    .search-container {
+      width: 100%;
+    }
+
+    .searchbox {
+      width: 90%;
+      margin-left: 8px;
+      padding-top: 4px;
+    }
+
+    .btn-auth {
+      display: none;
+    }
+
+    .toggler-icon {
+      color: $color-primary;
+      border-radius: 4px;
+      width: 40px;
+      padding: 5px;
+      height: 42px;
+      cursor: pointer;
+
+      &:hover {
+        background: $color-secondary;
+        color: $color-light;
+      }
+
+      &:active {
+        background: $color-secondary;
+        color: $color-light;
+      }
+    }
+  }
+}
+
+@media #{$medium-device} {
+  .navbar {
+    padding: 0.4em 0 !important;
+    .logo {
+      display: flex;
+    }
+
+    .search-container {
+      margin-left: auto !important;
+      width: 35%;
+    }
+
+    .searchbox {
+      width: 90%;
+      margin-left: 8px;
+      padding-top: 4px;
+    }
+
+    .btn-auth {
+      display: flex;
+      flex-direction: row;
+      margin-right: 2%;
+    }
+
+    .toggler-icon {
+      display: none;
+    }
+  }
+}
+
+@media #{$large-device} {
+  .navbar {
+    .btn-auth {
+      display: flex;
+      flex-direction: row;
+      margin-right: 2%;
+    }
+
+    .toggler-icon {
+      display: none;
+    }
+
+    .logo {
+      display: flex;
+    }
+  }
+}
+
+@media #{$extra-large-device} {
+  .navbar {
+    .btn-auth {
+      display: flex;
+      flex-direction: row;
+      margin-right: 2%;
+    }
+
+    .toggler-icon {
+      display: none;
+    }
   }
 }

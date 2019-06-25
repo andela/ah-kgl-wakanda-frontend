@@ -3,16 +3,23 @@
 .searchbox {
   background: $color-light-soft;
   border: 0;
-  border-radius: 3px;
-
-  .dropdown-toggle {
-    width: 100px !important;
-  }
-
+  border-radius: 4px;
+  display: flex;
+  padding-top: 0 !important;
   input {
     border: 0px solid rgba(0, 0, 0, 0.1);
     background: $color-light-soft;
-    width: 300px !important;
+    &:focus {
+      background: $color-light-soft;
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+  }
+
+  .input-group {
+    padding: 0 !important;
   }
   .btn-outline-primary {
     color: $color-primary;

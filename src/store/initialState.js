@@ -1,14 +1,9 @@
 import checkToken from '../helpers/checkToken';
-import img from '../assets/img/blank_profile_pic.png';
 
 const initialState = {
   currentUser: {
     isAuth: checkToken(),
     user: checkToken() || null,
-    profile: {
-      image: img,
-      username: 'Mutombo Jean-vincent',
-    },
     notification: {
       notificationList: [],
       notificationsCount: 0,
@@ -16,6 +11,20 @@ const initialState = {
   },
   navbar: {
     isDrawerDisplay: false,
+  },
+  profile: {
+    user: {
+      username: '@coolbeatz71',
+      firstName: '',
+      lastName: '',
+      email: '',
+      bio: undefined,
+      image: undefined,
+      followers: 0,
+      following: 0,
+      articles: 0,
+      allowEmailNotification: false,
+    },
   },
 };
 export default initialState;

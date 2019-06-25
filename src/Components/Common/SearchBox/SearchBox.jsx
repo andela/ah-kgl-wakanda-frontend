@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputGroup, DropdownButton, Dropdown, FormControl, Button } from 'react-bootstrap';
 import { PropTypes } from 'prop-types';
@@ -14,37 +14,61 @@ const filters = ['tag', 'author', 'title'];
  * @param {object} props {icon, onChange, onClick}
  * @returns {object} jsx
  */
-const SearchBox = ({ icon, onChange, onClick, value }) => (
-  <InputGroup className="searchbox">
-    <DropdownButton
-      as={InputGroup.Prepend}
-      variant="outline-primary"
-      title="filter  "
-      id="input-group-dropdown-1"
-    >
-      {filters.map(item => {
-        const index = filters.indexOf(item);
-        return (
-          <Dropdown.Item key={index} value={item}>
-            {item}
-          </Dropdown.Item>
-        );
-      })}
-    </DropdownButton>
-    <FormControl
-      name="searchText"
-      value={value}
-      placeholder="Search..."
-      onChange={onChange}
-      aria-describedby="basic-addon2"
-    />
-    <InputGroup.Append>
-      <Button variant="outline-primary" onClick={onClick}>
-        <FontAwesomeIcon icon={icon} />
-      </Button>
-    </InputGroup.Append>
-  </InputGroup>
-);
+class SearchBox extends Component {
+  state = {
+    filter: 'filter',
+  };
+
+  /**
+   * update the selected filter
+   * @param {string} filterValue
+   * @returns {void}
+   */
+  onChangeFilter = filterValue => {
+    this.setState({ filter: filterValue });
+  };
+
+  /**
+   *
+   * @param {string} item
+   * @param {int} index
+   * @returns {object} jsx
+   * @memberof SearchBox
+   */
+  renderItems(item, index) {
+    return (
+      <Dropdown.Item key={index} id={item} onClick={() => this.onChangeFilter(item)} value={item}>
+        {item}
+      </Dropdown.Item>
+    );
+  }
+
+  /**
+   * render the component
+   * @returns {object} jsx
+   * @memberof SearchBox
+   */
+  render() {
+    const { icon, onChange, onClick, value } = this.props;
+    const { filter } = this.state;
+    return (
+      <InputGroup className="searchbox">
+        <DropdownButton as={InputGroup.Prepend} variant="outline-primary" title={filter}>
+          {filters.map(item => {
+            const index = filters.indexOf(item);
+            return this.renderItems(item, index);
+          })}
+        </DropdownButton>
+        <FormControl name="searchText" value={value} placeholder="Search..." onChange={onChange} />
+        <InputGroup.Append>
+          <Button variant="outline-primary" onClick={onClick}>
+            <FontAwesomeIcon icon={icon} />
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
+    );
+  }
+}
 
 SearchBox.propTypes = {
   onChange: PropTypes.func.isRequired,
