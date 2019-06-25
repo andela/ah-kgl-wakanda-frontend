@@ -1,0 +1,145 @@
+@import '../../../assets/sass/global.scss';
+.article-create {
+  margin-top: 74px;
+  margin-left: 74px;
+  min-height: 100vh;
+  // max-height: 800px;
+  background: #f4f6f9;
+  .body {
+    h2 {
+      font-weight: 600;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      button {
+        box-shadow: none;
+        border-radius: 0;
+      }
+      p {
+        color: #9ea4ae;
+      }
+    }
+    form {
+      background: #fff;
+      min-height: 1200px;
+      max-width: 2000px;
+      padding: 3rem 2rem;
+      input {
+        border: none;
+        display: block;
+        min-height: 50px;
+        width: 100%;
+        text-align: center;
+        &[name='title'] {
+          font-weight: 500;
+          font-size: 30px;
+          &::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            text-align: center;
+            font-weight: 500;
+            font-size: 30px;
+            color: #555;
+            padding-left: 55px;
+          }
+        }
+        &:focus {
+          outline: none !important;
+          border: none;
+          box-shadow: none;
+        }
+      }
+      .md-RichEditor-root {
+        min-height: 300px;
+        width: 100%;
+      }
+      ::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        text-align: center;
+      }
+      ::-moz-placeholder {
+        /* Firefox 19+ */
+        text-align: center;
+        font-weight: 500;
+      }
+      :-ms-input-placeholder {
+        /* IE 10+ */
+        text-align: center;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .body {
+    padding: 2rem 5rem !important;
+  }
+}
+
+nav {
+  background: #fff;
+}
+
+body {
+  background: #263238;
+  background-size: cover;
+  margin: 0;
+  padding-top: 5em;
+  padding-bottom: 5em;
+}
+
+.containey {
+  height: 0;
+  display: inline-block;
+  padding: 8px 4px 12px 4px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  margin-left: -8px;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 80px;
+  z-index: 1;
+}
+
+.canvas {
+  align-items: center;
+  border-radius: 50%;
+  height: 10em;
+  justify-content: center;
+  width: 10em;
+}
+
+/* Spinner 1 starts here */
+.spinner1 {
+  align-items: center;
+  border: 0.3em solid transparent;
+  border-top: 0.3em solid rgba($color: $color-primary, $alpha: 0.8);
+  border-right: 0.3em solid rgba($color: $color-primary, $alpha: 0.8);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.spinnerMax {
+  animation: spinnerOne 1s linear infinite;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+@keyframes spinnerOne {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 527px) {
+  .article-create {
+    background: #fff;
+    margin: 0;
+    padding: 5rem 10px;
+  }
+}

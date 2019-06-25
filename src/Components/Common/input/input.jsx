@@ -122,8 +122,12 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   required: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   onType: PropTypes.func.isRequired,
+};
+
+Input.defaultProps = {
+  placeholder: '',
 };
 
 export default Input;

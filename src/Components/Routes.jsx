@@ -8,6 +8,8 @@ import NotFound from '../Containers/NotFound/NotFound';
 import Login from '../Containers/Login/login';
 import * as paths from '../paths';
 import Signup from '../Containers/Signup/Signup';
+import CreateArticle from '../Containers/Article/Create/createArticle';
+import SingleArticle from '../Containers/Article/Single/singleArticle';
 
 /**
  * NavBar component
@@ -32,6 +34,15 @@ export const Routes = ({ isAuth }) => (
       <Route exact path={paths.RESET_PASSWORD_PATH} component={ResetPassword} />
       <Route exact path={paths.UPDATE_PASSWORD_PATH} component={UpdatePassword} />
 
+      <Route exact path="/reset-password" component={ResetPassword} />
+      <Route exact path="/update-password/:token" component={UpdatePassword} />
+      <Route
+        exact
+        path="/articles/new"
+        render={props => (isAuth ? <CreateArticle {...props} /> : <Redirect to="/login" />)}
+      />
+      <Route exact path="/articles/:slug" component={SingleArticle} />
+      <Route exact path="/not-found" component={NotFound} />
       <Route exact path="*" component={NotFound} />
     </Switch>
   </Router>

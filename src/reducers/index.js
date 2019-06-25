@@ -5,6 +5,8 @@ import signupState from './signupReducer';
 import navbar, { profile } from './navbar';
 import resetPassword from './resetPassword';
 import updatePassword from './updatePassword';
+import article from './article';
+import system from './system';
 
 const reducers = combineReducers({
   currentUser,
@@ -14,6 +16,8 @@ const reducers = combineReducers({
   updatePassword,
   navbar,
   profile,
+  article,
+  system,
 });
 
 export default reducers;

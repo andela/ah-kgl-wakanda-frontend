@@ -36,16 +36,18 @@ export class SideBar extends Component {
     });
   };
 
-  user = ({ user: { profileImage, firstName, lastName, username } }) => (
-    <React.Fragment>
-      <div className="p-avatar row">
-        <div className="avatar" style={{ backgroundImage: `url(${profileImage})` }} />
-      </div>
+  user = ({ user: { image, firstname, lastname, username } }) => {
+    return (
+      <React.Fragment>
+        <div className="p-avatar row">
+          <div className="avatar" style={{ backgroundImage: `url(${image})` }} />
+        </div>
 
-      <div className="name row">{`${firstName} ${lastName}`}</div>
-      <div className="username row">{username}</div>
-    </React.Fragment>
-  );
+        <div className="name row">{`${firstname} ${lastname}`}</div>
+        <div className="username row">{username}</div>
+      </React.Fragment>
+    );
+  };
 
   toggle = ({ checked }) => (
     <React.Fragment>

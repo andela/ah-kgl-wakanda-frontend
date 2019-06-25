@@ -1,5 +1,5 @@
 import initialState from '../store/initialState';
-import { CHANGE_NAME } from '../actionTypes';
+import { CHANGE_NAME, UPDATE_USER } from '../actionTypes';
 
 /**
  *
@@ -13,6 +13,11 @@ const currentUser = (state = initialState.currentUser, { type, payload }) => {
       return {
         ...state,
         team: payload,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: payload,
       };
     default:
       return state;
