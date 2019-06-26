@@ -15,7 +15,7 @@ const initialState = {
  * @param {object} action
  * @returns {object} new state
  */
-const login = (state = initialState, { type, payload }) => {
+const system = (state = initialState, { type, payload }) => {
   switch (type) {
     case NOT_FOUND:
       return {
@@ -27,4 +27,4 @@ const login = (state = initialState, { type, payload }) => {
   }
 };
 
-export default login;
+export default system;

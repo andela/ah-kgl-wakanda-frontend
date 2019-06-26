@@ -3,7 +3,18 @@ import checkToken from '../helpers/checkToken';
 const initialState = {
   currentUser: {
     isAuth: !!checkToken(),
-    user: checkToken() || null,
+    user: {
+      username: '@coolbeatz71',
+      firstName: '',
+      lastName: '',
+      email: '',
+      bio: undefined,
+      image: undefined,
+      followers: 0,
+      following: 0,
+      articles: 0,
+      allowEmailNotification: false,
+    },
     notification: {
       notificationList: [],
       notificationsCount: 0,

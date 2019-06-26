@@ -12,6 +12,7 @@ import getUser from '../../../actions/userInfo';
 import Sidebar from '../../../Components/SideBar/SideBar';
 import Navbar from '../../../Components/NavBar/NavBar';
 import Button from '../../../Components/Common/Button/Button';
+import 'medium-draft/lib/index.css';
 import './createArticle.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,7 +24,7 @@ let spinner = false;
  * @param {object} editorState
  * @returns {method} render
  */
-class CustomImageSideButton extends ImageSideButton {
+export class CustomImageSideButton extends ImageSideButton {
   /*
   We will only check for first file and also whether
   it is an image or not.
@@ -91,9 +92,9 @@ export class CreateArticle extends Component {
    * @return {object}
    * s {jsx} react fragment
    */
-  componentWillUpdate = ({ article, history }) => {
+  componentWillUpdate = async ({ article, history }) => {
     if (article.title) {
-      setTimeout(() => {
+      await setTimeout(() => {
         this.setState({ loadingBarProgress: 1000 });
         history.push(`/articles/${article.slug}`);
       }, 1000);
@@ -150,10 +151,6 @@ export class CreateArticle extends Component {
     onPublishArticle(article);
   };
 
-  onLoaderFinished = () => {
-    this.setState({ loadingBarProgress: 100 });
-  };
-
   /**
    *
    * @returns {jsx} react fragment
@@ -171,12 +168,7 @@ export class CreateArticle extends Component {
     return (
       <div className="article-create">
         <Navbar {...this.props} currentUser={currentUser} />
-        <LoadingBar
-          progress={loadingBarProgress}
-          height={3}
-          color="red"
-          onLoaderFinished={() => this.onLoaderFinished()}
-        />
+        <LoadingBar progress={loadingBarProgress} height={3} color="red" />
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -192,7 +184,7 @@ export class CreateArticle extends Component {
           <div className="col-md-2">
             <Sidebar user={currentUser.user} />
           </div>
-          <div className="col-md-10 p-md-5">
+          <div className="col-md-10 content">
             <div className="body">
               <div className="header">
                 <div className="left">
@@ -219,6 +211,7 @@ export class CreateArticle extends Component {
                   editorState={editorState}
                   onChange={this.draftOnChange}
                   sideButtons={this.sideButtons}
+                  webDriverTestID="foo"
                 />
               </form>
             </div>
@@ -230,11 +223,11 @@ export class CreateArticle extends Component {
 }
 
 CreateArticle.propTypes = {
-  currentUser: PropTypes.array.isRequired,
-  article: PropTypes.array.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  article: PropTypes.object.isRequired,
   onPublishArticle: PropTypes.func.isRequired,
   onGetUserInfo: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 /**

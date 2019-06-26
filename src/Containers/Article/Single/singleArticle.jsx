@@ -24,10 +24,6 @@ export class SingleArticle extends Component {
     loadingBarProgress: 0,
   };
 
-  onLoaderFinished = () => {
-    this.setState({ loadingBarProgress: 90 });
-  };
-
   componentDidMount = () => {
     const {
       match: { params },
@@ -75,12 +71,7 @@ export class SingleArticle extends Component {
     const { loadingBarProgress } = this.state;
     return (
       <div id="single-article" className="container p-0 mw-100">
-        <LoadingBar
-          progress={loadingBarProgress}
-          height={3}
-          color="red"
-          onLoaderFinished={() => this.onLoaderFinished()}
-        />
+        <LoadingBar progress={loadingBarProgress} height={3} color="red" />
         <div
           className="row image-display"
           style={{
@@ -129,7 +120,9 @@ export class SingleArticle extends Component {
             </div>
           </div>
           <div className="col-md-6 body-text">
-            <p id="content-text">{body ? ReactHtmlParser(JSON.parse(body)) : 'No content yet'}</p>
+            <div id="content-text">
+              {body ? ReactHtmlParser(JSON.parse(body)) : 'No content yet'}
+            </div>
             <div className="tags">
               <a href="hello">#Java</a>
               <a href="hello">#Node</a>
@@ -170,10 +163,10 @@ export class SingleArticle extends Component {
 }
 
 SingleArticle.propTypes = {
-  article: PropTypes.array.isRequired,
+  article: PropTypes.object.isRequired,
   onGetArticle: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   system: PropTypes.object.isRequired,
 };
 

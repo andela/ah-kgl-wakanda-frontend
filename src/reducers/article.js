@@ -6,7 +6,7 @@ import { PUBLISH_ARTICLE, GET_SINGLE_ARTICLE } from '../actionTypes/article';
  * @param {object} action
  * @returns {object} new state
  */
-const login = (state = {}, { type, payload }) => {
+const article = (state = {}, { type, payload }) => {
   switch (type) {
     case PUBLISH_ARTICLE:
       return {
@@ -23,4 +23,4 @@ const login = (state = {}, { type, payload }) => {
   }
 };
 
-export default login;
+export default article;

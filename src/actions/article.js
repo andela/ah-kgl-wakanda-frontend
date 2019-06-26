@@ -18,7 +18,6 @@ export default article => dispatch => {
         type: PUBLISH_ARTICLE,
         payload: newArticle.article,
       });
-      toast.success('Article successfully created');
     })
     .catch(error => {
       if (error.response) {
