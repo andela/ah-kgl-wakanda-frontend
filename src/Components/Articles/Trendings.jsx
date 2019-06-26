@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faComment, faStar, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
 
-import getRatings from '../../helpers/getRatings';
+import RatingDisplay from '../Rating/RatingDisplay';
 
 import staticImage from '../../assets/images/image-display.jpg';
 
@@ -34,8 +34,6 @@ const Trendings = props => {
       commentsCount,
       slug,
     }) => {
-      const rate = getRatings(Ratings);
-
       return (
         <Link className="article" key={id} to={`/articles/${slug}`}>
           <div
@@ -73,11 +71,7 @@ const Trendings = props => {
               </div>
               <div className="right">
                 <div className="rating">
-                  {[...Array(rate)].map((e, i) => (
-                    <i key={i}>
-                      <Icon icon={faStar} />
-                    </i>
-                  ))}
+                  <RatingDisplay ratings={Ratings} />
                 </div>
               </div>
             </div>

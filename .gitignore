@@ -9,8 +9,6 @@ yarn.lock
 .env
 /cypress/videos
 
-/cypress/videos
-
 # testing
 /coverage
 
