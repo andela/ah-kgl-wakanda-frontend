@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router } from 'react-router-dom';
 import mockAxios from 'axios';
@@ -29,6 +30,9 @@ const props = {
     push: jest.fn(''),
     location: '/',
   },
+  location: {
+    search: 'url',
+  },
 };
 
 const user = {
@@ -39,19 +43,27 @@ const user = {
 const mockStore = configureMockStore([thunk]);
 
 describe('Render Login component', () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore();
+  });
   it('to have wrapper class', async () => {
     const wrapper = mount(
-      <Router>
-        <Login {...props} />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <Login store={store} {...props} />
+        </Router>
+      </Provider>,
     );
     expect(wrapper.find('.wrapper').length).toBe(1);
   });
   it('should login a user', async () => {
     const wrapper = mount(
-      <Router>
-        <Login {...props} />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <Login store={store} {...props} />
+        </Router>
+      </Provider>,
     );
     wrapper.find('Login').instance().props.history.push = jest.fn();
     wrapper.find('input[name="email"]').simulate('input', { target: { value: 'grace@gmail.com' } });
