@@ -1,0 +1,48 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "NODE_MODULES_CACHE": {
+      "required": true
+    },
+    "REACT_APP_BACKEND_URL": {
+      "required": true
+    },
+    "REACT_APP_BACKEND_URL_ME": {
+      "required": true
+    },
+    "REACT_APP_CLOUDINARY_API_KEY": {
+      "required": true
+    },
+    "REACT_APP_CLOUDINARY_PRESET": {
+      "required": true
+    },
+    "REACT_APP_CLOUDINARY_URL": {
+      "required": true
+    },
+    "REACT_APP_FACEBOOK_APP_ID": {
+      "required": true
+    },
+    "REACT_APP_GOOGLE_APP_ID": {
+      "required": true
+    },
+    "REACT_APP_JWT_SECRET_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "ah-kgl-wakanda-frontend",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
