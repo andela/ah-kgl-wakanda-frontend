@@ -157,9 +157,11 @@ export class NavBar extends Component {
 
           {!isAuth ? this.renderAuthButton() : null}
           {isAuth && this.pathname !== paths.CREATE_ARTICLE_PATH ? (
-            <Nav className="ml-md-auto">
-              <Button text="NEW ARTICLE" />
-            </Nav>
+            <a href="/articles/new">
+              <Nav className="ml-md-auto">
+                <Button text="NEW ARTICLE" />
+              </Nav>
+            </a>
           ) : null}
           {!isAuth ? null : this.renderProfileNotifIcon(notificationsCount, username, image)}
         </Navbar>

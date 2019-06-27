@@ -5,6 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import LoadingBar from 'react-top-loading-bar';
 import { isMobile } from 'mobile-detector';
 import { getArticle } from '../../../actions/article';
+import Navbar from '../../../Components/NavBar/NavBar';
 import 'medium-draft/lib/basic.css';
 import './singleArticle.scss';
 import lightStarIcon from '../../../assets/images/icons/light-star.png';
@@ -12,6 +13,7 @@ import emptyStarIcon from '../../../assets/images/icons/empty-star.png';
 import editIcon from '../../../assets/images/icons/edit.png';
 import deleteIcon from '../../../assets/images/icons/delete.png';
 import staticImageDisplay from '../../../assets/images/image-display.jpg';
+import defaultProfile from '../../../assets/images/profile-boy.png';
 
 /**
  *
@@ -50,9 +52,9 @@ export class SingleArticle extends Component {
   authorInfo = ({ firstname, lastname, username, image: authorImage }, main) => {
     return (
       <React.Fragment>
-        <img src={authorImage} alt="hey" />
+        <img src={authorImage || defaultProfile} alt="hey" />
         <div className="names">
-          <h4>{`${firstname} ${lastname}`}</h4>
+          <h4>{`${firstname || ''} ${lastname || ''}`}</h4>
           <h6>{`@${username}`}</h6>
           {main && <a href="hello">Follow</a>}
         </div>
@@ -71,6 +73,7 @@ export class SingleArticle extends Component {
     const { loadingBarProgress } = this.state;
     return (
       <div id="single-article" className="container p-0 mw-100">
+        <Navbar {...this.props} />
         <LoadingBar progress={loadingBarProgress} height={3} color="red" />
         <div
           className="row image-display"

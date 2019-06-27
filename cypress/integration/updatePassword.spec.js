@@ -19,23 +19,6 @@ describe('Reset-password', () => {
     cy.get('#updated').should('have.text', 'Your password has been updated successfully');
   });
 
-  it('should redirect to login when clicking the button', () => {
-    cy.visit('/update-password/this-is-a-wrong-token');
-    cy.route({
-      method: 'PUT', // Route all GET requests
-      url: '/api/users/*', // that have a URL that matches '/users/*'
-      status: 200,
-      response: {
-        email: 'dev1@gmail.com',
-      }, // and force the response to be: []
-    });
-    cy.get('input[name="password"]').type('Abc12345');
-    cy.get('input[name="confirmPassword"]').type('Abc12345');
-    cy.get('button').click();
-    cy.get('button').click();
-    cy.location('pathname').should('eq', '/login');
-  });
-
   it('should return an error when the two password are not the same', () => {
     cy.visit('/update-password/this-is-a-wrong-token');
     cy.route({
