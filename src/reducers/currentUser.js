@@ -7,7 +7,7 @@ import { CHANGE_NAME, UPDATE_USER } from '../actionTypes';
  * @param {object} action
  * @returns {object} new state
  */
-const currentUser = (state = initialState.currentUser, { type, payload }) => {
+const currentUser = (state = initialState.profile, { type, payload }) => {
   switch (type) {
     case CHANGE_NAME:
       return {

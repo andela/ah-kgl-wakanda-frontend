@@ -18,6 +18,11 @@ const props = {
       username: 'dus',
     },
   },
+  profile: {
+    user: {
+      username: 'dus',
+    },
+  },
   navbar: {
     isDrawerDisplay: false,
   },

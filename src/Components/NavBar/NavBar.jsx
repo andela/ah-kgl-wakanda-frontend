@@ -27,15 +27,14 @@ export class NavBar extends Component {
    */
   constructor(props) {
     super(props);
-    const { navbar, onToggleSideNav, currentUser, location, displaySearchBox } = props;
+    const { navbar, onToggleSideNav, profile, currentUser, location, displaySearchBox } = props;
     const { pathname } = location;
-    this.profile = currentUser;
+    this.profile = profile;
     this.displaySearchBox = displaySearchBox;
     this.pathname = pathname;
     this.navbar = navbar;
     this.onToggleSideNav = onToggleSideNav;
     this.currentUser = currentUser;
-    this.profile = profile;
   }
 
   state = {
@@ -179,8 +178,9 @@ export class NavBar extends Component {
     const { isAuth, notification } = this.currentUser;
     const { notificationsCount } = notification;
     const {
-      currentUser: { user },
+      profile: { user },
     } = this.props;
+
     const { username, image } = user;
     return this.renderNavBar(isAuth, notificationsCount, username, image);
   }
@@ -210,6 +210,7 @@ NavBar.propTypes = {
   currentUser: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   displaySearchBox: PropTypes.bool,
+  profile: PropTypes.object.isRequired,
 };
 
 NavBar.defaultProps = {

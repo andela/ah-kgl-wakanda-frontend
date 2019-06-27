@@ -1,6 +1,7 @@
 import initialState from '../store/initialState';
 
 import * as types from '../actionTypes/profileActionTypes';
+import { UPDATE_USER } from '../actionTypes';
 
 /**
  *
@@ -18,6 +19,11 @@ const profile = (state = initialState.profile.user, { type, payload }) => {
     case types.EDIT_PROFILE:
       return {
         ...state,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: payload,
       };
     default:
       return state;

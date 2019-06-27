@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import cloudinary from 'cloudinary';
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,6 +8,7 @@ import './Profile.scss';
 import NavBar from '../../Components/NavBar/NavBar';
 import SideBar from '../../Components/SideBar/SideBar';
 import picture from '../../assets/img/blank_profile_pic.png';
+import initialState from '../../store/initialState';
 
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/ah-wakanda/image/upload';
 const CLOUDINARY_UPLOAD_PRESET = 'j9eazq6w';
@@ -18,9 +18,9 @@ const CLOUDINARY_UPLOAD_PRESET = 'j9eazq6w';
  * @param {event} e
  * @returns {method} render
  */
-class Profile extends Component {
+export class ProfileContainer extends Component {
   state = {
-    newBio: '',
+    bio: '',
   };
 
   fileInput = React.createRef();
@@ -31,7 +31,7 @@ class Profile extends Component {
    */
   componentWillMount() {
     const { onViewProfile } = this.props;
-    const username = localStorage.getItem('username');
+    const { username } = initialState.currentUser.user;
     onViewProfile(username);
   }
 
@@ -41,7 +41,7 @@ class Profile extends Component {
 
   edit = e => {
     e.preventDefault();
-    const username = localStorage.getItem('username');
+    const { username } = initialState.currentUser.isAuth;
     const { onEditProfile, onViewProfile } = this.props;
     onEditProfile(this.state, username);
     onViewProfile(username);
@@ -69,7 +69,8 @@ class Profile extends Component {
         onEditProfile(user, user.username);
       })
       .catch(err => {
-        console.log('err :', err);
+        err.message = 'Please check your internet and reload';
+        document.getElementById('message').innerHTML = err.message;
       });
   };
 
@@ -79,9 +80,9 @@ class Profile extends Component {
    */
   form = () => {
     const { user } = this.props;
-    const { newBio } = this.state;
+    const { bio } = this.state;
     return (
-      <form action="#" className="form" onSubmit={this.edit}>
+      <form action="#" className="form profile" onSubmit={this.edit}>
         <div className="row">
           <div className="col-sm-5 form-box">
             <Input
@@ -114,9 +115,9 @@ class Profile extends Component {
               <textarea
                 id="bio"
                 rows="4"
-                name="newBio"
+                name="bio"
                 cols="39"
-                value={newBio || user.bio}
+                value={bio || user.bio}
                 onChange={this.onKeyChange}
                 required
               />
@@ -149,15 +150,21 @@ class Profile extends Component {
       <div id="profile">
         <div className="wrapper">
           <div className="row">
-            <NavBar currentUser={user} />
-            <div className="col-sm-2">
+            <NavBar
+              {...this.props}
+              username={user.username}
+              picture={user.username}
+              currentUser={user}
+              displaySearchBox={false}
+            />
+            <div className="col-sm-2 sideB">
               <SideBar user={user} />
             </div>
-            <div className="col-sm-10 form-box">
-              <div className="body">
+            <div className="col-sm-10 form-box bodyProfile">
+              <div className="body profile">
                 <div id="pic" className="row">
                   <div className="col-sm-2 form-box pl-4">
-                    <div className="p-avatar row ">
+                    <div className="p-avatar row big">
                       <div
                         className="avatar-main"
                         style={{
@@ -167,7 +174,7 @@ class Profile extends Component {
                       <div
                         className="edit"
                         role="presentation"
-                        onClick={() => this.fileInput.click()}
+                        onClick={() => this.fileInput.current.click()}
                       >
                         <i className="fas fa-pencil-alt" />
                       </div>
@@ -183,7 +190,7 @@ class Profile extends Component {
                   </div>
                   <div className="col-sm-3 form-box uname">
                     <b>
-                      {user.firstname || ''}
+                      {`${user.firstname} ` || ''}
                       {user.lastname || ''}
                     </b>
                     <br />
@@ -191,6 +198,7 @@ class Profile extends Component {
                   </div>
                 </div>
                 {this.form()}
+                <p id="message" />
               </div>
             </div>
           </div>
@@ -200,32 +208,34 @@ class Profile extends Component {
   }
 }
 
-Profile.propTypes = {
-  onViewProfile: PropTypes.object.isRequired,
+ProfileContainer.defaultProps = {
+  onViewProfile: null,
+  onEditProfile: null,
+};
+
+ProfileContainer.propTypes = {
+  onViewProfile: PropTypes.object,
   user: PropTypes.object.isRequired,
-  onEditProfile: PropTypes.object.isRequired,
+  onEditProfile: PropTypes.object,
 };
 /**
  *
  * @param {object} state
+ * @param {object} currentUser
  * @return {void}
  */
-const mapStateToProps = ({ profile: { user } }) => ({ user });
+export const mapStateToProps = ({ profile: { user } }) => ({ user });
 
 /**
  *
  * @param {object} dispatch
  * @returns {method} dispatch
  */
-const mapDispatchToProps = dispatch => ({
-  onViewProfile: username => {
-    dispatch(viewProfile(username));
-  },
-  onEditProfile: (profile, username) => {
-    dispatch(editProfile(profile, username));
-  },
+export const mapDispatchToProps = dispatch => ({
+  onViewProfile: username => dispatch(viewProfile(username)),
+  onEditProfile: (profile, username) => dispatch(editProfile(profile, username)),
 });
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Profile);
+)(ProfileContainer);

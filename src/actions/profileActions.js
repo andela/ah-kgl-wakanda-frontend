@@ -5,13 +5,19 @@ import wakanda from '../api/wakanda';
  * @param {string} payload
  */
 export const viewProfile = payload => dispatch => {
-  wakanda.get(`/users/${payload}`).then(res => {
-    const { profile } = res.data;
-    dispatch({
-      type: types.SET_PROFILE,
-      payload: profile,
+  return wakanda
+    .get(`api/users/${payload}`)
+    .then(res => {
+      const { profile } = res.data;
+      dispatch({
+        type: types.SET_PROFILE,
+        payload: profile,
+      });
+    })
+    .catch(err => {
+      err.message = 'Please check your internet and reload';
+      document.getElementById('message').innerHTML = err.message;
     });
-  });
 };
 
 /**
@@ -20,15 +26,12 @@ export const viewProfile = payload => dispatch => {
  * @param {string} username
  */
 export const editProfile = (payload, username) => dispatch => {
-  wakanda
-    .put(`/user/${username}`, { ...payload })
-    .then(res => {
-      const { profile } = res.data;
-      viewProfile();
-      dispatch({
-        type: types.EDIT_PROFILE,
-        payload: profile,
-      });
-    })
-    .catch(e => e.message);
+  wakanda.put(`api/user/${username}`, { ...payload }).then(res => {
+    const { profile } = res.data;
+    viewProfile();
+    dispatch({
+      type: types.EDIT_PROFILE,
+      payload: profile,
+    });
+  });
 };

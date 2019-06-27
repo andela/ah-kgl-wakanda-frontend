@@ -11,8 +11,8 @@ import Signup from '../Containers/Signup/Signup';
 import CreateArticle from '../Containers/Article/Create/createArticle';
 import SingleArticle from '../Containers/Article/Single/singleArticle';
 import Home from '../Containers/Home/Home';
-import Profile from '../Containers/Profile/profile';
 import UserArticles from '../Containers/UserArticles/UserArticles';
+import Profile from '../Containers/Profile/profileContainer';
 
 /**
  * NavBar component

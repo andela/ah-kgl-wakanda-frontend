@@ -4,6 +4,9 @@
   button {
     width: 80%;
   }
+  button {
+    width: 80%;
+  }
   label {
     color: #444;
   }
@@ -11,7 +14,8 @@
     border: 2px solid #efefef;
     margin-bottom: 10px;
     padding: 0 6px;
-    width: 90%;
+    width: 79%;
+    background: #fafafa;
     &:focus {
       outline: none !important;
       border: 2px solid rgba(#aca9a9, 0.5);
@@ -21,15 +25,22 @@
   .navbar {
     background-color: white;
   }
+  .sidenav {
+    height: 90%;
+  }
+  .bodyProfile {
+    height: 200%;
+  }
 }
 
-.body {
+.profile {
   padding-left: 14%;
 
   div,
-  .form {
+  .profile {
     background-color: #f5f5f5;
   }
+  height: 100%;
   #pic {
     img {
       width: 70%;
@@ -48,6 +59,7 @@
       .form-box {
         width: 40%;
         height: 0;
+        padding-top: 0%;
         img {
           width: 110%;
         }
@@ -63,12 +75,13 @@
     width: 90% !important;
   }
   textarea {
-    width: 90%;
+    width: 90% !important;
     margin: 5px 0;
     padding: 3px;
   }
 }
-.p-avatar {
+.p-avatar.big {
+  margin-left: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +103,7 @@
     position: absolute;
     height: 28px;
     width: 28px;
-    margin-left: 2.8rem;
+    margin-left: 6.8rem;
     margin-top: 1.6rem;
     text-align: center;
     padding: 4px;
@@ -99,15 +112,17 @@
     cursor: pointer;
   }
 }
-.col-sm-3 {
-  margin-top: 8%;
-}
-.col-sm-10,
-.body {
-  padding-bottom: 0px;
+.col-sm-3.form-box.uname {
+  margin-top: 6%;
+  margin-left: 14%;
 }
 
-.form {
+.col-sm-10.body.bodyProfile {
+  padding-bottom: 0px;
+  height: 100%;
+}
+
+.body.profile {
   height: 10%;
   div {
     margin-top: 2%;
@@ -123,6 +138,7 @@
       display: flex;
       height: 120px;
       .form-box {
+        padding-top: 0%;
         img {
           width: 70%;
         }
@@ -138,13 +154,52 @@
     width: 90% !important;
   }
   textarea {
-    width: 90%;
+    width: 90% !important;
     margin: 5px 0;
     padding: 3px;
   }
 }
+@media only screen and (max-width: 500px) {
+  #profile {
+    padding-top: 0px;
+    padding-left: 10%;
+    #pic {
+      display: flex;
+      height: 120px;
+      .p-avatar.row.big {
+        margin-left: -23%;
+        margin-top: 40%;
+      }
+      .form-box {
+        padding-top: 0%;
+        img {
+          width: 70%;
+        }
+      }
+
+      .uname {
+        padding: 0;
+        margin-top: 27%;
+        margin-left: 15%;
+      }
+    }
+  }
+  input,
+  .button {
+    width: 90% !important;
+  }
+  textarea {
+    width: 90% !important;
+    margin: 5px 0;
+    padding: 3px;
+  }
+  .form.profile {
+    margin-top: 23%;
+    margin-right: 12%;
+  }
+}
 
 .form-box {
+  padding-top: 0%;
   background: #f5f5f5;
-  // padding: 3rem 7rem !important;
 }

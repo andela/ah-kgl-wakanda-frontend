@@ -21,7 +21,7 @@ export class SideBar extends Component {
       { key: 3, to: '/stats', icon: 'fas fa-signal', name: 'Statistics' },
       { key: 4, to: '/complaint', icon: 'fas fa-file', name: 'Complaints' },
       { key: 5, to: '/sidebar', icon: 'far fa-user', name: 'Create user' },
-      { key: 6, to: paths.LOGOUT_PATH, icon: 'fas fa-sign-out-alt', name: 'Logout' },
+      { key: 7, to: paths.LOGOUT_PATH, icon: 'fas fa-sign-out-alt', name: 'Logout' },
     ],
   };
 
