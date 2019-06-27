@@ -27,9 +27,9 @@ export class NavBar extends Component {
    */
   constructor(props) {
     super(props);
-    const { navbar, onToggleSideNav, currentUser, profile, location, displaySearchBox } = props;
+    const { navbar, onToggleSideNav, currentUser, location, displaySearchBox } = props;
     const { pathname } = location;
-    this.profile = profile;
+    this.profile = currentUser;
     this.displaySearchBox = displaySearchBox;
     this.pathname = pathname;
     this.navbar = navbar;
@@ -156,7 +156,7 @@ export class NavBar extends Component {
           ) : null}
 
           {!isAuth ? this.renderAuthButton() : null}
-          {isAuth && this.path !== paths.CREATE_ARTICLE_PATH ? (
+          {isAuth && this.pathname !== paths.CREATE_ARTICLE_PATH ? (
             <Nav className="ml-md-auto">
               <Button text="NEW ARTICLE" />
             </Nav>
@@ -175,7 +175,9 @@ export class NavBar extends Component {
   render() {
     const { isAuth, notification } = this.currentUser;
     const { notificationsCount } = notification;
-    const { user } = this.profile;
+    const {
+      currentUser: { user },
+    } = this.props;
     const { username, image } = user;
     return this.renderNavBar(isAuth, notificationsCount, username, image);
   }
@@ -203,7 +205,6 @@ NavBar.propTypes = {
   onToggleSideNav: PropTypes.func.isRequired,
   navbar: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   displaySearchBox: PropTypes.bool,
 };
