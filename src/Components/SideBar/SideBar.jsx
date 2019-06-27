@@ -16,7 +16,7 @@ export class SideBar extends Component {
     checked: true,
     navLinks: [
       { key: 0, to: paths.HOME_PATH, icon: 'far fa-newspaper', name: 'Home' },
-      { key: 1, to: '/my-articles', icon: 'fas fa-list-ul', name: 'My articles' },
+      { key: 1, to: '/myarticles', icon: 'fas fa-list-ul', name: 'My articles' },
       { key: 2, to: '/bookmarks', icon: 'far fa-heart', name: 'Bookmarks' },
       { key: 3, to: '/stats', icon: 'fas fa-signal', name: 'Statistics' },
       { key: 4, to: '/complaint', icon: 'fas fa-file', name: 'Complaints' },

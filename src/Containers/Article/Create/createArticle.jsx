@@ -222,11 +222,15 @@ export class CreateArticle extends Component {
   }
 }
 
+CreateArticle.defaultProps = {
+  onGetUserInfo: null,
+};
+
 CreateArticle.propTypes = {
   currentUser: PropTypes.object.isRequired,
   article: PropTypes.object.isRequired,
   onPublishArticle: PropTypes.func.isRequired,
-  onGetUserInfo: PropTypes.func.isRequired,
+  onGetUserInfo: PropTypes.func,
   history: PropTypes.object.isRequired,
 };
 

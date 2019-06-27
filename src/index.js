@@ -8,6 +8,8 @@ import * as serviceWorker from './serviceWorker';
 import store from './store';
 import Routes from './Components/Routes';
 
+import 'typeface-playfair-display';
+
 const routing = (
   <Provider store={store}>
     <Routes />

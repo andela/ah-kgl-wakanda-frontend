@@ -144,12 +144,17 @@ export class Signup extends Component {
   }
 }
 
+Signup.defaultProps = {
+  loading: null,
+  user: null,
+};
+
 Signup.propTypes = {
   error: PropTypes.string.isRequired,
   onSignup: PropTypes.func.isRequired,
-  history: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
+  history: PropTypes.any.isRequired,
+  loading: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 /**

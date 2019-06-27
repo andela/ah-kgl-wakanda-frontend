@@ -148,11 +148,16 @@ export class UpdatePassword extends Component {
   }
 }
 
+UpdatePassword.defaultProps = {
+  updated: null,
+  loading: null,
+};
+
 UpdatePassword.propTypes = {
   onUpdatePassword: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  updated: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
+  updated: PropTypes.bool,
+  loading: PropTypes.bool,
   message: PropTypes.string.isRequired,
 };
 
