@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { NavBar, mapDispatchToProps, mapStateToProps } from '../../Components/NavBar/NavBar';
 import initialState from '../../store/initialState';
 import { HOME_PATH } from '../../paths';
@@ -42,7 +42,6 @@ describe('NavBar component', () => {
   it('should render navbar children', () => {
     expect(wrapper).toMatchSnapshot();
     props.currentUser.isAuth = true;
-    wrapper = mount(<NavBar {...props} />);
   });
 
   it('should map state to props', () => {
