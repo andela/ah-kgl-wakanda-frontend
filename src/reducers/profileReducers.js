@@ -1,5 +1,7 @@
 import initialState from '../store/initialState';
-import { CHANGE_NAME, UPDATE_USER } from '../actionTypes';
+
+import * as types from '../actionTypes/profileActionTypes';
+import { UPDATE_USER } from '../actionTypes';
 
 /**
  *
@@ -7,12 +9,16 @@ import { CHANGE_NAME, UPDATE_USER } from '../actionTypes';
  * @param {object} action
  * @returns {object} new state
  */
-const currentUser = (state = initialState.profile, { type, payload }) => {
+const profile = (state = initialState.profile.user, { type, payload }) => {
   switch (type) {
-    case CHANGE_NAME:
+    case types.SET_PROFILE:
       return {
         ...state,
-        team: payload,
+        user: payload,
+      };
+    case types.EDIT_PROFILE:
+      return {
+        ...state,
       };
     case UPDATE_USER:
       return {
@@ -24,4 +30,4 @@ const currentUser = (state = initialState.profile, { type, payload }) => {
   }
 };
 
-export default currentUser;
+export default profile;

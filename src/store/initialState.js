@@ -1,9 +1,21 @@
 import checkToken from '../helpers/checkToken';
+import img from '../assets/img/blank_profile_pic.png';
 
 const initialState = {
   currentUser: {
     isAuth: !!checkToken(),
-    user: checkToken(),
+    user: checkToken() || {
+      username: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      bio: null,
+      image: img,
+      followers: 0,
+      following: 0,
+      articles: 0,
+      allowEmailNotification: false,
+    },
     notification: {
       notificationList: [],
       notificationsCount: 0,
@@ -14,12 +26,12 @@ const initialState = {
   },
   profile: {
     user: {
-      username: '@coolbeatz71',
-      firstName: '',
-      lastName: '',
+      username: '',
+      firstname: '',
+      lastname: '',
       email: '',
-      bio: undefined,
-      image: undefined,
+      bio: null,
+      image: img,
       followers: 0,
       following: 0,
       articles: 0,
@@ -27,4 +39,5 @@ const initialState = {
     },
   },
 };
+
 export default initialState;

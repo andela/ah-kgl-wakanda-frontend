@@ -156,18 +156,12 @@ export class CreateArticle extends Component {
    * @returns {jsx} react fragment
    */
   render() {
-    let { currentUser } = this.props;
-    const { username } = currentUser.user.username;
-    currentUser = {
-      ...currentUser,
-      profile: {
-        username,
-      },
-    };
+    const { profile } = this.props;
+
     const { editorState, loadingBarProgress } = this.state;
     return (
       <div className="article-create">
-        <Navbar {...this.props} currentUser={currentUser} />
+        <Navbar {...this.props} />
         <LoadingBar progress={loadingBarProgress} height={3} color="red" />
         <ToastContainer
           position="top-right"
@@ -182,7 +176,7 @@ export class CreateArticle extends Component {
         />
         <div className="row">
           <div className="col-md-2">
-            <Sidebar user={currentUser.user} />
+            <Sidebar user={profile.user} />
           </div>
           <div className="col-md-10 content">
             <div className="body">
@@ -227,6 +221,7 @@ CreateArticle.defaultProps = {
 };
 
 CreateArticle.propTypes = {
+  profile: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   article: PropTypes.object.isRequired,
   onPublishArticle: PropTypes.func.isRequired,
@@ -239,8 +234,9 @@ CreateArticle.propTypes = {
  * @param {object} state
  * @returns {object} props
  */
-const mapStateToProps = ({ currentUser, article }) => {
+const mapStateToProps = ({ profile, currentUser, article }) => {
   return {
+    profile,
     currentUser,
     article,
   };

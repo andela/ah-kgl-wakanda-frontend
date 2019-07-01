@@ -21,7 +21,7 @@ export class SideBar extends Component {
       { key: 3, to: '/stats', icon: 'fas fa-signal', name: 'Statistics' },
       { key: 4, to: '/complaint', icon: 'fas fa-file', name: 'Complaints' },
       { key: 5, to: '/sidebar', icon: 'far fa-user', name: 'Create user' },
-      { key: 6, to: paths.LOGOUT_PATH, icon: 'fas fa-sign-out-alt', name: 'Logout' },
+      { key: 7, to: paths.LOGOUT_PATH, icon: 'fas fa-sign-out-alt', name: 'Logout' },
     ],
   };
 
@@ -36,18 +36,16 @@ export class SideBar extends Component {
     });
   };
 
-  user = ({ user: { image, firstname, lastname, username } }) => {
-    return (
-      <React.Fragment>
-        <div className="p-avatar row">
-          <div className="avatar" style={{ backgroundImage: `url(${image})` }} />
-        </div>
+  user = ({ user: { image, firstname, lastname, username } }) => (
+    <React.Fragment>
+      <div className="p-avatar row">
+        <div className="avatar" style={{ backgroundImage: `url(${image})` }} />
+      </div>
 
-        <div className="name row">{`${firstname} ${lastname}`}</div>
-        <div className="username row">{username}</div>
-      </React.Fragment>
-    );
-  };
+      <div className="name row">{`${firstname} ${lastname}`}</div>
+      <div className="username row">{username}</div>
+    </React.Fragment>
+  );
 
   toggle = ({ checked }) => (
     <React.Fragment>
@@ -68,19 +66,19 @@ export class SideBar extends Component {
       </NavLink>
     ));
 
-  accountStats = ({ posts, followers, following }) => (
+  accountStats = ({ articles, follows, followings }) => (
     <React.Fragment>
       <div className="item">
         <div className="label">Posts</div>
-        <div className="data">{posts}</div>
+        <div className="data">{articles}</div>
       </div>
       <div className="item">
         <div className="label">Followers</div>
-        <div className="data">{followers}</div>
+        <div className="data">{follows}</div>
       </div>
       <div className="item">
         <div className="label">Following</div>
-        <div className="data">{following}</div>
+        <div className="data">{followings}</div>
       </div>
     </React.Fragment>
   );
