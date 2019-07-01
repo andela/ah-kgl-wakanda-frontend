@@ -26,6 +26,36 @@ describe('Edit article', () => {
     cy.location('pathname').should('eq', '/');
   });
   it('should create an article and redirect to the single page', () => {
+    cy.route({
+      method: 'GET', // Route all GET requests
+      url: '/api/users/hadad',
+      status: 200,
+      response: {
+        profile: {
+          username: 'hadad',
+        },
+      },
+    });
+
+    cy.route({
+      method: 'GET', // Route all GET requests
+      url: '/api/articles/sdjaklsdsa-132141825/comments', // that have a URL that matches '/articles/*'
+      status: 200,
+      response: {
+        data: {
+          commentsCount: 3,
+          comments: [
+            {
+              body: 'body text',
+              title: 'title',
+              description: 'description',
+              User: { username: 'username' },
+            },
+          ],
+        },
+      },
+    });
+
     cy.visit('/articles/new');
     cy.route({
       method: 'POST', // Route all POST requests

@@ -1,4 +1,11 @@
-import { PUBLISH_ARTICLE, GET_SINGLE_ARTICLE, DELETE_SINGLE_ARTICLE } from '../actionTypes/article';
+import {
+  PUBLISH_ARTICLE,
+  GET_SINGLE_ARTICLE,
+  DELETE_SINGLE_ARTICLE,
+  LOAD,
+  STOP_LOADING,
+  DISPLAY_COMMENTS,
+} from '../actionTypes/article';
 
 /**
  *
@@ -20,6 +27,21 @@ const article = (state = {}, { type, payload }) => {
       };
     case DELETE_SINGLE_ARTICLE:
       return {};
+    case LOAD:
+      return {
+        ...state,
+        loading: true,
+      };
+    case STOP_LOADING:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DISPLAY_COMMENTS:
+      return {
+        ...state,
+        comments: payload.comments,
+      };
     default:
       return state;
   }

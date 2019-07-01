@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import { secret } from '../../config';
 
 describe('Create article', () => {
+  const token = jwt.sign({ username: 'hadad', email: 'hadad.bwenge@gmail.com', id: 20 }, secret);
+
   beforeEach(() => {
     const token = jwt.sign({ username: 'hadad', email: 'hadad.bwenge@gmail.com', id: 23 }, secret);
     cy.server(); // enable response stubbing
@@ -27,7 +29,19 @@ describe('Create article', () => {
     cy.location('pathname').should('eq', '/');
   });
   it('should create an article and redirect to the single page', () => {
+    cy.route({
+      method: 'GET', // Route all GET requests
+      url: '/api/users/hadad',
+      status: 200,
+      response: {
+        profile: {
+          username: "hadad"
+        },
+      },
+    });
+
     cy.visit('/articles/new');
+
     cy.route({
       method: 'POST', // Route all POST requests
       url: '/api/articles', // that have a URL that matches '/users/*'
@@ -98,6 +112,19 @@ describe('Create article', () => {
         },
       }, // and force the response to be: []
     });
+
+    cy.route({
+      method: 'GET', // Route all GET requests
+      url: '/api/articles/sdjaklsdsa-132141825/comments', // that have a URL that matches '/articles/*'
+      status: 200,
+      response: {
+        data: {
+          commentsCount: 3,
+          comments: [{ body: 'body text', title: 'title', description: 'description', User: { username: 'username' } }]
+        },
+      },
+    });
+
     cy.get('input[name="title"]').type('Hello world');
     cy.get('[contenteditable]')
       .eq(0)

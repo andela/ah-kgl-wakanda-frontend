@@ -5,9 +5,19 @@ import { Link } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import LoadingBar from 'react-top-loading-bar';
 import { isMobile } from 'mobile-detector';
-import { getArticle, deleteArticle } from '../../../actions/article';
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../../../Components/NavBar/NavBar';
 import checkToken from '../../../helpers/checkToken';
+import {
+  getArticle,
+  deleteArticle,
+  commentArticle,
+  fetchComments,
+  deleteComment,
+  updateComment,
+} from '../../../actions/article';
+import Button from '../../../Components/Common/Button/Button';
 import 'medium-draft/lib/basic.css';
 import './singleArticle.scss';
 import lightStarIcon from '../../../assets/images/icons/light-star.png';
@@ -15,7 +25,7 @@ import emptyStarIcon from '../../../assets/images/icons/empty-star.png';
 import editIcon from '../../../assets/images/icons/edit.png';
 import deleteIcon from '../../../assets/images/icons/delete.png';
 import staticImageDisplay from '../../../assets/images/image-display.jpg';
-import defaultProfile from '../../../assets/images/profile-boy.png';
+import defaultProfile from '../../../assets/img/blank_profile_pic.png';
 
 /**
  *
@@ -29,14 +39,20 @@ export class SingleArticle extends Component {
     deleted: false,
     contentSetted: false,
     isMyArticle: false,
+    body: '',
+    updateBody: '',
   };
 
   componentDidMount = () => {
     const {
-      match: { params },
+      match: {
+        params: { slug },
+      },
       onGetArticle,
+      onFetchComments,
     } = this.props;
-    onGetArticle(params.slug);
+    onGetArticle(slug);
+    onFetchComments(slug);
     this.setState({ loadingBarProgress: 100 });
   };
 
@@ -76,6 +92,102 @@ export class SingleArticle extends Component {
     );
   };
 
+  commentBlock = () => {
+    const {
+      isAuth,
+      article: { loading, comments = [] },
+      username: currentUsername,
+    } = this.props;
+
+    const { body } = this.state;
+
+    /**
+     * Toggles the comment textarea
+     *
+     * @param {*} index
+     * @param {*} status
+     * @returns {void}
+     */
+    const toggler = index => {
+      this.setState(prevState => ({ [index]: !prevState[index] }));
+    };
+
+    return (
+      <React.Fragment>
+        <div className="form comment-block">
+          <div className="comment-label">Comments</div>
+          <div className="wrapper" style={{ display: !isAuth ? 'none' : null }}>
+            <textarea
+              name="comment"
+              cols="30"
+              rows="10"
+              value={body}
+              onChange={e => this.setState({ body: e.target.value })}
+            />
+            <Button text="POST" onClick={() => this.handlePostComment()} loading={loading} />
+          </div>
+        </div>
+        {comments.map(({ body: text, favoritesCount, User: { username, image }, id }, index) => {
+          const { state } = this;
+          const { updateBody } = state;
+
+          return (
+            <div className="comment-card" key={index}>
+              <div className="author-details-column">
+                <img src={image || defaultProfile} alt="" />
+                <div className="names">
+                  <h4>{username}</h4>
+                </div>
+              </div>
+              <div className="comments">
+                <span>{text}</span>
+
+                <div className="option">
+                  <Icon icon={faThumbsUp} />
+                  <span className="">{favoritesCount}</span>
+                  {currentUsername === username ? (
+                    <React.Fragment>
+                      <Icon
+                        icon={faEdit}
+                        onClick={() => {
+                          toggler(index);
+                        }}
+                      />
+                      <Icon
+                        icon={faTrash}
+                        color="#e70000"
+                        onClick={() => this.handleDeleteComment(id)}
+                      />
+                    </React.Fragment>
+                  ) : null}
+                </div>
+
+                <div
+                  className="wrapper edit-comment"
+                  style={{ display: !state[index] ? 'none' : 'flex' }}
+                >
+                  <textarea
+                    name="comment"
+                    value={updateBody === '' ? text : updateBody}
+                    onChange={e => this.setState({ updateBody: e.target.value })}
+                  />
+                  <div className="bottom">
+                    <Button
+                      text="POST"
+                      onClick={() => this.handleUpdateComment(id)}
+                      loading={loading}
+                      size={12}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </React.Fragment>
+    );
+  };
+
   /**
    *
    * @param {string} slug
@@ -107,9 +219,88 @@ export class SingleArticle extends Component {
    *
    * @returns {jsx} react fragment
    */
+
+  /**
+   * Handle post comment action
+   *
+   * @memberof SingleArticle
+   * @returns {void}
+   */
+  handlePostComment() {
+    const {
+      onCommentArticle,
+      onFetchComments,
+      match: {
+        params: { slug },
+      },
+    } = this.props;
+    const { body } = this.state;
+    onCommentArticle(slug, body).then(res => {
+      if (res) {
+        this.setState({ body: '' });
+        onFetchComments(slug);
+      }
+    });
+  }
+
+  /**
+   * Deletes a comment
+   *
+   * @param {*} id
+   * @memberof SingleArticle
+   * @returns {void}
+   */
+  handleDeleteComment(id) {
+    const {
+      onDeleteComment,
+      onFetchComments,
+      match: {
+        params: { slug },
+      },
+    } = this.props;
+    onDeleteComment(slug, id).then(res => {
+      if (res) {
+        onFetchComments(slug);
+      }
+    });
+  }
+
+  /**
+   * Update a comment
+   *
+   * @param {*} id
+   * @memberof SingleArticle
+   * @returns {void}
+   */
+  handleUpdateComment(id) {
+    const {
+      onUpdateComment,
+      onFetchComments,
+      match: {
+        params: { slug },
+      },
+    } = this.props;
+
+    const { updateBody } = this.state;
+
+    onUpdateComment(slug, id, updateBody).then(res => {
+      if (res) {
+        this.setState({ updateBody: '' });
+        onFetchComments(slug);
+      }
+    });
+  }
+
+  /**
+   * Renders the single article
+   *
+   * @returns
+   * @memberof SingleArticle
+   * @returns {object} Jsx
+   */
   render() {
     const {
-      article: { title, slug, body, images: imageDisplay, User },
+      article: { title, body, images: imageDisplay, User, slug },
     } = this.props;
     const { loadingBarProgress, isMyArticle } = this.state;
     return (
@@ -194,6 +385,7 @@ export class SingleArticle extends Component {
               </div>
             </div>
             <hr />
+            {slug ? this.commentBlock() : null}
           </div>
         </div>
       </div>
@@ -203,6 +395,9 @@ export class SingleArticle extends Component {
 
 SingleArticle.defaultProps = {
   onDeleteArticle: null,
+  loading: false,
+  username: null,
+  comments: [],
 };
 
 SingleArticle.propTypes = {
@@ -212,6 +407,14 @@ SingleArticle.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   system: PropTypes.object.isRequired,
+  onCommentArticle: PropTypes.func.isRequired,
+  onFetchComments: PropTypes.func.isRequired,
+  onDeleteComment: PropTypes.func.isRequired,
+  onUpdateComment: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
+  username: PropTypes.string,
+  comments: PropTypes.array,
 };
 
 /**
@@ -219,10 +422,19 @@ SingleArticle.propTypes = {
  * @param {object} state
  * @returns {object} props
  */
-const mapStateToProps = ({ article, system }) => {
+const mapStateToProps = ({
+  article,
+  system,
+  currentUser: {
+    isAuth,
+    user: { username },
+  },
+}) => {
   return {
     article,
     system,
+    isAuth,
+    username,
   };
 };
 
@@ -231,9 +443,13 @@ const mapStateToProps = ({ article, system }) => {
  * @param {*} dispatch
  * @returns {object} props
  */
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onGetArticle: slug => dispatch(getArticle(slug)),
   onDeleteArticle: slug => dispatch(deleteArticle(slug)),
+  onCommentArticle: (slug, body) => dispatch(commentArticle({ slug, body })),
+  onFetchComments: slug => dispatch(fetchComments(slug)),
+  onDeleteComment: (slug, id) => dispatch(deleteComment({ slug, id })),
+  onUpdateComment: (slug, id, body) => dispatch(updateComment({ slug, id, body })),
 });
 export default connect(
   mapStateToProps,

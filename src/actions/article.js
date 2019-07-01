@@ -1,7 +1,137 @@
 import { toast } from 'react-toastify';
-import { PUBLISH_ARTICLE, GET_SINGLE_ARTICLE, DELETE_SINGLE_ARTICLE } from '../actionTypes/article';
+import {
+  PUBLISH_ARTICLE,
+  GET_SINGLE_ARTICLE,
+  DELETE_SINGLE_ARTICLE,
+  LOAD,
+  STOP_LOADING,
+  DISPLAY_COMMENTS,
+} from '../actionTypes/article';
 import { NOT_FOUND, SUCCESS_MESSAGE } from '../actionTypes/system';
 import wakanda from '../api/wakanda';
+
+/**
+ *Update comment
+ *
+ * @param {*} {slug}
+ * @param {*} id
+ * @returns {void}
+ */
+export const updateComment = ({ slug, id, body }) => async () => {
+  try {
+    await wakanda.put(`/api/articles/${slug}/comments/${id}`, {
+      comment: {
+        body,
+      },
+    });
+
+    return true;
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('Internet Lost');
+    }
+
+    return false;
+  }
+};
+
+/**
+ *Delete comment
+ *
+ * @param {*} {slug}
+ * @param {*} id
+ * @returns {void}
+ */
+export const deleteComment = ({ slug, id }) => async () => {
+  try {
+    await wakanda.delete(`/api/articles/${slug}/comments/${id}`);
+
+    return true;
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('Internet Lost');
+    }
+
+    return false;
+  }
+};
+
+/**
+ * Fetch comments
+ * @return {object} response
+ * @param {String} slug
+ */
+export const fetchComments = slug => dispatch => {
+  wakanda
+    .get(`/api/articles/${slug}/comments`)
+    .then(response => {
+      const {
+        data: { data: comments },
+      } = response;
+
+      dispatch({
+        type: DISPLAY_COMMENTS,
+        payload: comments,
+      });
+    })
+    .catch(error => {
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Internet Lost');
+      }
+    });
+};
+
+/**
+ *Posts a comment on an article
+ *
+ * @param {*} { slug, comment }
+ * @returns {void}
+ */
+export const commentArticle = ({ slug, body }) => async dispatch => {
+  dispatch({
+    type: LOAD,
+  });
+
+  if (body.length === 0) {
+    dispatch({
+      type: STOP_LOADING,
+    });
+    return;
+  }
+
+  try {
+    await wakanda.post(`/api/articles/${slug}/comments`, {
+      comment: {
+        body,
+      },
+    });
+
+    toast.success('Comment posted');
+    dispatch({
+      type: STOP_LOADING,
+    });
+
+    return true;
+  } catch (error) {
+    dispatch({
+      type: STOP_LOADING,
+    });
+
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('Internet Lost');
+    }
+
+    return false;
+  }
+};
 
 /**
  * @returns {*} dispatch
@@ -61,8 +191,11 @@ export const updateArticle = (slug, article) => dispatch => {
 export const getArticle = slug => dispatch => {
   wakanda
     .get(`/api/articles/${slug}`)
-    .then(response => {
+    .then(async response => {
       const newArticle = response.data.data;
+
+      await fetchComments(slug);
+
       dispatch({
         type: GET_SINGLE_ARTICLE,
         payload: newArticle.article,
