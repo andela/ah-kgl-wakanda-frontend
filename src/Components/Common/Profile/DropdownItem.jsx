@@ -7,7 +7,7 @@ const property = [
     id: 1,
     text: 'Profile',
     icon: ' far fa-user fa-lg',
-    link: '#/action-1',
+    link: '/profile',
   },
   {
     id: 2,

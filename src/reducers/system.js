@@ -1,4 +1,4 @@
-import { NOT_FOUND } from '../actionTypes/system';
+import { NOT_FOUND, SUCCESS_MESSAGE } from '../actionTypes/system';
 
 const initialState = {
   notFound: {
@@ -7,6 +7,10 @@ const initialState = {
   },
   progressBar: 0,
   noInternet: false,
+  successMessage: {
+    status: false,
+    message: '',
+  },
 };
 
 /**
@@ -18,6 +22,11 @@ const initialState = {
 const system = (state = initialState, { type, payload }) => {
   switch (type) {
     case NOT_FOUND:
+      return {
+        ...state,
+        ...payload,
+      };
+    case SUCCESS_MESSAGE:
       return {
         ...state,
         ...payload,
