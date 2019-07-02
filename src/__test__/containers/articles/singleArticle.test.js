@@ -9,6 +9,8 @@ import {
   updateComment,
   deleteComment,
   deleteArticle,
+  likeArticle,
+  unlikeArticle,
 } from '../../../actions/article';
 import triggerSystem from '../../../actions/userInfo';
 import {
@@ -58,6 +60,8 @@ const props = {
   onUpdateComment: jest.fn(''),
   onDeleteComment: jest.fn(''),
   isAuth: true,
+  onlike: jest.fn(''),
+  onUnlike: jest.fn(''),
   location: {
     pathname: '/api/articles/new',
   },
@@ -221,6 +225,26 @@ describe('Get one article actions', () => {
   it('should throw an error where the connection is lost', async () => {
     mockAxios.get.mockImplementationOnce(() => Promise.reject({}));
     await store.dispatch(triggerSystem('dus'));
+  });
+
+  it('should call the like action with success', async () => {
+    mockAxios.get.mockImplementationOnce(() => Promise.resolve({ data: { status: 200 } }));
+    await store.dispatch(likeArticle(slug));
+  });
+
+  it('should call the like action with error', async () => {
+    mockAxios.get.mockImplementationOnce(() => Promise.reject({ data: { status: 409 } }));
+    await store.dispatch(likeArticle(slug));
+  });
+
+  it('should call the unlike action with success', async () => {
+    mockAxios.get.mockImplementationOnce(() => Promise.resolve({ data: { status: 200 } }));
+    await store.dispatch(unlikeArticle(slug));
+  });
+
+  it('should call the unlike action with error', async () => {
+    mockAxios.get.mockImplementationOnce(() => Promise.reject({ data: { status: 409 } }));
+    await store.dispatch(likeArticle(slug));
   });
 });
 

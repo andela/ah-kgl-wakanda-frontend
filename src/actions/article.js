@@ -1,3 +1,4 @@
+/* eslint no-use-before-define: 0 */
 import { toast } from 'react-toastify';
 import {
   PUBLISH_ARTICLE,
@@ -192,13 +193,13 @@ export const getArticle = slug => dispatch => {
   wakanda
     .get(`/api/articles/${slug}`)
     .then(async response => {
-      const newArticle = response.data.data;
+      const { article } = response.data.data;
 
       await fetchComments(slug);
 
       dispatch({
         type: GET_SINGLE_ARTICLE,
-        payload: newArticle.article,
+        payload: article,
       });
     })
     .catch(error => {
@@ -247,4 +248,58 @@ export const deleteArticle = slug => dispatch => {
         toast.error('Internet Lost');
       }
     });
+};
+
+/**
+ * Likes an article
+ *
+ * @param {*} slug
+ * @returns {void}
+ */
+export const likeArticle = slug => async dispatch => {
+  try {
+    await wakanda.post(`/api/articles/${slug}/favorite`);
+    toast.success('Liked');
+
+    dispatch(getArticle(slug));
+
+    return true;
+  } catch (error) {
+    if (error.response) {
+      if (error.response.data.status === 409) {
+        dispatch(unlikeArticle(slug));
+        return;
+      }
+      toast.error('You must be logged in');
+    } else {
+      toast.error('Internet Lost');
+    }
+  }
+};
+
+/**
+ * Unlike an article
+ *
+ * @param {*} slug
+ * @returns {void}
+ */
+export const unlikeArticle = slug => async dispatch => {
+  try {
+    await wakanda.delete(`/api/articles/${slug}/favorite`);
+    toast.success('Unliked');
+
+    dispatch(getArticle(slug));
+
+    return false;
+  } catch (error) {
+    if (error.response) {
+      if (error.response.data.status === 409) {
+        dispatch(likeArticle(slug));
+        return;
+      }
+      toast.error('You must be logged in');
+    } else {
+      toast.error('Internet Lost');
+    }
+  }
 };
