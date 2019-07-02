@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import LoadingBar from 'react-top-loading-bar';
 import { isMobile } from 'mobile-detector';
-import { getArticle } from '../../../actions/article';
+import { getArticle, deleteArticle } from '../../../actions/article';
 import Navbar from '../../../Components/NavBar/NavBar';
+import checkToken from '../../../helpers/checkToken';
 import 'medium-draft/lib/basic.css';
 import './singleArticle.scss';
 import lightStarIcon from '../../../assets/images/icons/light-star.png';
@@ -24,6 +26,9 @@ import defaultProfile from '../../../assets/images/profile-boy.png';
 export class SingleArticle extends Component {
   state = {
     loadingBarProgress: 0,
+    deleted: false,
+    contentSetted: false,
+    isMyArticle: false,
   };
 
   componentDidMount = () => {
@@ -35,9 +40,18 @@ export class SingleArticle extends Component {
     this.setState({ loadingBarProgress: 100 });
   };
 
-  componentWillUpdate = ({ system: { notFound }, history }) => {
+  componentWillUpdate = ({ system: { notFound }, article: { userId }, history }) => {
+    const { deleted, contentSetted } = this.state;
+    if (!contentSetted) {
+      if (!!checkToken() && userId === checkToken().id) {
+        this.setState({ isMyArticle: true, contentSetted: true });
+      }
+    }
     if (notFound.status) {
       history.push('/not-found');
+    }
+    if (deleted && !userId) {
+      history.push('/myarticles');
     }
   };
 
@@ -64,13 +78,40 @@ export class SingleArticle extends Component {
 
   /**
    *
+   * @param {string} slug
+   * @returns {method} deleteArticle
+   */
+  actions = slug => (
+    <React.Fragment>
+      <Link to={`/articles/${slug}/edit`} href className="action-edit">
+        <img src={editIcon} alt="" />
+      </Link>
+      <button onClick={() => this.deleteArticle(slug)} className="action-delete">
+        <img src={deleteIcon} alt="" />
+      </button>
+    </React.Fragment>
+  );
+
+  /**
+   *
+   * @param {string} slug
+   * @returns {method} deleteArticle
+   */
+  deleteArticle = slug => {
+    const { onDeleteArticle } = this.props;
+    onDeleteArticle(slug);
+    this.setState({ deleted: true });
+  };
+
+  /**
+   *
    * @returns {jsx} react fragment
    */
   render() {
     const {
-      article: { title, body, images: imageDisplay, User },
+      article: { title, slug, body, images: imageDisplay, User },
     } = this.props;
-    const { loadingBarProgress } = this.state;
+    const { loadingBarProgress, isMyArticle } = this.state;
     return (
       <div id="single-article" className="container p-0 mw-100">
         <Navbar {...this.props} />
@@ -105,12 +146,7 @@ export class SingleArticle extends Component {
           <div className="col-md-4 body-sidebar">
             <div className="author-details">{this.authorInfo(User || {})}</div>
             <div className="actions">
-              <a href="hello" className="action-edit">
-                <img src={editIcon} alt="" />
-              </a>
-              <a href="hello" className="action-delete">
-                <img src={deleteIcon} alt="" />
-              </a>
+              {isMyArticle && this.actions(slug)}
               <a href="hello" className="share">
                 <i className="fas fa-envelope" />
               </a>
@@ -165,9 +201,14 @@ export class SingleArticle extends Component {
   }
 }
 
+SingleArticle.defaultProps = {
+  onDeleteArticle: null,
+};
+
 SingleArticle.propTypes = {
   article: PropTypes.object.isRequired,
   onGetArticle: PropTypes.func.isRequired,
+  onDeleteArticle: PropTypes.func,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   system: PropTypes.object.isRequired,
@@ -192,6 +233,7 @@ const mapStateToProps = ({ article, system }) => {
  */
 const mapDispatchToProps = dispatch => ({
   onGetArticle: slug => dispatch(getArticle(slug)),
+  onDeleteArticle: slug => dispatch(deleteArticle(slug)),
 });
 export default connect(
   mapStateToProps,

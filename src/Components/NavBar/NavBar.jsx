@@ -142,7 +142,7 @@ export class NavBar extends Component {
     return (
       <React.Fragment>
         <Navbar fixed="top" className="flex-nowrap flex-row" expand="lg" variant="dark">
-          <Navbar.Brand className="d-none d-md-block">
+          <Navbar.Brand className="d-none mr-md-auto d-md-block">
             <Logo />
           </Navbar.Brand>
           {this.renderHamburgerIcon(faBars)}

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import LoadingBar from 'react-top-loading-bar';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import NavBar from '../../Components/NavBar/NavBar';
 import SideBar from '../../Components/SideBar/SideBar';
@@ -23,7 +24,9 @@ import Button from '../../Components/Common/Button/Button';
  * @extends {Component}
  */
 export class UserArticles extends Component {
-  state = {};
+  state = {
+    displayNotification: false,
+  };
 
   /**
    * Gets user articles
@@ -39,6 +42,19 @@ export class UserArticles extends Component {
   }
 
   /**
+   * @param {object} props
+   * @return {object}
+   * s {jsx} react fragment
+   */
+  componentDidUpdate = ({ system: { successMessage } }) => {
+    const { displayNotification } = this.state;
+    if (!displayNotification && successMessage.status) {
+      toast.success(successMessage.message);
+      this.setState({ displayNotification: true });
+    }
+  };
+
+  /**
    * Renders the component
    *
    * @returns {object} Jsx
@@ -49,8 +65,19 @@ export class UserArticles extends Component {
 
     return (
       <div className="page">
-        <NavBar displaySearchBox={false} {...this.props} />
+        <NavBar {...this.props} />
         <LoadingBar height={3} progress={!loading ? 0 : 100} color="#f46036" />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
 
         <div className="middle">
           <SideBar user={currentUser} />
@@ -83,6 +110,7 @@ UserArticles.defaultProps = {
   userArticles: [],
   username: '',
   loading: null,
+  system: {},
 };
 
 UserArticles.propTypes = {
@@ -91,6 +119,7 @@ UserArticles.propTypes = {
   userArticles: PropTypes.array,
   username: PropTypes.string,
   loading: PropTypes.bool,
+  system: PropTypes.object,
 };
 
 /**
@@ -104,12 +133,14 @@ const mapStateToProps = ({
   currentUser: {
     user: { username },
   },
+  system,
 }) => {
   return {
     userArticles,
     currentUser: user,
     username,
     loading,
+    system,
   };
 };
 

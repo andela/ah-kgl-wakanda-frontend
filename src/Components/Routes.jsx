@@ -10,6 +10,7 @@ import * as paths from '../paths';
 import Signup from '../Containers/Signup/Signup';
 import CreateArticle from '../Containers/Article/Create/createArticle';
 import SingleArticle from '../Containers/Article/Single/singleArticle';
+import EditArticle from '../Containers/Article/Edit/editArticle';
 import Home from '../Containers/Home/Home';
 import UserArticles from '../Containers/UserArticles/UserArticles';
 import Profile from '../Containers/Profile/profileContainer';
@@ -54,6 +55,7 @@ export const Routes = ({ isAuth }) => (
         render={props => (isAuth ? <CreateArticle {...props} /> : <Redirect to="/login" />)}
       />
       <Route exact path="/articles/:slug" component={SingleArticle} />
+      <Route exact path="/articles/:slug/edit" component={EditArticle} />
       <Route exact path="/not-found" component={NotFound} />
       <Route exact path="/" render={props => <Home {...props} />} />
       <Route exact path="/profile" component={Profile} />
