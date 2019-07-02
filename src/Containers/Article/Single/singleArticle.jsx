@@ -1,13 +1,17 @@
+/* eslint-disable react/no-will-update-set-state */
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import LoadingBar from 'react-top-loading-bar';
 import { isMobile } from 'mobile-detector';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'medium-draft/lib/basic.css';
+import './singleArticle.scss';
 import Navbar from '../../../Components/NavBar/NavBar';
 import checkToken from '../../../helpers/checkToken';
 import {
@@ -22,21 +26,36 @@ import {
 import Button from '../../../Components/Common/Button/Button';
 import Rating from '../../../Components/Rating/Rating';
 import RatingDisplay from '../../../Components/Rating/RatingDisplay';
-import 'medium-draft/lib/basic.css';
-import './singleArticle.scss';
 import editIcon from '../../../assets/images/icons/edit.png';
 import deleteIcon from '../../../assets/images/icons/delete.png';
 import staticImageDisplay from '../../../assets/images/image-display.jpg';
 import defaultProfile from '../../../assets/img/blank_profile_pic.png';
 import getRatings from '../../../helpers/getRatings';
+import Bookmark from '../../../Components/Common/Bookmark/Bookmark';
+import { viewBookmarked } from '../../../actions/getBookmarked';
 
 /**
- * @param {object} slug
- * @param {object} main
- * @param {object} title
- * @returns {method} render
+ *
+ * @export
+ * @class SingleArticle
+ * @extends {Component}
  */
 export class SingleArticle extends Component {
+  /**
+   *Creates an instance of SingleArticle.
+   * @param {*} props
+   * @memberof SingleArticle
+   */
+  constructor(props) {
+    super(props);
+    const {
+      onFetchBookmarkedArticles,
+      match: { params },
+    } = this.props;
+    onFetchBookmarkedArticles();
+    this.slug = params.slug;
+  }
+
   state = {
     loadingBarProgress: 0,
     deleted: false,
@@ -82,6 +101,12 @@ export class SingleArticle extends Component {
     return isMobile() ? 'row image-display' : 'row image-display';
   }
 
+  /**
+   * @param {object} {}
+   * @param {*} main
+   * @memberof SingleArticle
+   * @return {object} jsx
+   */
   authorInfo = ({ firstname, lastname, username, image: authorImage }, main) => {
     return (
       <React.Fragment>
@@ -219,9 +244,20 @@ export class SingleArticle extends Component {
   };
 
   /**
-   *
-   * @returns {jsx} react fragment
+   * @param {string} slug
+   * @memberof SingleArticle
+   * @returns {object} isBookmarked
    */
+  isArticleBookmarked = slug => {
+    const { isAuth } = this.props;
+    if (isAuth) {
+      const { viewBookmarkArticles } = this.props;
+      const { bookmarkArticles } = viewBookmarkArticles;
+
+      const isBookmarked = bookmarkArticles.find(item => slug === item.Article.slug);
+      return isBookmarked;
+    }
+  };
 
   /**
    * Handle post comment action
@@ -308,6 +344,7 @@ export class SingleArticle extends Component {
     } = this.props;
     const { loadingBarProgress, isMyArticle } = this.state;
     const url = `${process.env.REACT_APP_FRONTEND_URL}/articles/${slug}`;
+    const bookmarked = this.isArticleBookmarked(this.slug);
     return (
       <div id="single-article" className="container p-0 mw-100">
         <Navbar {...this.props} />
@@ -324,7 +361,6 @@ export class SingleArticle extends Component {
           draggable
           pauseOnHover
         />
-
         <div
           className="row image-display"
           style={{
@@ -395,6 +431,14 @@ export class SingleArticle extends Component {
                     <Icon icon={faThumbsUp} id="like" onClick={() => onlike(slug)} />
                     <span className="digit liking">{favoritesCount}</span>
                   </div>
+                  <div className="option">
+                    {!isMyArticle ? (
+                      <Bookmark
+                        slug={this.slug}
+                        bookmarkedSlug={bookmarked ? bookmarked.Article.slug : ''}
+                      />
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>
@@ -416,6 +460,9 @@ SingleArticle.defaultProps = {
 
 SingleArticle.propTypes = {
   article: PropTypes.object.isRequired,
+  viewBookmarkArticles: PropTypes.object.isRequired,
+  isAuth: PropTypes.any.isRequired,
+  onFetchBookmarkedArticles: PropTypes.func.isRequired,
   onGetArticle: PropTypes.func.isRequired,
   onDeleteArticle: PropTypes.func,
   onlike: PropTypes.func.isRequired,
@@ -426,7 +473,6 @@ SingleArticle.propTypes = {
   onFetchComments: PropTypes.func.isRequired,
   onDeleteComment: PropTypes.func.isRequired,
   onUpdateComment: PropTypes.func.isRequired,
-  isAuth: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
   username: PropTypes.string,
   comments: PropTypes.array,
@@ -440,18 +486,18 @@ SingleArticle.propTypes = {
 const mapStateToProps = ({
   article,
   system,
+  viewBookmarkArticles,
   currentUser: {
     isAuth,
     user: { username },
   },
-}) => {
-  return {
-    article,
-    system,
-    isAuth,
-    username,
-  };
-};
+}) => ({
+  article,
+  system,
+  viewBookmarkArticles,
+  isAuth,
+  username,
+});
 
 /**
  *
@@ -466,6 +512,7 @@ export const mapDispatchToProps = dispatch => ({
   onDeleteComment: (slug, id) => dispatch(deleteComment({ slug, id })),
   onUpdateComment: (slug, id, body) => dispatch(updateComment({ slug, id, body })),
   onlike: slug => dispatch(likeArticle(slug)),
+  onFetchBookmarkedArticles: () => dispatch(viewBookmarked()),
 });
 export default connect(
   mapStateToProps,

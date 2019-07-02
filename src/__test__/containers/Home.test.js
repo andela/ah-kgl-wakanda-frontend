@@ -48,7 +48,12 @@ const props = {
   loggedIn: true,
   onFetchArticles,
   onUpdateIsAuth: jest.fn(),
+  onFetchNewFeed: jest.fn(),
   onSignupError: () => null,
+  viewBookmarkArticles: {
+    bookmarkArticles: [],
+  },
+  onFetchBookmarkedArticles: jest.fn(),
 };
 
 const mockStore = configureMockStore([thunk]);

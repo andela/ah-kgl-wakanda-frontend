@@ -1,8 +1,8 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
-
+import { faThumbsUp, faComment } from '@fortawesome/free-solid-svg-icons';
+import Bookmark from '../Common/Bookmark/Bookmark';
 import RatingDisplay from '../Rating/RatingDisplay';
 import staticImage from '../../assets/images/image-display.jpg';
 
@@ -14,7 +14,7 @@ import staticImage from '../../assets/images/image-display.jpg';
  */
 const TopArticle = props => {
   const { list } = props;
-
+  const { bookmarkedList } = props;
   let max = 0;
 
   const article = list.filter(element => {
@@ -39,21 +39,21 @@ const TopArticle = props => {
     slug,
   } = element;
 
+  const bookmarked = bookmarkedList.find(item => slug === item.Article.slug);
+
   return (
-    <a className="article top-article" id="large-article" href={`/articles/${slug}`}>
+    <div className="article top-article" id="large-article">
       <div
         className="image"
         style={{ backgroundImage: `url(${images ? images[0] : staticImage})` }}
       >
-        <div className="bookmark">
-          <i>
-            <Icon icon={faBookmark} />
-          </i>
-        </div>
+        <Bookmark slug={slug} bookmarkedSlug={bookmarked ? bookmarked.Article.slug : ''} />
       </div>
       <div className="info">
-        <div className="title">{title.toString().substr(0, 100)}</div>
-        <div className="description">{description.toString().substr(0, 200)}</div>
+        <a href={`/articles/${slug}`}>
+          <div className="title">{title.toString().substr(0, 100)}</div>
+          <div className="description">{description.toString().substr(0, 200)}</div>
+        </a>
         <div className="options">
           <div className="left">
             <div className="option">
@@ -79,12 +79,17 @@ const TopArticle = props => {
           </div>
         </div>
       </div>
-    </a>
+    </div>
   );
 };
 
 TopArticle.propTypes = {
   list: PropTypes.array.isRequired,
+  bookmarkedList: PropTypes.array,
+};
+
+TopArticle.defaultProps = {
+  bookmarkedList: [],
 };
 
 export default TopArticle;

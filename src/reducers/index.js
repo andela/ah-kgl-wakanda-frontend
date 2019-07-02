@@ -11,6 +11,9 @@ import profile from './profileReducers';
 import articles from './fetchArticles';
 import searchFilter from './search';
 import rating from './rating';
+import bookmarkArticle from './bookmark';
+import unBookmarkArticle from './unbookmark';
+import viewBookmarkArticles from './viewBookmarked';
 
 const reducers = combineReducers({
   currentUser,
@@ -22,9 +25,12 @@ const reducers = combineReducers({
   profile,
   article,
   system,
+  viewBookmarkArticles,
   articles,
   searchFilter,
   rating,
+  bookmarkArticle,
+  unBookmarkArticle,
 });
 
 export default reducers;

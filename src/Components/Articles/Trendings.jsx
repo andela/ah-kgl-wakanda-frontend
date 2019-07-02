@@ -1,9 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
-
+import { faThumbsUp, faComment } from '@fortawesome/free-solid-svg-icons';
 import RatingDisplay from '../Rating/RatingDisplay';
-
+import Bookmark from '../Common/Bookmark/Bookmark';
 import staticImage from '../../assets/images/image-display.jpg';
 
 /**
@@ -14,6 +13,7 @@ import staticImage from '../../assets/images/image-display.jpg';
  */
 const Trendings = props => {
   let { list } = props;
+  const { bookmarkedList } = props;
 
   list = list.sort((a, b) => {
     return (a.favoritesCount - b.favoritesCount) * -1;
@@ -31,23 +31,23 @@ const Trendings = props => {
       commentsCount,
       slug,
     }) => {
+      const bookmarked = bookmarkedList.find(item => slug === item.Article.slug);
+
       return (
-        <a className="article" key={id} href={`/articles/${slug}`}>
+        <div className="article" key={id}>
           <div
             className="image"
             style={{ backgroundImage: `url(${images ? images[0] : staticImage})` }}
           >
-            <div className="bookmark">
-              <i>
-                <Icon icon={faBookmark} />
-              </i>
-            </div>
+            <Bookmark slug={slug} bookmarkedSlug={bookmarked ? bookmarked.Article.slug : ''} />
           </div>
           <div className="info">
-            <div>
-              <div className="title">{title.toString().substr(0, 100)}</div>
-              <div className="description">{description.toString().substr(0, 200)}</div>
-            </div>
+            <a href={`/articles/${slug}`}>
+              <div>
+                <div className="title">{title.toString().substr(0, 100)}</div>
+                <div className="description">{description.toString().substr(0, 200)}</div>
+              </div>
+            </a>
             <div className="time">
               <p className="read-time-dark">{readTime}</p>
             </div>
@@ -73,7 +73,7 @@ const Trendings = props => {
               </div>
             </div>
           </div>
-        </a>
+        </div>
       );
     },
   );

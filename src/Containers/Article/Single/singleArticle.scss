@@ -1,5 +1,6 @@
 @import '../../../assets/sass/global.scss';
 #single-article {
+  $color: #fff;
   .image-display {
     background-position: center;
     background-repeat: no-repeat;
@@ -170,6 +171,23 @@
               &:hover {
                 cursor: pointer;
                 color: rgba($color: $color-primary, $alpha: 0.9);
+              }
+            }
+
+            .bookmark {
+              cursor: pointer;
+              &:hover,
+              &:active {
+                i {
+                  color: $color-primary;
+                }
+              }
+            }
+
+            .bookmarked {
+              cursor: pointer;
+              i {
+                color: $color-primary;
               }
             }
 

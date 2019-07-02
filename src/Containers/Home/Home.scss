@@ -1,4 +1,4 @@
-@import '../../assets//sass/global.scss';
+@import '../../assets/sass/global.scss';
 
 a {
   color: $color-dark !important;
@@ -186,7 +186,7 @@ a {
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            border: 0.3px solid #000000;
+            border: 1px solid $color-secondary;
             padding: 0.1em;
             cursor: pointer;
             display: flex;
@@ -202,6 +202,15 @@ a {
               i {
                 color: $color;
               }
+            }
+          }
+
+          .bookmarked {
+            background-color: $color-primary;
+            i {
+              font-weight: 400;
+              font-size: 0.7em;
+              color: $color;
             }
           }
         }
@@ -284,7 +293,7 @@ a {
               width: 30px;
               height: 30px;
               border-radius: 50%;
-              border: 0.3px solid #000000;
+              border: 1px solid $color-secondary;
               padding: 0.1em;
               cursor: pointer;
               display: flex;
@@ -300,6 +309,15 @@ a {
                 i {
                   color: $color;
                 }
+              }
+            }
+
+            .bookmarked {
+              background-color: $color-primary;
+              i {
+                font-weight: 400;
+                font-size: 0.7em;
+                color: $color;
               }
             }
           }
@@ -394,7 +412,7 @@ a {
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            border: 0.3px solid #000000;
+            border: 1px solid $color-secondary;
             padding: 0.1em;
             cursor: pointer;
             display: flex;
@@ -411,6 +429,15 @@ a {
               i {
                 color: $color;
               }
+            }
+          }
+
+          .bookmarked {
+            background-color: $color-primary;
+            i {
+              font-weight: 400;
+              font-size: 0.7em;
+              color: $color;
             }
           }
         }
