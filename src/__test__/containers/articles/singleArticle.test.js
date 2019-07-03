@@ -3,23 +3,47 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import mockAxios from 'axios';
-import { getArticle, deleteArticle } from '../../../actions/article';
+import {
+  getArticle,
+  commentArticle,
+  updateComment,
+  deleteComment,
+  deleteArticle,
+} from '../../../actions/article';
 import triggerSystem from '../../../actions/userInfo';
-import { SingleArticle } from '../../../Containers/Article/Single/singleArticle';
+import {
+  SingleArticle,
+  mapDispatchToProps,
+} from '../../../Containers/Article/Single/singleArticle';
 import articleReducer from '../../../reducers/article';
 import { GET_SINGLE_ARTICLE, DELETE_SINGLE_ARTICLE } from '../../../actionTypes/article';
 import { NOT_FOUND, SUCCESS_MESSAGE } from '../../../actionTypes/system';
 
 const props = {
   article: {
+    slug: 'the-article',
     title: 'hello',
     body: '{"p":{"value":"bla bla went dark"}}',
     images: 'image/path',
+    User: {
+      username: 'dus',
+    },
+    comments: [
+      {
+        body: 'body',
+        favoritesCount: 2,
+        id: 4,
+        User: {
+          username: 'username',
+        },
+      },
+    ],
   },
   currentUser: {
     user: {
       username: 'dus',
     },
+    isAuth: true,
   },
   system: {
     notFound: false,
@@ -29,6 +53,11 @@ const props = {
     location: '/articles/hello-world-233591714',
   },
   onGetArticle: jest.fn(''),
+  onFetchComments: jest.fn(''),
+  onCommentArticle: jest.fn(''),
+  onUpdateComment: jest.fn(''),
+  onDeleteComment: jest.fn(''),
+  isAuth: true,
   location: {
     pathname: '/api/articles/new',
   },
@@ -64,11 +93,101 @@ describe('Single Article Component', () => {
   });
 });
 
+describe('Comments', () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore();
+  });
+  it('should test mapDispatchToProps', () => {
+    /**
+     * Dispatch
+     *
+     * @param {*} action
+     * @returns {object} dispatch
+     */
+    const dispatch = action => action;
+    const mappedObject = mapDispatchToProps(dispatch);
+    expect(mappedObject).toHaveProperty('onFetchComments');
+    expect(mappedObject.onGetArticle('slug')).toEqual(expect.any(Function));
+    expect(mappedObject.onFetchComments('slug')).toEqual(expect.any(Function));
+    expect(mappedObject.onCommentArticle('slug', 'body')).toEqual(expect.any(Function));
+    expect(mappedObject.onDeleteComment('slug', 'id')).toEqual(expect.any(Function));
+    expect(mappedObject.onUpdateComment('slug', 'id', 'body')).toEqual(expect.any(Function));
+  });
+
+  it('should call commentArticle action with success', () => {
+    mockAxios.post.mockImplementationOnce(() =>
+      Promise.resolve({
+        response: { data: { status: 200 } },
+      }),
+    );
+    store.dispatch(commentArticle(props.article)).then(res => {
+      expect(res.data.status).toBe(200);
+    });
+  });
+
+  it('should call commentArticle action with error', () => {
+    mockAxios.post.mockImplementationOnce(() =>
+      Promise.reject({
+        response: { data: { status: 400 } },
+      }),
+    );
+    store.dispatch(commentArticle(props.article)).then(res => {
+      expect(res.data.status).toBe(400);
+    });
+  });
+
+  it('should call updateComment action with success', () => {
+    mockAxios.post.mockImplementationOnce(() =>
+      Promise.resolve({
+        response: { data: { status: 200 } },
+      }),
+    );
+    store.dispatch(updateComment(props.article)).then(res => {
+      expect(res.data.status).toBe(200);
+    });
+  });
+
+  it('should call updateComment action with error', () => {
+    mockAxios.post.mockImplementationOnce(() =>
+      Promise.reject({
+        response: { data: { status: 400 } },
+      }),
+    );
+    store.dispatch(updateComment(props.article)).then(res => {
+      expect(res.data.status).toBe(400);
+    });
+  });
+
+  it('should call deleteComment action with success', () => {
+    mockAxios.post.mockImplementationOnce(() =>
+      Promise.resolve({
+        response: { data: { status: 200 } },
+      }),
+    );
+    store.dispatch(deleteComment(props.article)).then(res => {
+      expect(res.data.status).toBe(200);
+    });
+  });
+
+  it('should call updateComment action with error', () => {
+    mockAxios.post.mockImplementationOnce(() =>
+      Promise.resolve({
+        response: { data: { status: 400 } },
+      }),
+    );
+    store.dispatch(deleteComment(props.article)).then(res => {
+      expect(res.data.status).toBe(400);
+    });
+  });
+});
+
 describe('Get one article actions', () => {
   let store;
   beforeEach(() => {
     store = mockStore();
   });
+
   it('should call the createArticle action with success', async () => {
     mockAxios.get.mockImplementationOnce(() =>
       Promise.resolve({ data: { status: 200, data: { title: 'hello' } } }),

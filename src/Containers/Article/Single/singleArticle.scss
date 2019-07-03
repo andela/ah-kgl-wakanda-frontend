@@ -219,9 +219,10 @@
         border: 2px solid $color-primary;
       }
       .names {
-        padding: 0 0 0 1rem;
+        padding: 15px 0 0;
         font-family: nunito;
         h4 {
+          text-align: center;
           font-size: 15px;
         }
         h6 {
@@ -232,11 +233,52 @@
     }
 
     .comments {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       font-family: 'Playfair Display', serif;
       color: #666;
       line-height: 1.8;
       font-size: 18px;
       text-align: justify;
+
+      .edit-comment {
+        display: flex;
+        flex-direction: column;
+        textarea {
+          font-size: 0.9em;
+          border: 2px solid #efefef;
+          height: 100px;
+          margin-bottom: 10px;
+          padding: 10px;
+          resize: none !important;
+          outline: none;
+        }
+        .bottom {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+
+      .option {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 30px;
+        font-size: 0.8em;
+        span {
+          font-size: 1.2em;
+          margin-left: 10px;
+          margin-right: 20px;
+        }
+        svg {
+          margin-left: 15px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
 
       .highlighted {
         background: rgba($color: $color-primary, $alpha: 0.9);
@@ -321,7 +363,17 @@
     align-items: flex-start;
     margin-top: 1rem;
     margin-bottom: 30px;
-    label {
+    .wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .comment-label {
+      padding-bottom: 10px;
+      font-size: 1.2em;
+    }
+    .comment-label {
       display: block;
       color: #555;
       font-family: 'Playfair Display', serif;
@@ -331,22 +383,15 @@
       box-sizing: border-box;
       width: 100%;
       border: 2px solid #efefef;
-      height: 180px;
+      height: 200px;
       margin-bottom: 10px;
-      padding: 0 6px;
+      padding: 10px;
+      resize: none !important;
+      outline: none;
     }
 
     button {
       align-self: flex-end;
-      text-transform: uppercase;
-      font-family: Roboto, sans-serif;
-      padding: 10px 40px;
-      background-color: #f46036;
-      font-size: 0.9em;
-      color: #fff;
-      font-weight: 600;
-      border: 0;
-      border-radius: 5px;
     }
   }
 
@@ -441,7 +486,7 @@
   position: absolute;
   background: #fafafa;
   border: 1px solid #e2e2e2;
-  form {
+  .form {
     margin-bottom: 0 !important;
   }
   #card-title {
