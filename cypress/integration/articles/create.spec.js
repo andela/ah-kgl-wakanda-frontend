@@ -125,11 +125,26 @@ describe('Create article', () => {
       },
     });
 
+    cy.route({
+      method: 'POST', // Route all POST requests
+      url: '/api/articles/rate/*', // that have a URL that matches '/users/*'
+      status: 200,
+      response: {
+        data: {
+          message: 'rating submitted successfully',
+        },
+      }, // and force the response to be: []
+    });
     cy.get('input[name="title"]').type('Hello world');
     cy.get('[contenteditable]')
       .eq(0)
       .type('I am typing');
     cy.get('form').submit();
+    cy.location('pathname').should('eq', '/articles/sdjaklsdsa-132141825');
+
+    cy.get('input[name="rate"]')
+      .first()
+      .check({ force: true });
     cy.location('pathname').should('eq', '/articles/sdjaklsdsa-132141825');
   });
 });

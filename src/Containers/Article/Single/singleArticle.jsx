@@ -18,14 +18,15 @@ import {
   updateComment,
 } from '../../../actions/article';
 import Button from '../../../Components/Common/Button/Button';
+import Rating from '../../../Components/Rating/Rating';
+import RatingDisplay from '../../../Components/Rating/RatingDisplay';
 import 'medium-draft/lib/basic.css';
 import './singleArticle.scss';
-import lightStarIcon from '../../../assets/images/icons/light-star.png';
-import emptyStarIcon from '../../../assets/images/icons/empty-star.png';
 import editIcon from '../../../assets/images/icons/edit.png';
 import deleteIcon from '../../../assets/images/icons/delete.png';
 import staticImageDisplay from '../../../assets/images/image-display.jpg';
 import defaultProfile from '../../../assets/img/blank_profile_pic.png';
+import getRatings from '../../../helpers/getRatings';
 
 /**
  *
@@ -300,7 +301,7 @@ export class SingleArticle extends Component {
    */
   render() {
     const {
-      article: { title, body, images: imageDisplay, User, slug },
+      article: { title, slug, body, images: imageDisplay, User, Ratings },
     } = this.props;
     const { loadingBarProgress, isMyArticle } = this.state;
     return (
@@ -318,14 +319,8 @@ export class SingleArticle extends Component {
           <div className="overlay">
             <div className="col-md-4 ratings">
               <div className="average">
-                <h1>4.4</h1>
-                <div className="average-icons">
-                  <img src={lightStarIcon} alt="" />
-                  <img src={lightStarIcon} alt="" />
-                  <img src={lightStarIcon} alt="" />
-                  <img src={lightStarIcon} alt="" />
-                  <img src={emptyStarIcon} alt="" />
-                </div>
+                <h1>{getRatings(Ratings)}</h1>
+                <RatingDisplay ratings={Ratings} color="white" />
               </div>
             </div>
             <div className="col-md-6 title">
@@ -361,13 +356,7 @@ export class SingleArticle extends Component {
             <div className="article-info">
               <div className="author-details">{this.authorInfo(User || {}, true)}</div>
               <div className="article-details">
-                <div className="rating">
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="far fa-star" />
-                </div>
+                <Rating slug={slug} />
                 <div className="numbers">
                   <div className="option">
                     <i className="far fa-comment-alt" />

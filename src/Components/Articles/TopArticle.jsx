@@ -2,10 +2,9 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faComment, faStar, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
 
-import getRatings from '../../helpers/getRatings';
-
+import RatingDisplay from '../Rating/RatingDisplay';
 import staticImage from '../../assets/images/image-display.jpg';
 
 /**
@@ -40,8 +39,6 @@ const TopArticle = props => {
     commentsCount,
     slug,
   } = element;
-
-  const rate = getRatings(Ratings);
 
   return (
     <Link className="article top-article" id="large-article" to={`/articles/${slug}`}>
@@ -78,11 +75,7 @@ const TopArticle = props => {
               <p className="">{readTime}</p>
             </div>
             <div className="rating">
-              {[...Array(rate)].map((e, i) => (
-                <i key={i}>
-                  <Icon icon={faStar} />
-                </i>
-              ))}
+              <RatingDisplay ratings={Ratings} />
             </div>
           </div>
         </div>
