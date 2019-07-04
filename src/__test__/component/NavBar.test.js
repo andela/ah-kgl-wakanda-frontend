@@ -59,11 +59,6 @@ describe('NavBar component', () => {
     expect(mapStateToProps({ navbar })).toBeDefined();
   });
 
-  it('should trigger toggleNotification event', () => {
-    wrapper.find('NotifIcon').simulate('click', e);
-    expect(e.preventDefault).toHaveBeenCalled();
-  });
-
   it('should set state `value`', () => {
     const searchText = 'Title for testing';
     wrapper.setState({

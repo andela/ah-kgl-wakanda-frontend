@@ -54,6 +54,17 @@ export const Routes = ({ isAuth }) => (
         path="/articles/new"
         render={props => (isAuth ? <CreateArticle {...props} /> : <Redirect to="/login" />)}
       />
+      <Route
+        exact
+        path="/logout"
+        render={() => {
+          if (isAuth) {
+            localStorage.setItem('token_ah_wakanda', '');
+            return window.location.reload();
+          }
+          return <Redirect to="/" />;
+        }}
+      />
       <Route exact path="/articles/:slug" component={SingleArticle} />
       <Route exact path="/articles/:slug/edit" component={EditArticle} />
       <Route exact path="/not-found" component={NotFound} />

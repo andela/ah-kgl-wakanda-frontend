@@ -104,7 +104,9 @@ export class NavBar extends Component {
   renderProfileNotifIcon(notificationsCount, username, image) {
     return (
       <Nav className="d-flex flex-row">
-        <NotifIcon notificationsCount={notificationsCount} onClick={this.toggleNotification} />
+        {true || (
+          <NotifIcon notificationsCount={notificationsCount} onClick={this.toggleNotification} />
+        )}
         <ProfileDropdown username={username} picture={image} />
       </Nav>
     );

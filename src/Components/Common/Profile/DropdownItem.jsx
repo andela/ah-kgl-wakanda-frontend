@@ -13,7 +13,7 @@ const property = [
     id: 2,
     text: 'Logout',
     icon: ' fas fa-sign-out-alt fa-lg',
-    link: '#/action-2',
+    link: '/logout',
   },
 ];
 /**

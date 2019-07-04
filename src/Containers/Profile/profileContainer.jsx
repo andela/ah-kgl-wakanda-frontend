@@ -2,13 +2,13 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import Input from '../../Components/Common/input/input';
 import { viewProfile, editProfile } from '../../actions/profileActions';
 import './Profile.scss';
 import NavBar from '../../Components/NavBar/NavBar';
 import SideBar from '../../Components/SideBar/SideBar';
 import picture from '../../assets/img/blank_profile_pic.png';
-import initialState from '../../store/initialState';
 
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/ah-wakanda/image/upload';
 const CLOUDINARY_UPLOAD_PRESET = 'j9eazq6w';
@@ -30,8 +30,7 @@ export class ProfileContainer extends Component {
    * @returns {method} form
    */
   componentWillMount() {
-    const { onViewProfile } = this.props;
-    const { username } = initialState.currentUser.user;
+    const { onViewProfile, username } = this.props;
     onViewProfile(username);
   }
 
@@ -41,8 +40,7 @@ export class ProfileContainer extends Component {
 
   edit = e => {
     e.preventDefault();
-    const { username } = initialState.currentUser.user;
-    const { onEditProfile, onViewProfile } = this.props;
+    const { onEditProfile, onViewProfile, username } = this.props;
     onEditProfile(this.state, username);
     onViewProfile(username);
   };
@@ -100,7 +98,7 @@ export class ProfileContainer extends Component {
               name="lastname"
               label="last Name"
               placeholder=""
-              defaultValue={user.lastname}
+              defaultValue={user.lastname || ''}
               onType={this.onKeyChange}
             />
           </div>
@@ -143,63 +141,76 @@ export class ProfileContainer extends Component {
   render() {
     const { user } = this.props;
     return (
-      <div id="profile">
-        <div className="wrapper">
-          <div className="row">
-            <NavBar
-              {...this.props}
-              username={user.username}
-              picture={user.username}
-              currentUser={user}
-              displaySearchBox={false}
-            />
-            <div className="col-sm-2 sideB">
-              <SideBar user={user} />
-            </div>
-            <div className="col-sm-10 form-box bodyProfile">
-              <div className="body profile">
-                <div id="pic" className="row">
-                  <div className="col-sm-2 form-box pl-4">
-                    <div className="p-avatar row big">
-                      <div
-                        className="avatar-main"
-                        style={{
-                          backgroundImage: user.image ? `url(${user.image})` : `url(${picture})`,
-                        }}
-                      />
-                      <div
-                        className="edit"
-                        role="presentation"
-                        onClick={() => this.fileInput.current.click()}
-                      >
-                        <i className="fas fa-pencil-alt" />
+      <React.Fragment>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
+        <div id="profile">
+          <div className="wrapper">
+            <div className="row">
+              <NavBar
+                {...this.props}
+                username={user.username}
+                picture={user.username}
+                currentUser={user}
+                displaySearchBox={false}
+              />
+
+              <div className="col-sm-2 sideB">
+                <SideBar user={user} />
+              </div>
+              <div className="col-sm-10 form-box bodyProfile">
+                <div className="body profile">
+                  <div id="pic" className="row">
+                    <div className="col-sm-2 form-box pl-4">
+                      <div className="p-avatar row big">
+                        <div
+                          className="avatar-main"
+                          style={{
+                            backgroundImage: user.image ? `url(${user.image})` : `url(${picture})`,
+                          }}
+                        >
+                          <div
+                            className="edit"
+                            role="presentation"
+                            onClick={() => this.fileInput.current.click()}
+                          >
+                            <i className="fas fa-pencil-alt" />
+                          </div>
+                        </div>
+
+                        <input
+                          type="file"
+                          name="file"
+                          className="file-upload"
+                          onChange={this.onUpload}
+                          ref={this.fileInput}
+                          style={{ display: 'none' }}
+                        />
                       </div>
-                      <input
-                        type="file"
-                        name="file"
-                        className="file-upload"
-                        onChange={this.onUpload}
-                        ref={this.fileInput}
-                        style={{ display: 'none' }}
-                      />
+                    </div>
+                    <div className="col-sm-3 form-box uname">
+                      <b>{`${user.firstname || ''} ${user.lastname || ''}`}</b>
+                      <br />
+                      {`@${user.username}`}
                     </div>
                   </div>
-                  <div className="col-sm-3 form-box uname">
-                    <b>
-                      {`${user.firstname} ` || ''}
-                      {user.lastname || ''}
-                    </b>
-                    <br />
-                    {`@${user.username}`}
-                  </div>
+                  {this.form()}
+                  <p id="message" />
                 </div>
-                {this.form()}
-                <p id="message" />
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -207,11 +218,13 @@ export class ProfileContainer extends Component {
 ProfileContainer.defaultProps = {
   onViewProfile: null,
   onEditProfile: null,
+  username: '',
 };
 
 ProfileContainer.propTypes = {
   onViewProfile: PropTypes.object,
   user: PropTypes.object.isRequired,
+  username: PropTypes.string,
   onEditProfile: PropTypes.object,
 };
 /**
@@ -220,7 +233,12 @@ ProfileContainer.propTypes = {
  * @param {object} currentUser
  * @return {void}
  */
-export const mapStateToProps = ({ profile: { user } }) => ({ user });
+export const mapStateToProps = ({
+  profile: { user },
+  currentUser: {
+    user: { username },
+  },
+}) => ({ user, username });
 
 /**
  *
