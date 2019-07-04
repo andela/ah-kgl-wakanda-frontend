@@ -68,6 +68,7 @@ export class ProfileContainer extends Component {
       })
       .catch(err => {
         err.message = 'Please check your internet and reload';
+        document.getElementById('message').style.display = 'none';
         document.getElementById('message').innerHTML = err.message;
       });
   };
@@ -230,7 +231,7 @@ ProfileContainer.propTypes = {
 /**
  *
  * @param {object} state
- * @param {object} currentUser
+ * @param {object} user
  * @return {void}
  */
 export const mapStateToProps = ({

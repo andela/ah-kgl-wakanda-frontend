@@ -3,9 +3,9 @@
   margin-right: 0px !important;
 }
 #profile {
-  height: 100vh !important;
+  height: 100vh;
   .bodyProfile {
-    height: 100vh !important;
+    height: 100vh;
   }
   #pic {
     margin-top: 80px !important;
@@ -68,9 +68,9 @@
   .sidenav {
     height: 90%;
   }
-  .bodyProfile {
-    height: 200%;
-  }
+  // .bodyProfile {
+  //   height: 200%;
+  // }
 
   .profile {
     padding-left: 80px;
@@ -198,6 +198,9 @@
     #profile {
       padding-top: 0px;
       padding-left: 10%;
+      .bodyProfile {
+        height: 200% !important;
+      }
       #pic {
         display: flex;
         height: 120px;
@@ -227,6 +230,9 @@
     #profile {
       padding-top: 0px;
       padding-left: 10%;
+      .bodyProfile {
+        height: 200% !important;
+      }
       #pic {
         display: flex;
         height: 120px;
@@ -263,6 +269,9 @@
     }
   }
   @media only screen and (max-width: 768px) {
+    .bodyProfile {
+      height: 200% !important;
+    }
     .uname {
       text-align: center;
     }

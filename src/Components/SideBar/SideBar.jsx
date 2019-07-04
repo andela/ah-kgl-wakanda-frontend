@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import * as paths from '../../paths';
 import defaultImage from '../../assets/img/blank_profile_pic.png';
+import { emailNotificationSubscription } from '../../actions/profileActions';
 
 import './SideBar.scss';
 
@@ -14,7 +15,7 @@ import './SideBar.scss';
  */
 export class SideBar extends Component {
   state = {
-    checked: true,
+    allowEmailNotification: true,
     navLinks: [
       { key: 0, to: paths.HOME_PATH, icon: 'far fa-newspaper', name: 'Home' },
       { key: 1, to: '/myarticles', icon: 'fas fa-list-ul', name: 'My articles' },
@@ -27,10 +28,12 @@ export class SideBar extends Component {
    * @returns {void}
    */
   check = () => {
-    const { checked } = this.state;
+    const { user, onEmailNotificationSubscription } = this.props;
+    const { allowEmailNotification } = user;
     this.setState({
-      checked: !checked,
+      allowEmailNotification,
     });
+    onEmailNotificationSubscription();
   };
 
   user = ({ user: { image, firstname, lastname, username } }) => (
@@ -44,11 +47,16 @@ export class SideBar extends Component {
     </React.Fragment>
   );
 
-  toggle = ({ checked }) => (
+  toggle = ({ allowEmailNotification }) => (
     <React.Fragment>
       <hr />
       <label htmlFor="emailNotif" onClick={this.check} className="switch">
-        <input name="emailNotif" type="checkbox" onChange={this.check} checked={checked} />
+        <input
+          name="emailNotif"
+          type="checkbox"
+          onChange={this.check}
+          checked={allowEmailNotification}
+        />
         <span className="slider round" />
       </label>
       <span className="email-notif">Email Notification</span>
@@ -71,11 +79,11 @@ export class SideBar extends Component {
       </div>
       <div className="item">
         <div className="label">Followers</div>
-        <div className="data">{follows}</div>
+        <div className="data">{followings}</div>
       </div>
       <div className="item">
         <div className="label">Following</div>
-        <div className="data">{followings}</div>
+        <div className="data">{follows}</div>
       </div>
     </React.Fragment>
   );
@@ -103,10 +111,14 @@ export class SideBar extends Component {
     );
   }
 }
+SideBar.defaultProps = {
+  onEmailNotificationSubscription: null,
+};
 
 SideBar.propTypes = {
   user: PropTypes.object.isRequired,
   navbar: PropTypes.object.isRequired,
+  onEmailNotificationSubscription: PropTypes.object,
 };
 
 /**
@@ -115,4 +127,16 @@ SideBar.propTypes = {
  */
 export const mapStateToProps = state => state;
 
-export default connect(mapStateToProps)(SideBar);
+/**
+ *
+ * @param {object} dispatch
+ * @returns {method} dispatch
+ */
+export const mapDispatchToProps = dispatch => ({
+  onEmailNotificationSubscription: () => dispatch(emailNotificationSubscription()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SideBar);
