@@ -31,9 +31,9 @@ import defaultProfile from '../../../assets/img/blank_profile_pic.png';
 import getRatings from '../../../helpers/getRatings';
 
 /**
- *
- * @param {object} props
+ * @param {object} slug
  * @param {object} main
+ * @param {object} title
  * @returns {method} render
  */
 export class SingleArticle extends Component {
@@ -307,7 +307,7 @@ export class SingleArticle extends Component {
       onlike,
     } = this.props;
     const { loadingBarProgress, isMyArticle } = this.state;
-
+    const url = `${process.env.REACT_APP_FRONTEND_URL}/articles/${slug}`;
     return (
       <div id="single-article" className="container p-0 mw-100">
         <Navbar {...this.props} />
@@ -350,13 +350,31 @@ export class SingleArticle extends Component {
             <div className="author-details">{this.authorInfo(User || {})}</div>
             <div className="actions">
               {isMyArticle && this.actions(slug)}
-              <a href="hello" className="share">
+              <a href="hello" className="action-edit">
+                <img src={editIcon} alt="" />
+              </a>
+              <a href="hello" className="action-delete">
+                <img src={deleteIcon} alt="" />
+              </a>
+              <a
+                href={`mailto:?subject=${title}&body=${title} ${url}`}
+                className="share email"
+                target="blank"
+              >
                 <i className="fas fa-envelope" />
               </a>
-              <a href="hello" className="share">
+              <a
+                href={`https://www.facebook.com/sharer.php?u=${url}&t=${title}`}
+                className="share facebook"
+                target="blank"
+              >
                 <i className="fab fa-facebook" />
               </a>
-              <a href="hello" className="share">
+              <a
+                href={`https://twitter.com/intent/tweet?url=${url}&text=${title}&hashtags=wakanda,author_haven,article`}
+                className="share twitter"
+                target="blank"
+              >
                 <i className="fab fa-twitter" />
               </a>
             </div>

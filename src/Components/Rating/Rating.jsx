@@ -19,7 +19,7 @@ export class Rating extends Component {
     return (
       <div className="rate">
         {[...Array(5)].map((v, i) => (
-          <React.Fragment>
+          <React.Fragment key={5 - i}>
             <input
               type="radio"
               id={`star${5 - i}`}

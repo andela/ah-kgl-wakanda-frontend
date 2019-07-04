@@ -42,7 +42,7 @@ export class SideBar extends Component {
         <div className="avatar" style={{ backgroundImage: `url(${image})` }} />
       </div>
 
-      <div className="name row">{`${firstname} ${lastname}`}</div>
+      <div className="name row">{`${firstname} ${lastname}` || ''}</div>
       <div className="username row">{username}</div>
     </React.Fragment>
   );
