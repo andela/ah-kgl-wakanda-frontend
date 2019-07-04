@@ -14,9 +14,7 @@ import staticImage from '../../assets/images/image-display.jpg';
  * @returns {object} jsx
  */
 const Article = props => {
-  let { list } = props;
-  list = list.reverse().slice(0, 10);
-
+  const { list } = props;
   const articles = list.map(
     ({
       id,

@@ -5,6 +5,9 @@ import { PropTypes } from 'prop-types';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
 import LoadingBar from 'react-top-loading-bar';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+import { Spinner } from 'react-bootstrap';
 
 import NavBar from '../../Components/NavBar/NavBar';
 
@@ -15,7 +18,7 @@ import Trendings from '../../Components/Articles/Trendings';
 import Article from '../../Components/Articles/Article';
 import TopArticle from '../../Components/Articles/TopArticle';
 
-import { fetchArticles } from '../../actions/fetchArticles';
+import { fetchArticles, fetchNewFeed } from '../../actions/fetchArticles';
 import { signupError } from '../../actions/signupActions';
 
 /**
@@ -28,6 +31,8 @@ import { signupError } from '../../actions/signupActions';
 export class Home extends Component {
   state = {
     showAlert: true,
+    limit: 10,
+    offset: 0,
   };
 
   /**
@@ -53,6 +58,15 @@ export class Home extends Component {
     const { onSignupError } = this.props;
     onSignupError();
   }
+
+  newData = () => {
+    const { onFetchNewFeed } = this.props;
+    let { offset } = this.state;
+    const { limit } = this.state;
+    offset += limit;
+    this.setState({ offset });
+    onFetchNewFeed(offset, limit);
+  };
 
   /**
    * Displays an success message
@@ -82,7 +96,13 @@ export class Home extends Component {
    * @memberof Home
    */
   render() {
-    const { data, loggedIn, isAuth } = this.props;
+    const { data, newFeed, loggedIn, isAuth } = this.props;
+    let { hasMore } = this.props;
+    let feed = data;
+
+    feed = [...data, ...newFeed];
+
+    if (data.length < 10) hasMore = false;
 
     return (
       <React.Fragment>
@@ -154,9 +174,14 @@ export class Home extends Component {
 
               <TopArticle list={data} />
 
-              <div className="cards">
-                <Article list={data} />
-              </div>
+              <InfiniteScroll
+                dataLength={feed.length} // This is important field to render the next data
+                next={this.newData}
+                hasMore={hasMore}
+                loader={<Spinner animation="border" size="md" variant="danger" />}
+              >
+                <div className="cards">{<Article list={feed} />}</div>
+              </InfiniteScroll>
             </div>
 
             <div className="right trends">
@@ -176,15 +201,20 @@ export class Home extends Component {
 
 Home.defaultProps = {
   data: [],
+  newFeed: [],
+  hasMore: true,
   loggedIn: null,
   isAuth: null,
 };
 
 Home.propTypes = {
   data: PropTypes.array,
+  newFeed: PropTypes.array,
+  hasMore: PropTypes.bool,
   loggedIn: PropTypes.bool,
   onFetchArticles: PropTypes.func.isRequired,
   onSignupError: PropTypes.func.isRequired,
+  onFetchNewFeed: PropTypes.func.isRequired,
   isAuth: PropTypes.bool,
 };
 
@@ -194,12 +224,14 @@ Home.propTypes = {
  * @returns {object} props
  */
 const mapStateToProps = ({
-  articles: { data },
+  articles: { data, newFeed, hasMore },
   signupState: { loggedIn },
   currentUser: { isAuth },
 }) => {
   return {
     data,
+    newFeed,
+    hasMore,
     loggedIn,
     isAuth,
   };
@@ -214,6 +246,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchArticles: () => dispatch(fetchArticles()),
     onSignupError: () => dispatch(signupError()),
+    onFetchNewFeed: (offset, limit) => dispatch(fetchNewFeed(offset, limit)),
   };
 };
 
