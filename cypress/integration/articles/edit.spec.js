@@ -134,5 +134,9 @@ describe('Edit article', () => {
       .type('I am typing');
     cy.get('form').submit();
     cy.location('pathname').should('eq', '/articles/sdjaklsdsa-132141825');
+<<<<<<< HEAD
+=======
+    // cy.get('.action-edit').click();
+>>>>>>>  feature(share): sharing on different social media platforms
   });
 });

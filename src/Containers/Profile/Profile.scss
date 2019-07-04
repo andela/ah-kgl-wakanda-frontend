@@ -166,6 +166,24 @@
   .col-sm-10.body.bodyProfile {
     padding-bottom: 0px;
     height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+    background-size: cover;
+    margin-bottom: 20%;
+  }
+  .edit {
+    background-color: #f46036;
+    border-radius: 50%;
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    margin-left: 25%;
+    margin-top: 18%;
+    text-align: center;
+    padding: 4px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
   }
 
   .body.profile {
