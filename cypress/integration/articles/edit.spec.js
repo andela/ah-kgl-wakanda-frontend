@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { secret } from '../../config';
+
 describe('Edit article', () => {
   before(() => {
     const token = jwt.sign({ id: 9, username: 'hadad', email: 'hadad.bwenge@gmail.com' }, secret);
@@ -133,6 +134,5 @@ describe('Edit article', () => {
       .type('I am typing');
     cy.get('form').submit();
     cy.location('pathname').should('eq', '/articles/sdjaklsdsa-132141825');
-    cy.get('.action-edit').click();
   });
 });

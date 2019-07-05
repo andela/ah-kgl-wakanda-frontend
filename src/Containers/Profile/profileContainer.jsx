@@ -41,7 +41,7 @@ export class ProfileContainer extends Component {
 
   edit = e => {
     e.preventDefault();
-    const { username } = initialState.currentUser.isAuth;
+    const { username } = initialState.currentUser.user;
     const { onEditProfile, onViewProfile } = this.props;
     onEditProfile(this.state, username);
     onViewProfile(username);
@@ -92,7 +92,6 @@ export class ProfileContainer extends Component {
               defaultValue={user.firstname || ''}
               placeholder=""
               onType={this.onKeyChange}
-              required
             />
           </div>
           <div className="col-sm-5 form-box">
@@ -103,7 +102,6 @@ export class ProfileContainer extends Component {
               placeholder=""
               defaultValue={user.lastname}
               onType={this.onKeyChange}
-              required
             />
           </div>
         </div>
@@ -119,7 +117,6 @@ export class ProfileContainer extends Component {
                 cols="39"
                 value={bio || user.bio}
                 onChange={this.onKeyChange}
-                required
               />
             </label>
           </div>
@@ -131,7 +128,6 @@ export class ProfileContainer extends Component {
               defaultValue={user.email || ''}
               placeholder=""
               onType={this.onKeyChange}
-              required
             />
             <button className="button button-register">Edit</button>
           </div>

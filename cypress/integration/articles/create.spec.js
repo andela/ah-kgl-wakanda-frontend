@@ -5,7 +5,6 @@ describe('Create article', () => {
   const token = jwt.sign({ username: 'hadad', email: 'hadad.bwenge@gmail.com', id: 20 }, secret);
 
   beforeEach(() => {
-    const token = jwt.sign({ username: 'hadad', email: 'hadad.bwenge@gmail.com', id: 23 }, secret);
     cy.server(); // enable response stubbing
     cy.visit('/login');
     cy.route({
