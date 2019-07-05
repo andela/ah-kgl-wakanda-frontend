@@ -7,7 +7,7 @@
 const ratings = Ratings => {
   let prev = 0;
   if (!Ratings) return;
-  prev = Ratings.map(({ rate }) => {
+  Ratings.map(({ rate }) => {
     prev += rate;
     return prev;
   });

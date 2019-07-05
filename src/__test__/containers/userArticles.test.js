@@ -69,6 +69,24 @@ describe('Fetch actions', () => {
       expect(res.status).toBe(200);
     });
   });
+
+  it('should call the fetch action with success', () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: { data: { articles: [] } }, status: 200 }),
+    );
+    store.dispatch(fetchUserArticles()).then(res => {
+      expect(res.status).toBe(200);
+    });
+  });
+
+  it('should call the fetch action with success', () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.reject({ response: { data: { status: 400, message: 'Error' } } }),
+    );
+    store.dispatch(fetchUserArticles()).then(res => {
+      expect(res.status).toBe(400);
+    });
+  });
 });
 
 describe('fetch reducer', () => {

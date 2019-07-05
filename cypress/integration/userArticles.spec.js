@@ -21,7 +21,7 @@ describe('User Articles', () => {
 
     cy.route({
       method: 'GET', // Route all GET requests
-      url: '/api/articles/*/private', // that have a URL that matches '/articles/*'
+      url: '/api/articles/*/private?limit=10', // that have a URL that matches '/articles/*'
       status: 200,
       response: {
         data: {

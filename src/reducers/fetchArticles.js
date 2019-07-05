@@ -3,9 +3,14 @@ import {
   FETCH_ARTICLES_SUCCESS,
   FETCH_ARTICLES_ERROR,
   FETCH_USER_ARTICLES,
+  NEW_FEED,
+  NEW_USER_ARTICLES,
 } from '../actionTypes/fetchArticles';
 
-const articles = {};
+const articles = {
+  newFeed: [],
+  newUserArticles: [],
+};
 
 /**
  * Fetch articles reducer
@@ -38,6 +43,20 @@ const fetchReducer = (state = articles, { type, payload }) => {
         ...state,
         loading: false,
         userArticles: payload,
+      };
+    case NEW_FEED:
+      return {
+        ...state,
+        loading: false,
+        hasMore: !!payload.length,
+        newFeed: [...state.newFeed, ...payload],
+      };
+    case NEW_USER_ARTICLES:
+      return {
+        ...state,
+        loading: false,
+        hasMore: !!payload.length,
+        newUserArticles: [...state.newUserArticles, ...payload],
       };
     default:
       return state;

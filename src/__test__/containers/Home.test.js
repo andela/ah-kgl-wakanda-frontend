@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import thunk from 'redux-thunk';
 import mockAxios from 'axios';
 import configureMockStore from 'redux-mock-store';
-import { fetchArticles } from '../../actions/fetchArticles';
+import { fetchArticles, fetchNewFeed, fetchNewUserArticles } from '../../actions/fetchArticles';
 import reducer from '../../reducers/fetchArticles';
 import { Home } from '../../Containers/Home/Home';
 
@@ -11,6 +11,8 @@ import {
   FETCH_ARTICLES_STARTED,
   FETCH_ARTICLES_SUCCESS,
   FETCH_ARTICLES_ERROR,
+  NEW_FEED,
+  NEW_USER_ARTICLES,
 } from '../../actionTypes/fetchArticles';
 
 const articles = [
@@ -54,6 +56,22 @@ describe('Renders Home', () => {
   it('to have home-page Id', async () => {
     const wrapper = shallow(<Home {...props} />);
     wrapper.instance().componentDidMount();
+    // const customEvent = new Event('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
+    wrapper.first().simulate('scroll');
     expect(wrapper.find('#home-page').length).toBe(1);
   });
 });
@@ -75,6 +93,63 @@ describe('Fetch actions', () => {
     });
   });
 
+  it('should call the fetch newFeed action with success', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: { data: { articles } }, status: 200 }),
+    );
+
+    await store.dispatch(fetchNewFeed(1, 1));
+    const actions = store.getActions();
+
+    expect.assertions(1);
+    expect(actions[0].type).toEqual('FETCH_ARTICLES_STARTED');
+  });
+
+  it('should call the fetch newFeed action with success but with empty response', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: { data: { articles: [] } }, status: 200 }),
+    );
+    await store.dispatch(fetchNewFeed(1, 1));
+    const actions = store.getActions();
+
+    expect.assertions(1);
+    expect(actions[0].type).toEqual('FETCH_ARTICLES_STARTED');
+  });
+
+  it('should call the fetch newFeed action with success but with empty response', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: { data: { articles: [] } }, status: 200 }),
+    );
+    await store.dispatch(fetchNewUserArticles('username', 1, 1));
+    const actions = store.getActions();
+
+    expect.assertions(1);
+    expect(actions[0].type).toEqual('FETCH_ARTICLES_STARTED');
+  });
+
+  it('should call the fetch newFeed action with success but with empty response', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: { data: { articles } }, status: 200 }),
+    );
+    await store.dispatch(fetchNewUserArticles('username', 1, 1));
+    const actions = store.getActions();
+
+    expect.assertions(1);
+    expect(actions[0].type).toEqual('FETCH_ARTICLES_STARTED');
+  });
+
+  it('should call the signup action with error', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.reject({
+        response: { data: { status: 400, message: 'Error' } },
+      }),
+    );
+    await store.dispatch(fetchNewUserArticles('username', 1, 1));
+    const actions = store.getActions();
+
+    expect.assertions(1);
+    expect(actions[0].type).toEqual('FETCH_ARTICLES_STARTED');
+  });
   it('should call the signup action with error', () => {
     mockAxios.get.mockImplementationOnce(() =>
       Promise.reject({
@@ -85,6 +160,19 @@ describe('Fetch actions', () => {
       expect(res.data.status).toBe(400);
       expect(res.data.message).toBe('Error');
     });
+  });
+
+  it('should call the signup action with error', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.reject({
+        response: { data: { status: 400, message: 'Error' } },
+      }),
+    );
+    await store.dispatch(fetchNewFeed(1, 1));
+    const actions = store.getActions();
+
+    expect.assertions(1);
+    expect(actions[0].type).toEqual('FETCH_ARTICLES_STARTED');
   });
 
   it('should call the signup action with error', () => {
@@ -121,6 +209,20 @@ describe('fetch reducer', () => {
 describe('fetch reducer', () => {
   it('should test the reducer with type default', () => {
     const state = reducer({}, { type: 'default', payload: {} });
+    expect(state).toEqual(expect.any(Object));
+  });
+});
+
+describe('pagination reducer', () => {
+  it('should test the reducer with type default', () => {
+    const state = reducer({ newFeed: [] }, { type: NEW_FEED, payload: [] });
+    expect(state).toEqual(expect.any(Object));
+  });
+});
+
+describe('pagination reducer', () => {
+  it('should test the reducer with type default', () => {
+    const state = reducer({ newUserArticles: [] }, { type: NEW_USER_ARTICLES, payload: [] });
     expect(state).toEqual(expect.any(Object));
   });
 });

@@ -350,12 +350,6 @@ export class SingleArticle extends Component {
             <div className="author-details">{this.authorInfo(User || {})}</div>
             <div className="actions">
               {isMyArticle && this.actions(slug)}
-              <a href="hello" className="action-edit">
-                <img src={editIcon} alt="" />
-              </a>
-              <a href="hello" className="action-delete">
-                <img src={deleteIcon} alt="" />
-              </a>
               <a
                 href={`mailto:?subject=${title}&body=${title} ${url}`}
                 className="share email"

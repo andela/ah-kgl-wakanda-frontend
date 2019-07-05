@@ -24,7 +24,6 @@
         justify-content: center;
         align-items: flex-end;
         h1 {
-          padding: 0 2rem;
           text-align: right;
           color: $color-light;
           font-size: 60px;
@@ -147,11 +146,11 @@
             display: flex;
             margin-top: 20px;
             margin-left: 50px;
-            i {
-              margin-left: 10px;
-              color: #f46036;
-              font-size: 0.9em;
-            }
+            // i {
+            //   margin-left: 10px;
+            //   color: #f46036;
+            //   font-size: 0.9em;
+            // }
           }
 
           .numbers {

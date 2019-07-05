@@ -16,11 +16,9 @@ import staticImage from '../../assets/images/image-display.jpg';
 const Trendings = props => {
   let { list } = props;
 
-  list = list
-    .sort((a, b) => {
-      return (a.favoritesCount - b.favoritesCount) * -1;
-    })
-    .slice(0, 10);
+  list = list.sort((a, b) => {
+    return (a.favoritesCount - b.favoritesCount) * -1;
+  });
 
   const articles = list.map(
     ({

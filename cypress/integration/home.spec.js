@@ -36,6 +36,6 @@ describe('Home', () => {
 
     cy.visit('/');
 
-    cy.get('.article').should('exist');
+    cy.get('.top').should('exist');
   });
 });
