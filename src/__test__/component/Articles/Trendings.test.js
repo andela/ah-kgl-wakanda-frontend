@@ -23,6 +23,6 @@ describe('Trendings', () => {
         <Trendings list={articles} />
       </Route>,
     );
-    expect(wrapper.find('.article').length).toBe(2);
+    expect(wrapper.find('.article').length).toBe(1);
   });
 });

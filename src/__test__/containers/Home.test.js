@@ -47,6 +47,7 @@ const props = {
   data: [],
   loggedIn: true,
   onFetchArticles,
+  onUpdateIsAuth: jest.fn(),
   onSignupError: () => null,
 };
 

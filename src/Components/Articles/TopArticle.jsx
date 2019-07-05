@@ -1,6 +1,5 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -41,7 +40,7 @@ const TopArticle = props => {
   } = element;
 
   return (
-    <Link className="article top-article" id="large-article" to={`/articles/${slug}`}>
+    <a className="article top-article" id="large-article" href={`/articles/${slug}`}>
       <div
         className="image"
         style={{ backgroundImage: `url(${images ? images[0] : staticImage})` }}
@@ -80,7 +79,7 @@ const TopArticle = props => {
           </div>
         </div>
       </div>
-    </Link>
+    </a>
   );
 };
 

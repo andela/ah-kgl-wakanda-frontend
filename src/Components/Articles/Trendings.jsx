@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -33,7 +32,7 @@ const Trendings = props => {
       slug,
     }) => {
       return (
-        <Link className="article" key={id} to={`/articles/${slug}`}>
+        <a className="article" key={id} href={`/articles/${slug}`}>
           <div
             className="image"
             style={{ backgroundImage: `url(${images ? images[0] : staticImage})` }}
@@ -74,7 +73,7 @@ const Trendings = props => {
               </div>
             </div>
           </div>
-        </Link>
+        </a>
       );
     },
   );

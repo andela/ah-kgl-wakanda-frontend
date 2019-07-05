@@ -30,6 +30,19 @@ export class SearchBox extends Component {
 
   /**
    * update the selected filter
+   * @returns {void}
+   */
+  componentWillMount() {
+    const {
+      searchParams: { filter },
+    } = this.props;
+    if (filter) {
+      this.setState({ filter });
+    }
+  }
+
+  /**
+   * update the selected filter
    * @param {string} filterValue
    * @returns {void}
    */
@@ -51,9 +64,10 @@ export class SearchBox extends Component {
       const url = `/api/search?${filter !== 'filter' ? filter : 'keyword'}=${value}`;
       onSearch(url).then(() => {
         history.push({
-          pathname: '/search',
+          pathname: `/search`,
           state: {
             search: value,
+            filter,
           },
         });
       });
@@ -92,7 +106,12 @@ export class SearchBox extends Component {
    * @memberof SearchBox
    */
   render() {
-    const { icon, onChange, value, loading } = this.props;
+    const {
+      icon,
+      onChange,
+      loading,
+      searchParams: { search: searchValue },
+    } = this.props;
     const { filter } = this.state;
     return (
       <InputGroup className="searchbox">
@@ -104,7 +123,7 @@ export class SearchBox extends Component {
         </DropdownButton>
         <FormControl
           name="searchText"
-          value={value}
+          defaultValue={searchValue}
           placeholder="Search..."
           onKeyPress={this.onKeyPress}
           onChange={onChange}
@@ -135,12 +154,14 @@ SearchBox.propTypes = {
   onSearch: PropTypes.func.isRequired,
   history: PropTypes.any.isRequired,
   loading: PropTypes.bool,
+  searchParams: PropTypes.object,
 };
 
 SearchBox.defaultProps = {
   icon: faSearch,
   value: '',
   loading: false,
+  searchParams: {},
 };
 
 /**

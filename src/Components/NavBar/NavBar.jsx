@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import mobileDetect from 'mobile-detector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faFeather } from '@fortawesome/free-solid-svg-icons';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import './NavBar.scss';
 import { toggleSideNav } from '../../actions/toggleSideNav';
@@ -64,6 +66,17 @@ export class NavBar extends Component {
    */
   toggleSideNav = () => {
     this.onToggleSideNav();
+  };
+
+  newArticleButton = () => {
+    return mobileDetect.isMobile()
+      ? {
+          text: '',
+          icon: faFeather,
+        }
+      : {
+          text: 'NEW ARTICLE',
+        };
   };
 
   /**
@@ -141,6 +154,9 @@ export class NavBar extends Component {
    */
   renderNavBar(isAuth, notificationsCount, username, image) {
     const { searchText } = this.state;
+    const {
+      location: { state: searchParams = {} },
+    } = this.props;
     return (
       <React.Fragment>
         <Navbar fixed="top" className="flex-nowrap flex-row" expand="lg" variant="dark">
@@ -150,7 +166,12 @@ export class NavBar extends Component {
           {this.renderHamburgerIcon(faBars)}
           {this.displaySearchBox ? (
             <Nav className="mr-auto search-container">
-              <SearchBox history={this.history} value={searchText} onChange={this.onChange} />
+              <SearchBox
+                history={this.history}
+                searchParams={searchParams}
+                value={searchText}
+                onChange={this.onChange}
+              />
             </Nav>
           ) : null}
 
@@ -158,7 +179,7 @@ export class NavBar extends Component {
           {isAuth && this.pathname !== paths.CREATE_ARTICLE_PATH ? (
             <a href="/articles/new">
               <Nav className="ml-md-auto">
-                <Button text="NEW ARTICLE" />
+                <Button {...this.newArticleButton()} />
               </Nav>
             </a>
           ) : null}

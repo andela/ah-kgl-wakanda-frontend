@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,7 +27,7 @@ const Article = props => {
       slug,
     }) => {
       return (
-        <Link className="article" key={id} to={`articles/${slug}`}>
+        <a className="article" key={id} href={`articles/${slug}`}>
           <div>
             <div
               className="image"
@@ -75,7 +74,7 @@ const Article = props => {
               </div>
             </div>
           </div>
-        </Link>
+        </a>
       );
     },
   );
