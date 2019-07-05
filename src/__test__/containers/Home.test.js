@@ -49,6 +49,7 @@ const props = {
   onFetchArticles,
   onUpdateIsAuth: jest.fn(),
   onFetchNewFeed: jest.fn(),
+  onUpdateIsAuth: jest.fn(),
   onSignupError: () => null,
   viewBookmarkArticles: {
     bookmarkArticles: [],

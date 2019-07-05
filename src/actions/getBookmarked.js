@@ -41,7 +41,9 @@ export const viewBookmarked = () => async dispatch => {
   dispatch(viewBookmarkedStarted());
   try {
     const res = await wakanda.get('/api/articles/bookmark');
-    dispatch(viewBookmarkedSuccess(res.data.articles));
+    let { articles } = res.data;
+    articles = articles.filter(({ Article }) => Article);
+    dispatch(viewBookmarkedSuccess(articles));
     return res;
   } catch (e) {
     const error = e.response ? e.response.data.message : 'Please check your internet connection';

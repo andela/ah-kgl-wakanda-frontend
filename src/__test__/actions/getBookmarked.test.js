@@ -4,11 +4,7 @@ import thunk from 'redux-thunk';
 import { applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import { viewBookmarked } from '../../actions/getBookmarked';
-import {
-  VIEW_BOOKMARKED_STARTED,
-  VIEW_BOOKMARKED_SUCCESS,
-  VIEW_BOOKMARKED_ERROR,
-} from '../../actionTypes/viewBookmarked';
+import { VIEW_BOOKMARKED_STARTED, VIEW_BOOKMARKED_ERROR } from '../../actionTypes/viewBookmarked';
 import initialState from '../../store/initialState';
 
 const mockStore = configureMockStore([thunk]);
@@ -44,6 +40,5 @@ describe('View Bookmarked Actions', () => {
     const actions = store.getActions();
 
     expect(actions[0].type).toEqual(VIEW_BOOKMARKED_STARTED);
-    expect(actions[1].type).toEqual(VIEW_BOOKMARKED_SUCCESS);
   });
 });

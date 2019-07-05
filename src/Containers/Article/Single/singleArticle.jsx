@@ -339,7 +339,16 @@ export class SingleArticle extends Component {
    */
   render() {
     const {
-      article: { title, body, images: imageDisplay, User, slug, favoritesCount, Ratings },
+      article: {
+        title,
+        body,
+        images: imageDisplay,
+        User,
+        slug,
+        favoritesCount,
+        Ratings,
+        comments = [],
+      },
       onlike,
     } = this.props;
     const { loadingBarProgress, isMyArticle } = this.state;
@@ -425,7 +434,7 @@ export class SingleArticle extends Component {
                 <div className="numbers">
                   <div className="option">
                     <i className="far fa-comment-alt" />
-                    <span className="digit">245</span>
+                    <span className="digit">{comments.length}</span>
                   </div>
                   <div className="option ">
                     <Icon icon={faThumbsUp} id="like" onClick={() => onlike(slug)} />

@@ -11,6 +11,7 @@ import Signup from '../Containers/Signup/Signup';
 import CreateArticle from '../Containers/Article/Create/createArticle';
 import SingleArticle from '../Containers/Article/Single/singleArticle';
 import EditArticle from '../Containers/Article/Edit/editArticle';
+import BookmarkedArticles from '../Containers/Article/Bookmarked/bookmarked';
 import Home from '../Containers/Home/Home';
 import UserArticles from '../Containers/UserArticles/UserArticles';
 import Profile from '../Containers/Profile/profileContainer';
@@ -53,6 +54,11 @@ export const Routes = ({ isAuth }) => (
         exact
         path="/articles/new"
         render={props => (isAuth ? <CreateArticle {...props} /> : <Redirect to="/login" />)}
+      />
+      <Route
+        exact
+        path="/articles/bookmarked"
+        render={props => (isAuth ? <BookmarkedArticles {...props} /> : <Redirect to="/login" />)}
       />
       <Route
         exact

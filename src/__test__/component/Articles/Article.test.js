@@ -35,6 +35,6 @@ describe('Article', () => {
         </Route>
       </Provider>,
     );
-    expect(wrapper.find('.article').length).toBe(1);
+    expect(wrapper.find('.article').length).toBe(0);
   });
 });

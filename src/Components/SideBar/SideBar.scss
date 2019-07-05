@@ -111,7 +111,8 @@
       }
     }
     .active {
-      color: $color-primary;
+      color: $color-primary !important;
+      font-weight: 500;
     }
   }
   .notif {

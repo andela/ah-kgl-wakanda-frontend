@@ -13,7 +13,7 @@ import staticImage from '../../assets/images/image-display.jpg';
  */
 const Trendings = props => {
   let { list } = props;
-  const { bookmarkedList } = props;
+  const { bookmarkedList = [{ Article: { slug: '' } }] } = props;
 
   list = list.sort((a, b) => {
     return (a.favoritesCount - b.favoritesCount) * -1;
@@ -31,7 +31,9 @@ const Trendings = props => {
       commentsCount,
       slug,
     }) => {
-      const bookmarked = bookmarkedList.find(item => slug === item.Article.slug);
+      const bookmarked = bookmarkedList.find(item => {
+        return slug === item.Article.slug;
+      });
 
       return (
         <div className="article" key={id}>

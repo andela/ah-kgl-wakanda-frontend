@@ -43,6 +43,7 @@ export class Home extends Component {
   /**
    * Updates the state
    * Triggers when the component render
+   * Updates the state
    *
    * @memberof Home
    * @returns {void}

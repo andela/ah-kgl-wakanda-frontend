@@ -6,19 +6,25 @@ const property = [
   {
     id: 1,
     text: 'Profile',
-    icon: ' far fa-user fa-lg',
+    icon: ' far fa-user',
     link: '/profile',
   },
   {
     id: 2,
     text: 'My Articles',
-    icon: ' fas fa-list-ul fa-lg',
+    icon: ' fas fa-list-ul',
     link: '/myarticles',
   },
   {
     id: 3,
+    text: 'Bookmarked',
+    icon: ' fas fa-bookmark',
+    link: '/articles/bookmarked',
+  },
+  {
+    id: 4,
     text: 'Logout',
-    icon: ' fas fa-sign-out-alt fa-lg',
+    icon: ' fas fa-sign-out-alt',
     link: '/logout',
   },
 ];
