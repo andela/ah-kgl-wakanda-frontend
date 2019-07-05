@@ -35,8 +35,17 @@ describe('Create article', () => {
       status: 200,
       response: {
         profile: {
-          username: "hadad"
+          username: 'hadad',
         },
+      },
+    });
+
+    cy.route({
+      method: 'POST', // Route all GET requests
+      url: '/api/articles/sdjaklsdsa-132141825/favorite', // that have a URL that matches '/articles/*'
+      status: 200,
+      response: {
+        status: 200,
       },
     });
 
@@ -120,7 +129,14 @@ describe('Create article', () => {
       response: {
         data: {
           commentsCount: 3,
-          comments: [{ body: 'body text', title: 'title', description: 'description', User: { username: 'username' } }]
+          comments: [
+            {
+              body: 'body text',
+              title: 'title',
+              description: 'description',
+              User: { username: 'username' },
+            },
+          ],
         },
       },
     });
@@ -142,9 +158,8 @@ describe('Create article', () => {
     cy.get('form').submit();
     cy.location('pathname').should('eq', '/articles/sdjaklsdsa-132141825');
 
-    cy.get('input[name="rate"]')
-      .first()
-      .check({ force: true });
+    cy.get('#like').click();
+    cy.get('.Toastify__toast-body').should('have.text', 'Liked');
     cy.location('pathname').should('eq', '/articles/sdjaklsdsa-132141825');
   });
 });

@@ -2,7 +2,6 @@
 /* eslint-disable require-jsdoc */
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import './Rating.scss';
@@ -19,18 +18,6 @@ export class Rating extends Component {
   render() {
     return (
       <div className="rate">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnVisibilityChange
-          draggable
-          pauseOnHover
-        />
-
         {[...Array(5)].map((v, i) => (
           <React.Fragment>
             <input

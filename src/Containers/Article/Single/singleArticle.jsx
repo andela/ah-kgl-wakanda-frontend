@@ -7,10 +7,12 @@ import LoadingBar from 'react-top-loading-bar';
 import { isMobile } from 'mobile-detector';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer } from 'react-toastify';
 import Navbar from '../../../Components/NavBar/NavBar';
 import checkToken from '../../../helpers/checkToken';
 import {
   getArticle,
+  likeArticle,
   deleteArticle,
   commentArticle,
   fetchComments,
@@ -301,13 +303,28 @@ export class SingleArticle extends Component {
    */
   render() {
     const {
-      article: { title, slug, body, images: imageDisplay, User, Ratings },
+      article: { title, body, images: imageDisplay, User, slug, favoritesCount, Ratings },
+      onlike,
     } = this.props;
     const { loadingBarProgress, isMyArticle } = this.state;
+
     return (
       <div id="single-article" className="container p-0 mw-100">
         <Navbar {...this.props} />
         <LoadingBar progress={loadingBarProgress} height={3} color="red" />
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
+
         <div
           className="row image-display"
           style={{
@@ -362,13 +379,9 @@ export class SingleArticle extends Component {
                     <i className="far fa-comment-alt" />
                     <span className="digit">245</span>
                   </div>
-                  <div className="option">
-                    <i className="far fa-thumbs-up" />
-                    <span className="digit">245</span>
-                  </div>
-                  <div className="option">
-                    <i className="far fa-thumbs-down" />
-                    <span className="digit">34</span>
+                  <div className="option ">
+                    <Icon icon={faThumbsUp} id="like" onClick={() => onlike(slug)} />
+                    <span className="digit liking">{favoritesCount}</span>
                   </div>
                 </div>
               </div>
@@ -393,6 +406,7 @@ SingleArticle.propTypes = {
   article: PropTypes.object.isRequired,
   onGetArticle: PropTypes.func.isRequired,
   onDeleteArticle: PropTypes.func,
+  onlike: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   system: PropTypes.object.isRequired,
@@ -439,6 +453,7 @@ export const mapDispatchToProps = dispatch => ({
   onFetchComments: slug => dispatch(fetchComments(slug)),
   onDeleteComment: (slug, id) => dispatch(deleteComment({ slug, id })),
   onUpdateComment: (slug, id, body) => dispatch(updateComment({ slug, id, body })),
+  onlike: slug => dispatch(likeArticle(slug)),
 });
 export default connect(
   mapStateToProps,

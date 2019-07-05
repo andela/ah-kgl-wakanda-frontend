@@ -160,14 +160,23 @@
           }
 
           .option {
+            display: flex;
+            align-items: center;
             padding-top: 30px;
             margin-left: 25px;
-            font-size: 1.3em;
+            font-size: 1.2em;
             color: #444;
+            svg {
+              font-size: 0.75em;
+              &:hover {
+                cursor: pointer;
+                color: rgba($color: $color-primary, $alpha: 0.9);
+              }
+            }
 
             .digit {
               font-size: 0.8em;
-              margin-left: 2px;
+              margin-left: 10px;
             }
           }
         }
