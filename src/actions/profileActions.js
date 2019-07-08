@@ -37,3 +37,18 @@ export const editProfile = (payload, username) => dispatch => {
     });
   });
 };
+
+/**
+ * @returns {*} object
+ * @param {string} username
+ */
+export const emailNotificationSubscription = () => dispatch => {
+  wakanda.put(`api/notifications/subscribe`).then(res => {
+    const { allowEmailNotification } = res.data.user;
+    viewProfile();
+    dispatch({
+      type: types.EMAIL_NOTIFICATION,
+      payload: { allowEmailNotification },
+    });
+  });
+};

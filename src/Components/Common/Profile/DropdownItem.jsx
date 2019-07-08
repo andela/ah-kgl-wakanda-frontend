@@ -11,6 +11,12 @@ const property = [
   },
   {
     id: 2,
+    text: 'My Articles',
+    icon: ' fas fa-list-ul fa-lg',
+    link: '/myarticles',
+  },
+  {
+    id: 3,
     text: 'Logout',
     icon: ' fas fa-sign-out-alt fa-lg',
     link: '/logout',

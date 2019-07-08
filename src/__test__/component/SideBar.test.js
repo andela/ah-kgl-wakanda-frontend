@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import { SideBar } from '../../Components/SideBar/SideBar';
 
 const props = {
+  onEmailNotificationSubscription: jest.fn(),
   navbar: { isDrawerDisplay: true },
   user: {
     firstName: 'Karl',

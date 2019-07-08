@@ -15,6 +15,7 @@ import SearchBox from '../Common/SearchBox/SearchBox';
 import Button from '../Common/Button/Button';
 import * as paths from '../../paths';
 import ProfileDropdown from '../Common/Profile/ProfileDropdown';
+import logoImg from '../../assets/img/logo_ah.png';
 
 /**
  * Render the NavBar
@@ -144,6 +145,19 @@ export class NavBar extends Component {
   }
 
   /**
+   * Go back home
+   * @returns {object} jsx
+   * @memberof NavBar
+   */
+  renderGoHome() {
+    return (
+      <a href="/" className="ml-2 logo-container">
+        <img className="mobile-logo" src={logoImg} alt="author haven logo" />
+      </a>
+    );
+  }
+
+  /**
    * render navbar
    * @param {*} isAuth
    * @param {*} notificationsCount
@@ -157,13 +171,20 @@ export class NavBar extends Component {
     const {
       location: { state: searchParams = {} },
     } = this.props;
+    const { match } = this.props;
     return (
       <React.Fragment>
         <Navbar fixed="top" className="flex-nowrap flex-row" expand="lg" variant="dark">
           <Navbar.Brand className="d-none mr-md-auto d-md-block">
             <Logo />
           </Navbar.Brand>
-          {this.renderHamburgerIcon(faBars)}
+          {mobileDetect.isMobile() &&
+          (this.pathname === paths.HOME_PATH ||
+            this.pathname === '/not-found' ||
+            this.pathname === `/articles/${match.params.slug}` ||
+            this.pathname === '/search')
+            ? this.renderGoHome()
+            : this.renderHamburgerIcon(faBars)}
           {this.displaySearchBox ? (
             <Nav className="mr-auto search-container">
               <SearchBox
@@ -225,6 +246,7 @@ export const mapDispatchToProps = dispatch => ({
 });
 
 NavBar.propTypes = {
+  match: PropTypes.any,
   onToggleSideNav: PropTypes.func.isRequired,
   navbar: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
@@ -235,6 +257,7 @@ NavBar.propTypes = {
 };
 
 NavBar.defaultProps = {
+  match: {},
   displaySearchBox: true,
 };
 

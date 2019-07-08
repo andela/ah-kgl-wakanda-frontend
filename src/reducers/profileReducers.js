@@ -25,6 +25,11 @@ const profile = (state = initialState.profile.user, { type, payload }) => {
         ...state,
         user: payload,
       };
+    case types.EMAIL_NOTIFICATION:
+      return {
+        ...state,
+        user: { ...state.user, ...payload },
+      };
     default:
       return state;
   }
