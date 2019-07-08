@@ -20,6 +20,8 @@ import TopArticle from '../../Components/Articles/TopArticle';
 
 import { fetchArticles, fetchNewFeed } from '../../actions/fetchArticles';
 import { signupError } from '../../actions/signupActions';
+import updateIsAuth from '../../actions/system';
+import getUserInfo from '../../actions/userInfo';
 
 /**
  * Home component
@@ -36,6 +38,17 @@ export class Home extends Component {
   };
 
   /**
+   * Updates the state
+   *
+   * @memberof Home
+   * @returns {void}
+   */
+  componentWillMount() {
+    const { onUpdateIsAuth } = this.props;
+    onUpdateIsAuth();
+  }
+
+  /**
    * Triggers when the component updates
    *
    * @memberof Home
@@ -43,9 +56,23 @@ export class Home extends Component {
    */
   componentDidMount() {
     document.title = 'Home';
-
     const { onFetchArticles } = this.props;
     onFetchArticles();
+  }
+
+  /**
+   * Triggers when the component updates
+   *
+   * @memberof Home
+   * @returns {void}
+   */
+  componentDidUpdate() {
+    document.title = 'Home';
+    const {
+      onGetUserInfo,
+      user: { username },
+    } = this.props;
+    onGetUserInfo(username);
   }
 
   /**
@@ -99,7 +126,6 @@ export class Home extends Component {
     const { data, newFeed, loggedIn, isAuth } = this.props;
     let { hasMore } = this.props;
     let feed = data;
-
     feed = [...data, ...newFeed];
 
     if (data.length < 10) hasMore = false;
@@ -205,6 +231,7 @@ Home.defaultProps = {
   hasMore: true,
   loggedIn: null,
   isAuth: null,
+  user: {},
 };
 
 Home.propTypes = {
@@ -215,7 +242,10 @@ Home.propTypes = {
   onFetchArticles: PropTypes.func.isRequired,
   onSignupError: PropTypes.func.isRequired,
   onFetchNewFeed: PropTypes.func.isRequired,
+  onUpdateIsAuth: PropTypes.func.isRequired,
+  onGetUserInfo: PropTypes.func.isRequired,
   isAuth: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 /**
@@ -226,7 +256,7 @@ Home.propTypes = {
 const mapStateToProps = ({
   articles: { data, newFeed, hasMore },
   signupState: { loggedIn },
-  currentUser: { isAuth },
+  currentUser: { isAuth, user },
 }) => {
   return {
     data,
@@ -234,6 +264,7 @@ const mapStateToProps = ({
     hasMore,
     loggedIn,
     isAuth,
+    user,
   };
 };
 
@@ -246,6 +277,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchArticles: () => dispatch(fetchArticles()),
     onSignupError: () => dispatch(signupError()),
+    onUpdateIsAuth: () => dispatch(updateIsAuth()),
+    onGetUserInfo: username => dispatch(getUserInfo(username)),
     onFetchNewFeed: (offset, limit) => dispatch(fetchNewFeed(offset, limit)),
   };
 };

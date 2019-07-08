@@ -25,10 +25,10 @@ const initialState = {
     isDrawerDisplay: false,
   },
   profile: {
-    user: {
+    user: JSON.parse(localStorage.getItem('profile')) || {
       username: '',
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       bio: null,
       image: img,

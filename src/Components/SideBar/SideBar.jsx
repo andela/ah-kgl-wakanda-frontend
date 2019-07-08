@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import * as paths from '../../paths';
+import defaultImage from '../../assets/img/blank_profile_pic.png';
 
 import './SideBar.scss';
 
@@ -17,10 +18,6 @@ export class SideBar extends Component {
     navLinks: [
       { key: 0, to: paths.HOME_PATH, icon: 'far fa-newspaper', name: 'Home' },
       { key: 1, to: '/myarticles', icon: 'fas fa-list-ul', name: 'My articles' },
-      { key: 2, to: '/bookmarks', icon: 'far fa-heart', name: 'Bookmarks' },
-      { key: 3, to: '/stats', icon: 'fas fa-signal', name: 'Statistics' },
-      { key: 4, to: '/complaint', icon: 'fas fa-file', name: 'Complaints' },
-      { key: 5, to: '/sidebar', icon: 'far fa-user', name: 'Create user' },
       { key: 7, to: paths.LOGOUT_PATH, icon: 'fas fa-sign-out-alt', name: 'Logout' },
     ],
   };
@@ -39,10 +36,10 @@ export class SideBar extends Component {
   user = ({ user: { image, firstname, lastname, username } }) => (
     <React.Fragment>
       <div className="p-avatar row">
-        <div className="avatar" style={{ backgroundImage: `url(${image})` }} />
+        <div className="avatar" style={{ backgroundImage: `url(${image || defaultImage})` }} />
       </div>
 
-      <div className="name row">{`${firstname} ${lastname}` || ''}</div>
+      <div className="name row">{`${firstname || ''} ${lastname || ''}`}</div>
       <div className="username row">{username}</div>
     </React.Fragment>
   );
@@ -95,9 +92,13 @@ export class SideBar extends Component {
     return (
       <div className="sidenav slide-in-left" style={{ display: isDrawerDisplay ? 'flex' : null }}>
         <div className="user">{this.user(this.props)}</div>
-        <div className="info row">{this.accountStats(user)}</div>
-        <div className="navigation">{this.navigation(this.state)}</div>
-        <div className="notif">{this.toggle(this.state)}</div>
+        <div className="extend">
+          <div className="wrapper">
+            <div className="info row">{this.accountStats(user)}</div>
+            <div className="navigation">{this.navigation(this.state)}</div>
+          </div>
+          <div className="notif">{this.toggle(this.state)}</div>
+        </div>
       </div>
     );
   }

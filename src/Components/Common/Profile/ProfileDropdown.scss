@@ -8,6 +8,7 @@
   border: none;
   img {
     width: 30px;
+    height: 30px;
   }
   #rounded-circle {
     width: 30px;
@@ -21,8 +22,9 @@
     position: absolute;
   }
 }
-
 #menu {
+  position: absolute;
+  top: 52px;
   right: 5px !important;
   left: auto;
 }

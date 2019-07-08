@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import * as types from '../actionTypes/profileActionTypes';
 import wakanda from '../api/wakanda';
 /**
@@ -28,6 +29,7 @@ export const viewProfile = payload => dispatch => {
 export const editProfile = (payload, username) => dispatch => {
   wakanda.put(`api/user/${username}`, { ...payload }).then(res => {
     const { profile } = res.data;
+    toast.success('Your profile was edited');
     viewProfile();
     dispatch({
       type: types.EDIT_PROFILE,
