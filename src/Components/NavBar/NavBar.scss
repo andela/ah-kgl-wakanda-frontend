@@ -8,6 +8,14 @@
     width: 40%;
   }
 
+  .logo-container {
+    cursor: pointer;
+    .mobile-logo {
+      width: 43px;
+      height: 40px;
+    }
+  }
+
   #dropdown-basic {
     .dropdown-menu {
       position: absolute;
