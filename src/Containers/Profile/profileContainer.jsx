@@ -9,6 +9,7 @@ import './Profile.scss';
 import NavBar from '../../Components/NavBar/NavBar';
 import SideBar from '../../Components/SideBar/SideBar';
 import picture from '../../assets/img/blank_profile_pic.png';
+// import Button from '../../Components/Common/Button/Button';
 
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/ah-wakanda/image/upload';
 const CLOUDINARY_UPLOAD_PRESET = 'j9eazq6w';
@@ -38,11 +39,27 @@ export class ProfileContainer extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  spinning = () => {
+    const buton = document.querySelector('.button');
+    /**
+     *
+     * @returns {method} spin
+     */
+    const spin = () => {
+      buton.innerHTML = 'Editing';
+      setTimeout(() => {
+        buton.innerHTML = 'Edit';
+      }, 4000);
+    };
+    spin();
+  };
+
   edit = e => {
     e.preventDefault();
     const { onEditProfile, onViewProfile, username } = this.props;
     onEditProfile(this.state, username);
     onViewProfile(username);
+    this.spinning();
   };
 
   onUpload = e => {
@@ -68,8 +85,6 @@ export class ProfileContainer extends Component {
       })
       .catch(err => {
         err.message = 'Please check your internet and reload';
-        document.getElementById('message').style.display = 'none';
-        document.getElementById('message').innerHTML = err.message;
       });
   };
 
@@ -128,7 +143,7 @@ export class ProfileContainer extends Component {
               placeholder=""
               onType={this.onKeyChange}
             />
-            <button className="button button-register">Edit</button>
+            <button className="button button-register ">Edit</button>
           </div>
         </div>
       </form>

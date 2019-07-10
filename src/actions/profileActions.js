@@ -15,9 +15,9 @@ export const viewProfile = payload => dispatch => {
         payload: profile,
       });
     })
-    .catch(err => {
-      err.message = 'Please check your internet and reload';
-      document.getElementById('message').innerHTML = err.message;
+    .catch(error => {
+      toast.error('You need connectivity');
+      throw error;
     });
 };
 
@@ -27,6 +27,9 @@ export const viewProfile = payload => dispatch => {
  * @param {string} username
  */
 export const editProfile = (payload, username) => dispatch => {
+  dispatch({
+    type: 'PROFILE_LOADING',
+  });
   wakanda.put(`api/user/${username}`, { ...payload }).then(res => {
     const { profile } = res.data;
     toast.success('Your profile was edited');
@@ -45,6 +48,7 @@ export const editProfile = (payload, username) => dispatch => {
 export const emailNotificationSubscription = () => dispatch => {
   wakanda.put(`api/notifications/subscribe`).then(res => {
     const { allowEmailNotification } = res.data.user;
+    toast.success('Notification Option Well Edited');
     viewProfile();
     dispatch({
       type: types.EMAIL_NOTIFICATION,
