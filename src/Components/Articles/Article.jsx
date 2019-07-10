@@ -1,9 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
-
+import { faThumbsUp, faComment } from '@fortawesome/free-solid-svg-icons';
 import RatingDisplay from '../Rating/RatingDisplay';
-
+import Bookmark from '../Common/Bookmark/Bookmark';
 import staticImage from '../../assets/images/image-display.jpg';
 
 /**
@@ -14,6 +13,7 @@ import staticImage from '../../assets/images/image-display.jpg';
  */
 const Article = props => {
   const { list } = props;
+  const { bookmarkedList } = props;
   const articles = list.map(
     ({
       id,
@@ -26,25 +26,25 @@ const Article = props => {
       commentsCount,
       slug,
     }) => {
+      const bookmarked = bookmarkedList.find(item => slug === item.Article.slug);
+
       return (
-        <a className="article" key={id} href={`articles/${slug}`}>
+        <div className="article" key={id}>
           <div>
             <div
               className="image"
               style={{ backgroundImage: `url(${images ? images[0] : staticImage})` }}
             >
-              <div className="bookmark">
-                <i>
-                  <Icon icon={faBookmark} />
-                </i>
-              </div>
+              <Bookmark slug={slug} bookmarkedSlug={bookmarked ? bookmarked.Article.slug : ''} />
             </div>
-            <div className="info">
-              <div>
-                <div className="title">{title.toString().substr(0, 100)}</div>
-                <div className="description">{description.toString().substr(0, 200)}</div>
+            <a href={`articles/${slug}`}>
+              <div className="info">
+                <div>
+                  <div className="title">{title.toString().substr(0, 100)}</div>
+                  <div className="description">{description.toString().substr(0, 200)}</div>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
           <div className="info">
             <div>
@@ -74,7 +74,7 @@ const Article = props => {
               </div>
             </div>
           </div>
-        </a>
+        </div>
       );
     },
   );

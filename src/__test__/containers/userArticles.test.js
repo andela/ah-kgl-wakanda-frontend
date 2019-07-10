@@ -41,6 +41,7 @@ const props = {
   userArticles: [],
   currentUser: {},
   onFetchUserArticles,
+  onFetchNewUserArticles: jest.fn(),
 };
 
 const mockStore = configureMockStore([thunk]);

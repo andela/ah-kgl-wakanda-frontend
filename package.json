@@ -20,6 +20,7 @@
     "enzyme-to-json": "^3.3.5",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "hoist-non-react-statics": "^3.3.0",
     "identity-obj-proxy": "^3.0.0",
     "joi-browser": "^13.4.0",
     "jsonwebtoken": "^8.5.1",

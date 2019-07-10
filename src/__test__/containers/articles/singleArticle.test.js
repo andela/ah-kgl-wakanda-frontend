@@ -59,6 +59,10 @@ const props = {
   onCommentArticle: jest.fn(''),
   onUpdateComment: jest.fn(''),
   onDeleteComment: jest.fn(''),
+  onFetchBookmarkedArticles: jest.fn(),
+  viewBookmarkArticles: {
+    bookmarkArticles: [],
+  },
   isAuth: true,
   onlike: jest.fn(''),
   onUnlike: jest.fn(''),

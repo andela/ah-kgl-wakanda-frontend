@@ -19,6 +19,7 @@ export class SideBar extends Component {
     navLinks: [
       { key: 0, to: paths.HOME_PATH, icon: 'far fa-newspaper', name: 'Home' },
       { key: 1, to: '/myarticles', icon: 'fas fa-list-ul', name: 'My articles' },
+      { key: 3, to: '/articles/bookmarked', icon: 'fas fa-bookmark', name: 'Bookmarked' },
       { key: 7, to: paths.LOGOUT_PATH, icon: 'fas fa-sign-out-alt', name: 'Logout' },
     ],
   };
@@ -65,7 +66,7 @@ export class SideBar extends Component {
 
   navigation = ({ navLinks }) =>
     navLinks.map((navLink, key) => (
-      <NavLink key={key} to={navLink.to} className="item row">
+      <NavLink key={key} to={navLink.to} exact className="item row">
         <i className={navLink.icon} />
         <span>{navLink.name}</span>
       </NavLink>

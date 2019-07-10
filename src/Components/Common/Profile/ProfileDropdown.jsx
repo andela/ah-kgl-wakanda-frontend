@@ -17,7 +17,7 @@ const ProfileDropdown = props => {
     <React.Fragment>
       <Dropdown>
         <Dropdown.Toggle variant="light" id="dropdown-basic">
-          <Image src={picture} roundedCircle />
+          <Image src={picture || image} roundedCircle />
           <span className="names">{username}</span>
         </Dropdown.Toggle>
         <DropdownItem />

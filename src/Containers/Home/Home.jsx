@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { ToastContainer } from 'react-toastify';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
 import LoadingBar from 'react-top-loading-bar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Spinner } from 'react-bootstrap';
+import 'react-toastify/dist/ReactToastify.css';
+import './Home.scss';
 
 import NavBar from '../../Components/NavBar/NavBar';
 
 import Button from '../../Components/Common/Button/Button';
-import './Home.scss';
 
 import Trendings from '../../Components/Articles/Trendings';
 import Article from '../../Components/Articles/Article';
@@ -22,6 +24,7 @@ import { fetchArticles, fetchNewFeed } from '../../actions/fetchArticles';
 import { signupError } from '../../actions/signupActions';
 import updateIsAuth from '../../actions/system';
 import getUserInfo from '../../actions/userInfo';
+import { viewBookmarked } from '../../actions/getBookmarked';
 
 /**
  * Home component
@@ -39,13 +42,18 @@ export class Home extends Component {
 
   /**
    * Updates the state
+   * Triggers when the component render
+   * Updates the state
    *
    * @memberof Home
    * @returns {void}
    */
   componentWillMount() {
-    const { onUpdateIsAuth } = this.props;
+    const { onFetchBookmarkedArticles, isAuth, onUpdateIsAuth } = this.props;
     onUpdateIsAuth();
+    if (isAuth) {
+      onFetchBookmarkedArticles();
+    }
   }
 
   /**
@@ -123,17 +131,29 @@ export class Home extends Component {
    * @memberof Home
    */
   render() {
-    const { data, newFeed, loggedIn, isAuth } = this.props;
+    const { data, newFeed, loggedIn, isAuth, viewBookmarkArticles } = this.props;
     let { hasMore } = this.props;
     let feed = data;
     feed = [...data, ...newFeed];
 
     if (data.length < 10) hasMore = false;
 
+    const { bookmarkArticles } = viewBookmarkArticles;
     return (
       <React.Fragment>
         <NavBar {...this.props} />
         <LoadingBar height={3} progress={data.length > 1 ? 0 : 50} color="#f46036" />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
 
         {loggedIn ? this.success() : null}
 
@@ -198,7 +218,7 @@ export class Home extends Component {
                 </Link>
               </div>
 
-              <TopArticle list={data} />
+              <TopArticle list={data} bookmarkedList={bookmarkArticles} />
 
               <InfiniteScroll
                 dataLength={feed.length} // This is important field to render the next data
@@ -206,8 +226,13 @@ export class Home extends Component {
                 hasMore={hasMore}
                 loader={<Spinner animation="border" size="md" variant="danger" />}
               >
-                <div className="cards">{<Article list={feed} />}</div>
+                <div className="cards">
+                  {<Article list={feed} bookmarkedList={bookmarkArticles} />}
+                </div>
               </InfiniteScroll>
+              <div className="cards">
+                <Article list={data} bookmarkedList={bookmarkArticles} />
+              </div>
             </div>
 
             <div className="right trends">
@@ -215,7 +240,7 @@ export class Home extends Component {
                 <h4>Trending Articles</h4>
               </div>
               <div className="cards">
-                <Trendings list={data} />
+                <Trendings list={data} bookmarkedList={bookmarkArticles} />
               </div>
             </div>
           </div>
@@ -238,8 +263,10 @@ Home.propTypes = {
   data: PropTypes.array,
   newFeed: PropTypes.array,
   hasMore: PropTypes.bool,
+  viewBookmarkArticles: PropTypes.object.isRequired,
   loggedIn: PropTypes.bool,
   onFetchArticles: PropTypes.func.isRequired,
+  onFetchBookmarkedArticles: PropTypes.func.isRequired,
   onSignupError: PropTypes.func.isRequired,
   onFetchNewFeed: PropTypes.func.isRequired,
   onUpdateIsAuth: PropTypes.func.isRequired,
@@ -253,20 +280,20 @@ Home.propTypes = {
  * @param {*} { auth }
  * @returns {object} props
  */
-const mapStateToProps = ({
+export const mapStateToProps = ({
   articles: { data, newFeed, hasMore },
   signupState: { loggedIn },
   currentUser: { isAuth, user },
-}) => {
-  return {
-    data,
-    newFeed,
-    hasMore,
-    loggedIn,
-    isAuth,
-    user,
-  };
-};
+  viewBookmarkArticles,
+}) => ({
+  data,
+  newFeed,
+  hasMore,
+  loggedIn,
+  isAuth,
+  viewBookmarkArticles,
+  user,
+});
 
 /**
  * Maps dispatches to props
@@ -280,6 +307,7 @@ const mapDispatchToProps = dispatch => {
     onUpdateIsAuth: () => dispatch(updateIsAuth()),
     onGetUserInfo: username => dispatch(getUserInfo(username)),
     onFetchNewFeed: (offset, limit) => dispatch(fetchNewFeed(offset, limit)),
+    onFetchBookmarkedArticles: () => dispatch(viewBookmarked()),
   };
 };
 

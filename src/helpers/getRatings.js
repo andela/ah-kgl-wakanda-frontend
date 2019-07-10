@@ -11,7 +11,7 @@ const ratings = Ratings => {
     prev += rate;
     return prev;
   });
-  return (prev / Ratings.length).toPrecision(2) || 0;
+  return Ratings.length ? (prev / Ratings.length).toPrecision(2) : 0;
 };
 
 export default ratings;
