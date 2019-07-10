@@ -23,6 +23,7 @@ import {
   deleteComment,
   updateComment,
 } from '../../../actions/article';
+import { getRatings as getAllRatings } from '../../../actions/rating';
 import Button from '../../../Components/Common/Button/Button';
 import Rating from '../../../Components/Rating/Rating';
 import RatingDisplay from '../../../Components/Rating/RatingDisplay';
@@ -72,8 +73,10 @@ export class SingleArticle extends Component {
       },
       onGetArticle,
       onFetchComments,
+      onGetAllRatings,
     } = this.props;
     onGetArticle(slug);
+    onGetAllRatings(slug);
     onFetchComments(slug);
     this.setState({ loadingBarProgress: 100 });
   };
@@ -475,6 +478,7 @@ SingleArticle.propTypes = {
   onGetArticle: PropTypes.func.isRequired,
   onDeleteArticle: PropTypes.func,
   onlike: PropTypes.func.isRequired,
+  onGetAllRatings: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   system: PropTypes.object.isRequired,
@@ -522,6 +526,7 @@ export const mapDispatchToProps = dispatch => ({
   onUpdateComment: (slug, id, body) => dispatch(updateComment({ slug, id, body })),
   onlike: slug => dispatch(likeArticle(slug)),
   onFetchBookmarkedArticles: () => dispatch(viewBookmarked()),
+  onGetAllRatings: slug => dispatch(getAllRatings(slug)),
 });
 export default connect(
   mapStateToProps,

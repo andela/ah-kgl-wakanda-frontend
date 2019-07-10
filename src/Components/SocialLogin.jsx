@@ -17,9 +17,10 @@ export class SocialLogin extends Component {
   };
 
   responseSocialLogin = ({ response, provider }) => {
-    const { onSocialLogin } = this.props;
+    const { onSocialLogin, from } = this.props;
     const { accessToken } = response;
-    onSocialLogin(accessToken, provider);
+
+    onSocialLogin(accessToken, provider, from);
   };
 
   /**
@@ -48,8 +49,13 @@ export class SocialLogin extends Component {
   }
 }
 
+SocialLogin.defaultProps = {
+  from: '',
+};
+
 SocialLogin.propTypes = {
   onSocialLogin: PropTypes.func.isRequired,
+  from: PropTypes.string,
 };
 
 /**
@@ -58,7 +64,8 @@ SocialLogin.propTypes = {
  * @returns {object} props
  */
 const mapDispatchToProps = dispatch => ({
-  onSocialLogin: (accessToken, provider) => dispatch(socialLogin(accessToken, provider)),
+  onSocialLogin: (accessToken, provider, from) =>
+    dispatch(socialLogin(accessToken, provider, from)),
 });
 
 export default connect(

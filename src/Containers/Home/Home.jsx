@@ -80,7 +80,7 @@ export class Home extends Component {
       onGetUserInfo,
       user: { username },
     } = this.props;
-    onGetUserInfo(username);
+    if (username) onGetUserInfo(username);
   }
 
   /**

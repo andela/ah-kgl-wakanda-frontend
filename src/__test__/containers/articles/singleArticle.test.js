@@ -66,6 +66,7 @@ const props = {
   isAuth: true,
   onlike: jest.fn(''),
   onUnlike: jest.fn(''),
+  onGetAllRatings: jest.fn(''),
   location: {
     pathname: '/api/articles/new',
   },

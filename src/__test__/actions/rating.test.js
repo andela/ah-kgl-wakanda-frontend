@@ -1,7 +1,7 @@
 import mockAxios from 'axios';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import rating from '../../actions/rating';
+import rating, { getRatings } from '../../actions/rating';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -27,6 +27,21 @@ describe('Action resetPassword', () => {
     expect.assertions(2);
     expect(actions[0].type).toEqual('SUBMIT_RATING');
     expect(actions[0].payload).toEqual({ id: 1, rate: 3 });
+  });
+
+  test('Should dispatch the action GET_RATINGS', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: { ratings: [{ id: 1, rate: 3 }] },
+      }),
+    );
+
+    await store.dispatch(getRatings('article_slug'));
+    const actions = store.getActions();
+
+    expect.assertions(2);
+    expect(actions[0].type).toEqual('GET_RATINGS');
+    expect(actions[0].payload).toEqual({ ratings: [{ id: 1, rate: 3 }] });
   });
 
   test('Should dispatch the action RATING_ERROR', async () => {
