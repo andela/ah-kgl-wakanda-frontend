@@ -1,6 +1,20 @@
 import { toast } from 'react-toastify';
-import { SUBMIT_RATING, RATING_ERROR } from '../actionTypes/rating';
+import { SUBMIT_RATING, RATING_ERROR, GET_RATINGS } from '../actionTypes/rating';
 import wakanda from '../api/wakanda';
+import { getArticle } from './article';
+
+/**
+ * @returns {*} dispatch
+ * @param {string} slug
+ */
+export const getRatings = slug => dispatch => {
+  wakanda.get(`/api/articles/${slug}/ratings`).then(response => {
+    dispatch({
+      type: GET_RATINGS,
+      payload: response.data,
+    });
+  });
+};
 
 /**
  * @returns {*} dispatch
@@ -18,11 +32,11 @@ export default (rate, slug) => dispatch => {
         payload: response.data,
       });
       toast.success(response.data.message);
+      dispatch(getArticle(slug));
     })
     .catch(error => {
-      let message = '';
-      message = error.response ? error.response.data.message : 'No internet access';
-      if (error.response.status === 400) message = 'You need to first sign in';
+      let message = 'You must be logged in';
+      if (error.response) message = 'No internet access';
       dispatch({
         type: RATING_ERROR,
         payload: message,

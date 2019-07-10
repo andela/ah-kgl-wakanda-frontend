@@ -5,21 +5,27 @@ import { SIGNUP_SUCCESS } from '../actionTypes/signupTypes';
  * @returns {*} dispatch
  * @param {string} accessToken
  * @param {string} provider
+ * @param {string} from
  */
-export const socialLogin = (accessToken, provider) => async dispatch => {
+export const socialLogin = (accessToken, provider, from) => async dispatch => {
   try {
     const result = await wakanda.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/${provider}`, {
       access_token: accessToken,
     });
     const { user } = result.data;
-    dispatch({
-      type: SUBMIT_LOGIN,
-      payload: user,
-    });
-    dispatch({
-      type: SIGNUP_SUCCESS,
-      payload: user,
-    });
+
+    if (from === 'login') {
+      dispatch({
+        type: SUBMIT_LOGIN,
+        payload: user,
+      });
+    }
+    if (from === 'signup') {
+      dispatch({
+        type: SIGNUP_SUCCESS,
+        payload: user,
+      });
+    }
   } catch (error) {
     const message = error.response ? error.response.data.message : 'No internet access';
     dispatch({

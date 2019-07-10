@@ -1,4 +1,4 @@
-import { SUBMIT_RATING, RATING_ERROR } from '../actionTypes/rating';
+import { SUBMIT_RATING, RATING_ERROR, GET_RATINGS } from '../actionTypes/rating';
 
 /**
  *
@@ -8,6 +8,13 @@ import { SUBMIT_RATING, RATING_ERROR } from '../actionTypes/rating';
  */
 const rating = (state = { errorMessage: '', loading: false }, { type, payload }) => {
   switch (type) {
+    case GET_RATINGS:
+      return {
+        ...state,
+        ratings: payload.ratings,
+        errorMessage: null,
+        loading: false,
+      };
     case SUBMIT_RATING:
       return {
         ...state,

@@ -71,7 +71,7 @@ export class Login extends Component {
 
   shareButton = () => (
     <div className="social-button">
-      <SocialLogin />
+      <SocialLogin from="login" />
     </div>
   );
 

@@ -130,7 +130,7 @@ export class Signup extends Component {
               </form>
               <p>OR SIGNUP WITH</p>
               <div className="social-login">
-                <SocialLogin />
+                <SocialLogin from="signup" />
               </div>
               <p className="signin-link">
                 <span>Already have an account ? </span>

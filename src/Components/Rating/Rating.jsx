@@ -15,7 +15,16 @@ export class Rating extends Component {
     onRate(e.target.value, slug);
   };
 
+  userRating = (ratings = [], id) => {
+    const userRating = ratings.find(rate => rate.userId === id);
+    if (userRating) return userRating.rate;
+    return null;
+  };
+
   render() {
+    const { ratings, id, isAuth } = this.props;
+    let userRate;
+    if (isAuth) userRate = this.userRating(ratings, id);
     return (
       <div className="rate">
         {[...Array(5)].map((v, i) => (
@@ -24,10 +33,11 @@ export class Rating extends Component {
               type="radio"
               id={`star${5 - i}`}
               name="rate"
+              defaultChecked={userRate && 5 - i === userRate}
               value={5 - i}
               onChange={this.ratingChange}
             />
-            <label htmlFor={`star${5 - i}`} title="text">
+            <label htmlFor={`star${5 - i}`} title={5 - i}>
               {`${5 - i} stars`}
             </label>
           </React.Fragment>
@@ -37,16 +47,37 @@ export class Rating extends Component {
   }
 }
 
+Rating.defaultProps = {
+  ratings: [],
+  slug: '',
+  id: null,
+};
+
 Rating.propTypes = {
   onRate: PropTypes.func.isRequired,
-  slug: PropTypes.string.isRequired,
+  ratings: PropTypes.array,
+  slug: PropTypes.string,
+  isAuth: PropTypes.bool.isRequired,
+  id: PropTypes.number,
 };
+
+const mapStateToProps = ({
+  currentUser: {
+    isAuth,
+    user: { id },
+  },
+  rating: { ratings },
+}) => ({
+  isAuth,
+  id,
+  ratings,
+});
 
 const mapDispatchToProps = dispatch => ({
   onRate: (rate, slug) => dispatch(rating(rate, slug)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Rating);

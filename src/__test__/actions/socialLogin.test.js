@@ -26,14 +26,32 @@ describe('Action socialLogin', () => {
       }),
     );
 
-    await store.dispatch(socialLogin('access_token', 'google'));
+    await store.dispatch(socialLogin('access_token', 'google', 'login'));
     const actions = store.getActions();
 
-    expect.assertions(4);
+    expect.assertions(2);
     expect(actions[0].type).toEqual('SUBMIT_LOGIN');
-    expect(actions[1].type).toEqual('SIGNUP_SUCCESS');
     expect(actions[0].payload.token).toEqual('token');
-    expect(actions[1].payload.token).toEqual('token');
+  });
+
+  test('Should dispatch the action SIGNUP_SUCCESS', async () => {
+    mockAxios.post.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          user: {
+            token: 'token',
+            username: 'username',
+          },
+        },
+      }),
+    );
+
+    await store.dispatch(socialLogin('access_token', 'google', 'signup'));
+    const actions = store.getActions();
+
+    expect.assertions(2);
+    expect(actions[0].type).toEqual('SIGNUP_SUCCESS');
+    expect(actions[0].payload.token).toEqual('token');
   });
 
   test('Should dispatch the action ERROR_LOGIN', async () => {

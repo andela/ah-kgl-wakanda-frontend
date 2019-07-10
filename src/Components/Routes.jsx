@@ -65,7 +65,7 @@ export const Routes = ({ isAuth }) => (
         path="/logout"
         render={() => {
           if (isAuth) {
-            localStorage.setItem('token_ah_wakanda', '');
+            localStorage.clear();
             return window.location.reload();
           }
           return <Redirect to="/" />;
