@@ -50,6 +50,7 @@ describe('NavBar component', () => {
     const instance = wrapper.instance();
     instance.toggleSideNav(isDrawerDisplay);
     expect(props.onToggleSideNav).toHaveBeenCalled();
+    expect(instance.renderGoHome()).toBeDefined();
   });
 
   it('should map state to props', () => {
