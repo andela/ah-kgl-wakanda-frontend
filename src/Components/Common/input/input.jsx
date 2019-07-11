@@ -49,7 +49,7 @@ class Input extends Component {
       if (type === 'password') {
         return {
           message:
-            'Your password must have at least 8 digits and contain 1 Uppercase, 1 Lowercase, 1 number',
+            'Your password must have at least 6 characters and contain 1 Uppercase, 1 Lowercase, 1 number',
         };
       }
       return {

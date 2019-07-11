@@ -110,14 +110,13 @@ export class SingleArticle extends Component {
    * @memberof SingleArticle
    * @return {object} jsx
    */
-  authorInfo = ({ firstname, lastname, username, image: authorImage }, main) => {
+  authorInfo = ({ firstname, lastname, username, image: authorImage }) => {
     return (
       <React.Fragment>
         <img src={authorImage || defaultProfile} alt="hey" />
         <div className="names">
           <h4>{`${firstname || ''} ${lastname || ''}`}</h4>
           <h6>{`@${username}`}</h6>
-          {main && <a href="hello">Follow</a>}
         </div>
       </React.Fragment>
     );
@@ -424,11 +423,6 @@ export class SingleArticle extends Component {
           <div className="col-md-6 body-text">
             <div id="content-text">
               {body ? ReactHtmlParser(JSON.parse(body)) : 'No content yet'}
-            </div>
-            <div className="tags">
-              <a href="hello">#Java</a>
-              <a href="hello">#Node</a>
-              <a href="hello">#Express</a>
             </div>
             <div className="article-info">
               <div className="author-details">{this.authorInfo(User || {}, true)}</div>
