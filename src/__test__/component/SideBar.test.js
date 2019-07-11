@@ -19,6 +19,6 @@ const props = {
 describe('render SideBar component', () => {
   it('to have input tag', async () => {
     const wrapper = shallow(<SideBar {...props} />);
-    expect(wrapper.find('input').length).toBe(0);
+    expect(wrapper.find('input').length).toBe(1);
   });
 });
