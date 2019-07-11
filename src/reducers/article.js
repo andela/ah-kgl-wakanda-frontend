@@ -5,6 +5,8 @@ import {
   LOAD,
   STOP_LOADING,
   DISPLAY_COMMENTS,
+  LIKE_COMMENT,
+  UNLIKE_COMMENT,
 } from '../actionTypes/article';
 
 /**
@@ -41,6 +43,14 @@ const article = (state = {}, { type, payload }) => {
       return {
         ...state,
         comments: payload.comments,
+      };
+    case LIKE_COMMENT:
+      return {
+        ...state,
+      };
+    case UNLIKE_COMMENT:
+      return {
+        ...state,
       };
     default:
       return state;

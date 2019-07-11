@@ -54,6 +54,8 @@ const props = {
     push: jest.fn(''),
     location: '/articles/hello-world-233591714',
   },
+  onlikeComment: jest.fn(),
+  onunlikeComment: jest.fn(),
   onGetArticle: jest.fn(''),
   onFetchComments: jest.fn(''),
   onCommentArticle: jest.fn(''),
@@ -122,6 +124,7 @@ describe('Comments', () => {
     expect(mappedObject.onCommentArticle('slug', 'body')).toEqual(expect.any(Function));
     expect(mappedObject.onDeleteComment('slug', 'id')).toEqual(expect.any(Function));
     expect(mappedObject.onUpdateComment('slug', 'id', 'body')).toEqual(expect.any(Function));
+    expect(mappedObject.onlikeComment('slug', 'id')).toEqual(expect.any(Function));
   });
 
   it('should call commentArticle action with success', () => {

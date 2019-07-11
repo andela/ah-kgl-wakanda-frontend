@@ -22,6 +22,8 @@ import {
   fetchComments,
   deleteComment,
   updateComment,
+  likeComment,
+  unlikeComment,
 } from '../../../actions/article';
 import { getRatings as getAllRatings } from '../../../actions/rating';
 import Button from '../../../Components/Common/Button/Button';
@@ -158,63 +160,68 @@ export class SingleArticle extends Component {
             <Button text="POST" onClick={() => this.handlePostComment()} loading={loading} />
           </div>
         </div>
-        {comments.map(({ body: text, favoritesCount, User: { username, image }, id }, index) => {
-          const { state } = this;
-          const { updateBody } = state;
-
-          return (
-            <div className="comment-card" key={index}>
-              <div className="author-details-column">
-                <img src={image || defaultProfile} alt="" />
-                <div className="names">
-                  <h4>{username}</h4>
+        {comments.map(
+          ({ body: text, favoritesCount, favorited, User: { username, image }, id }, index) => {
+            const { state } = this;
+            const { updateBody } = state;
+            return (
+              <div className="comment-card" key={index}>
+                <div className="author-details-column">
+                  <img src={image || defaultProfile} alt="" />
+                  <div className="names">
+                    <h4>{username}</h4>
+                  </div>
                 </div>
-              </div>
-              <div className="comments">
-                <span>{text}</span>
+                <div className="comments">
+                  <span>{text}</span>
 
-                <div className="option">
-                  <Icon icon={faThumbsUp} />
-                  <span className="">{favoritesCount}</span>
-                  {currentUsername === username ? (
-                    <React.Fragment>
-                      <Icon
-                        icon={faEdit}
-                        onClick={() => {
-                          toggler(index);
-                        }}
-                      />
-                      <Icon
-                        icon={faTrash}
-                        color="#e70000"
-                        onClick={() => this.handleDeleteComment(id)}
-                      />
-                    </React.Fragment>
-                  ) : null}
-                </div>
-
-                <div
-                  className="wrapper edit-comment"
-                  style={{ display: !state[index] ? 'none' : 'flex' }}
-                >
-                  <textarea
-                    name="comment"
-                    value={updateBody === '' ? text : updateBody}
-                    onChange={e => this.setState({ updateBody: e.target.value })}
-                  />
-                  <div className="bottom">
-                    <Button
-                      text="POST"
-                      onClick={() => this.handleUpdateComment(id)}
-                      loading={loading}
-                      size={12}
+                  <div className="option">
+                    <Icon
+                      icon={faThumbsUp}
+                      id="likeComment"
+                      onClick={() => this.likeComment(id, favorited)}
                     />
+                    <span className="">{favoritesCount}</span>
+                    {currentUsername === username ? (
+                      <React.Fragment>
+                        <Icon
+                          icon={faEdit}
+                          onClick={() => {
+                            toggler(index);
+                          }}
+                        />
+                        <Icon
+                          icon={faTrash}
+                          color="#e70000"
+                          onClick={() => this.handleDeleteComment(id)}
+                        />
+                      </React.Fragment>
+                    ) : null}
+                  </div>
+
+                  <div
+                    className="wrapper edit-comment"
+                    style={{ display: !state[index] ? 'none' : 'flex' }}
+                  >
+                    <textarea
+                      name="comment"
+                      value={updateBody === '' ? text : updateBody}
+                      onChange={e => this.setState({ updateBody: e.target.value })}
+                    />
+                    <div className="bottom">
+                      <Button
+                        text="POST"
+                        onClick={() => this.handleUpdateComment(id)}
+                        loading={loading}
+                        size={12}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          },
+        )}
       </React.Fragment>
     );
   };
@@ -331,6 +338,38 @@ export class SingleArticle extends Component {
         onFetchComments(slug);
       }
     });
+  }
+
+  /**
+   * Like a comment
+   *
+   * @param {*} id
+   * @param {*} favorited
+   * @memberof SingleArticle
+   * @returns {void}
+   */
+  likeComment(id, favorited) {
+    const {
+      onlikeComment,
+      onFetchComments,
+      onUnlikeComment,
+      match: {
+        params: { slug },
+      },
+    } = this.props;
+    if (favorited) {
+      onUnlikeComment(slug, id).then(res => {
+        if (res) {
+          onFetchComments(slug);
+        }
+      });
+    } else {
+      onlikeComment(slug, id).then(res => {
+        if (res) {
+          onFetchComments(slug);
+        }
+      });
+    }
   }
 
   /**
@@ -489,6 +528,8 @@ SingleArticle.propTypes = {
   loading: PropTypes.bool,
   username: PropTypes.string,
   comments: PropTypes.array,
+  onlikeComment: PropTypes.func.isRequired,
+  onUnlikeComment: PropTypes.func.isRequired,
 };
 
 /**
@@ -527,6 +568,8 @@ export const mapDispatchToProps = dispatch => ({
   onlike: slug => dispatch(likeArticle(slug)),
   onFetchBookmarkedArticles: () => dispatch(viewBookmarked()),
   onGetAllRatings: slug => dispatch(getAllRatings(slug)),
+  onlikeComment: (slug, id) => dispatch(likeComment(slug, id)),
+  onUnlikeComment: (slug, id) => dispatch(unlikeComment(slug, id)),
 });
 export default connect(
   mapStateToProps,

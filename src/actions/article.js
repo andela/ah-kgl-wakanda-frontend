@@ -7,6 +7,8 @@ import {
   LOAD,
   STOP_LOADING,
   DISPLAY_COMMENTS,
+  LIKE_COMMENT,
+  UNLIKE_COMMENT,
 } from '../actionTypes/article';
 import { NOT_FOUND, SUCCESS_MESSAGE } from '../actionTypes/system';
 import wakanda from '../api/wakanda';
@@ -302,4 +304,69 @@ export const unlikeArticle = slug => async dispatch => {
       toast.error('Internet Lost');
     }
   }
+};
+
+/**
+ * @returns {*} object
+ * @param {string} slug
+ * @param {int} id
+ */
+export const likeComment = (slug, id) => dispatch => {
+  return wakanda
+    .post(`/api/articles/${slug}/comments/${id}/favorite`)
+    .then(res => {
+      toast.success('Liked a comment');
+      const { comment } = res.data.data;
+      dispatch({
+        type: LIKE_COMMENT,
+        payload: comment,
+      });
+      return true;
+    })
+    .catch(err => {
+      if (err.response) {
+        if (
+          err.response.data.status === 400 &&
+          err.response.data.message === 'You already liked this comment'
+        ) {
+          dispatch(unlikeComment(slug, id));
+          return;
+        }
+        toast.error('You need to log in');
+      } else {
+        toast.error('Internet Lost');
+      }
+      return false;
+    });
+};
+
+/**
+ * @returns {*} object
+ * @param {string} slug
+ * @param {int} id
+ */
+export const unlikeComment = (slug, id) => dispatch => {
+  return wakanda
+    .delete(`/api/articles/${slug}/comments/${id}/favorite`)
+    .then(res => {
+      toast.success('Unliked a comment');
+      const { comment } = res.data.data;
+
+      dispatch({
+        type: UNLIKE_COMMENT,
+        payload: comment,
+      });
+      return true;
+    })
+    .catch(err => {
+      if (err.response) {
+        if (err.response.data.status === 400) {
+          dispatch(likeComment(slug, id));
+        }
+        toast.error('You need to log in');
+      } else {
+        toast.error('Internet Lost');
+      }
+      return false;
+    });
 };
