@@ -31,12 +31,6 @@ describe('<SearchBox /> component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should update the filter value', () => {
-    wrapper.find('Button.dropdown-toggle').simulate('click');
-    wrapper.find('DropdownItem#tag').simulate('click');
-    expect(wrapper.state().filter).toBe('tag');
-  });
-
   it('should filter by author', () => {
     wrapper.setState({
       filter: 'author',

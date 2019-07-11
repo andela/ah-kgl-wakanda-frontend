@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './SearchBox.scss';
 import { search } from '../../../actions/search';
 
-const filters = ['tag', 'author', 'title'];
+const filters = ['author', 'title'];
 
 /**
  * Searchbox component
