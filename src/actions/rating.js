@@ -36,7 +36,7 @@ export default (rate, slug) => dispatch => {
     })
     .catch(error => {
       let message = 'You must be logged in';
-      if (error.response) message = 'No internet access';
+      if (!error.response) message = 'No internet access';
       dispatch({
         type: RATING_ERROR,
         payload: message,
