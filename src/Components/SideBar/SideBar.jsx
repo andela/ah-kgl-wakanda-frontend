@@ -106,7 +106,6 @@ export class SideBar extends Component {
             <div className="info row">{this.accountStats(user)}</div>
             <div className="navigation">{this.navigation(this.state)}</div>
           </div>
-          <div className="notif">{this.toggle(this.state)}</div>
         </div>
       </div>
     );

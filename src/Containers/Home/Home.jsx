@@ -230,9 +230,6 @@ export class Home extends Component {
                   {<Article list={feed} bookmarkedList={bookmarkArticles} />}
                 </div>
               </InfiniteScroll>
-              <div className="cards">
-                <Article list={data} bookmarkedList={bookmarkArticles} />
-              </div>
             </div>
 
             <div className="right trends">
